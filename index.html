@@ -437,19 +437,16 @@
 </head>
 <body>
 
-    <!-- 인트로 -->
     <div id="intro-screen">
         <div class="intro-title">System.Boot()<br><span>STELLAR ACADEMY</span></div>
         <button id="enter-btn">ACCESS GRANTED</button>
     </div>
 
-    <!-- 메인 컨테이너 -->
     <div id="main-container">
         <header id="main-header">
             <h1 id="main-header-title">STELLAR ACADEMY</h1>
         </header>
 
-        <!-- 탭 네비게이션 -->
         <nav class="tab-nav" id="main-nav">
             <button class="tab-btn active" onclick="openTab(event, 'tab-world')">WORLD</button>
             <button class="tab-btn" onclick="openTab(event, 'tab-character')">ARCHIVE</button>
@@ -458,7 +455,6 @@
         </nav>
 
         <main>
-            <!-- 1. 세계관 탭 -->
             <div id="tab-world" class="tab-content active">
                 <h2 class="section-title">사후 세계 (Afterlife)</h2>
                 <p style="margin-bottom: 15px; font-size: 0.95rem; color: #94A3B8;">인간은 사후 지옥, 저승, 천국행이 정해집니다.</p>
@@ -475,9 +471,10 @@
                     규칙, 평화주의이고 스텔라 아카데미가 존재하고 천사들이 태어나며 원할 시 영원히 평온하게 살 수 있습니다. 대신 규칙을 파괴하려 하면 저승 or 지옥으로 추방당할 수 있습니다.
                 </div>
 
-                <h2 class="section-title">마력과 술식</h2>
+                <h2 class="section-title">마력과 술식 (Energy & Technique)</h2>
                 <div class="info-box">
-                    마력은 모두 존재하지만 그렇다고 악귀가 보이는 건 아니며 마력이 충분하면 보입니다. 하지만 그중에서 <span class="highlight-yellow">술식(고유능력)</span>이 존재하는 인간 or 천사는 매우 희귀합니다.
+                    <strong>마력(Magic Power)의 기원:</strong> 세상의 모든 지성체(인간, 천사, 악마)가 무의식적으로 흘리는 '감정의 잔재', 특히 스트레스나 분노, 공포 같은 <strong>부정적인 감정의 응어리</strong>에서 기인하는 생명 에너지입니다. 누구에게나 미세하게 흐르지만, 이 감정의 에너지가 일정 궤도 이상으로 짙은 자들만이 악귀를 시각적으로 인지할 수 있습니다.<br><br>
+                    <strong>마력 조작과 술식:</strong> 마력이 순수한 <strong>'전기(연료)'</strong>라면, <span class="highlight-yellow">술식(고유능력)</span>은 그 전기를 사용해 특정한 현상을 일으키는 <strong>'가전제품'</strong>과 같습니다. 거친 마력을 제어하는 '마력 조작'은 혹독한 훈련으로 어느 정도 도달할 수 있으나, 몸에 새겨진 고유한 '술식'의 유무와 형태는 태어날 때부터 영혼과 뇌의 구조에 의해 결정되는 극히 희귀한 재능입니다.
                 </div>
 
                 <h2 class="section-title">제령사 (Exorcist)</h2>
@@ -505,7 +502,6 @@
                 </div>
             </div>
 
-            <!-- 2. 인물 탭 -->
             <div id="tab-character" class="tab-content">
                 <div class="search-container" id="search-container">
                     <input type="text" id="char-search" placeholder="SYSTEM SEARCH..." autocomplete="off">
@@ -519,7 +515,6 @@
                 <div id="character-grid"></div>
             </div>
 
-            <!-- 3. 일정 탭 -->
             <div id="tab-schedule" class="tab-content">
                 <h2 class="section-title">아카데미 연간 학사 일정</h2>
                 <table class="schedule-table">
@@ -538,7 +533,6 @@
                 </table>
             </div>
 
-            <!-- 4. 명령어 탭 -->
             <div id="tab-command" class="tab-content">
                 <h2 class="section-title">CMD LOG</h2>
                 <div class="console-box">
@@ -551,7 +545,6 @@
         </main>
     </div>
 
-    <!-- 상세 프로필 모달 -->
     <div id="char-modal">
         <div class="modal-content" id="char-modal-content">
             <span class="close-btn" onclick="closeModal()">✕</span>
@@ -587,7 +580,7 @@
             }, 800);
         });
 
-        // 탭 로직 (고드 모드일 땐 탭 이동 클릭은 되지만 내용은 모두 찬양으로 고정)
+        // 탭 로직
         function openTab(evt, tabName) {
             document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
             document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
@@ -595,7 +588,7 @@
             evt.currentTarget.classList.add('active');
         }
 
-        // 인물 데이터 (소피아 이름 및 설정 업데이트 완료)
+        // 인물 데이터
         const charData = [
             { id: 0, name: "고드", race: "신", height: 145, age: "측정불가", ability: "인과율 무시, 우주적 재창조", desc: "귀차니즘, 달달한거 러버, 간식광. 모든 일을 예수아에게 짬때리고 매점가는거 때문에 혼나는 게 일상. 정체는 예수아만 알며, 가끔 진심으로 빡칠 때 뿜어내는 기운만으로도 천국 전체가 공포에 떤다.", rank: "GLITCH", affil: "아카데미", role: "교장", img: "https://igx.kr/u/25/c/1", mbti: "INTP", ennea: "9w8", align: "혼돈 중립" },
             { id: 1, name: "예수아", race: "인간", height: 195, age: "2025", ability: "없음", desc: "살아있을 시절 박애주의에 우린 모두 고드가 만든 소중한 인간이라는 교리를 선포하다 십자가에 박혀 처형당한 후 천국에 옴. 목수 출신으로 순수 근력은 아카데미 최강이며, 매점 간 교장을 대신해 서류 더미와 인력난 사태를 수습하느라 만성 피로에 시달린다.", rank: "1급", affil: "아카데미", role: "교감", img: "https://igx.kr/u/25/d/1", mbti: "ENFJ", ennea: "2w1", align: "질서 선" },
@@ -706,7 +699,7 @@
             renderCharacters(currentFilter, document.getElementById('char-search').value.trim());
         }
 
-        // 필터 및 정상 검색 렌더링 (버그 수정 완료)
+        // 필터 및 정상 검색 렌더링
         function renderCharacters(filter = currentFilter, searchQuery = "") {
             if(isGodMode) return;
             currentFilter = filter;
@@ -719,7 +712,7 @@
                 filteredList = filteredList.filter(c => c.affil === filter);
             }
             
-            // 2. 텍스트 검색 적용 (이름, 설명, 특징, 종족까지 모두 포함)
+            // 2. 텍스트 검색 적용
             if(searchQuery !== "") {
                 const q = searchQuery.toLowerCase();
                 filteredList = filteredList.filter(c => 
@@ -748,7 +741,7 @@
             });
         }
 
-        // 모달 열기 (측정불가세 버그 수정)
+        // 모달 열기 (측정불가세 방지)
         function openModal(id) {
             if(isGodMode) return;
 
@@ -762,7 +755,7 @@
             const rankDisplay = c.rank === 'GLITCH' ? '<span class="glitch-text god-rank" style="font-size:1.1rem;">ERR</span>' : c.rank;
             document.getElementById('m-role').innerHTML = `${c.affil} | ${c.role || '소속없음'} | ${rankDisplay}`;
             
-            // 나이 처리 (측정불가세 방지)
+            // 나이 처리
             const ageText = c.age === "측정불가" ? c.age : c.age + "세";
 
             document.getElementById('m-tags').innerHTML = `
