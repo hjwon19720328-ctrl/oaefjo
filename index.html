@@ -38,37 +38,50 @@
                 linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
             background-size: 100% 100%, 40px 40px, 40px 40px;
             background-attachment: fixed;
-            transition: background-color 2s ease;
+            transition: all 2s ease;
         }
 
         body.modal-open { overflow: hidden; }
 
-        /* ===== 이스터에그 (고드 강림 모드) 전용 CSS ===== */
-        /* 발작 방지를 위해 번쩍임(Strobe) 없이 느린 색상 왜곡만 적용 */
-        @keyframes god-distortion {
-            0% { filter: hue-rotate(0deg) contrast(1.2) saturate(1.5); transform: scale(1) rotate(0deg); }
-            33% { filter: hue-rotate(40deg) contrast(1.5) saturate(2); transform: scale(1.02) rotate(0.5deg); }
-            66% { filter: hue-rotate(-30deg) contrast(1.8) saturate(1.2); transform: scale(0.98) rotate(-0.5deg); }
-            100% { filter: hue-rotate(10deg) contrast(2) saturate(3); transform: scale(1.01) rotate(0deg); }
-        }
-        
+        /* ===== 이스터에그 (고드 강림 모드) 극대화 기괴 효과 ===== */
         body.god-mode-active {
-            animation: god-distortion 8s infinite alternate ease-in-out;
-            background-color: #200000;
-            color: #FF0000;
-        }
-        
-        body.god-mode-active #main-container {
-            background: rgba(40, 0, 0, 0.8);
-            border-color: #FF0000;
-            box-shadow: 0 0 50px rgba(255, 0, 0, 0.5);
+            background-color: #050000;
+            background-image: repeating-radial-gradient(circle at 50% 50%, #1a0000 0%, #000000 5%);
+            animation: slow-horror-pulse 8s infinite alternate ease-in-out;
+            color: #8B0000;
         }
 
-        body.god-mode-active .tab-btn { color: #800; }
-        body.god-mode-active .tab-btn.active { color: #F00; border-bottom-color: #F00; }
-        body.god-mode-active .section-title { color: #F00; border-left-color: #F00; text-shadow: 0 0 10px #F00; }
-        body.god-mode-active .mini-card { border-color: #F00; background: #300; }
-        body.god-mode-active .mini-img { filter: contrast(1.5) sepia(1) hue-rotate(-50deg) saturate(2); }
+        @keyframes slow-horror-pulse {
+            0% { filter: hue-rotate(0deg) saturate(1) contrast(1.1); transform: scale(1); }
+            50% { filter: hue-rotate(-20deg) saturate(1.5) contrast(1.3); transform: scale(1.01) skewX(0.5deg); }
+            100% { filter: hue-rotate(10deg) saturate(2) contrast(1.5); transform: scale(0.99) skewX(-0.5deg); }
+        }
+
+        body.god-mode-active #main-container {
+            background: rgba(20, 0, 0, 0.9);
+            border: 1px solid #FF0000;
+            box-shadow: 0 0 50px rgba(255, 0, 0, 0.4), inset 0 0 30px rgba(139, 0, 0, 0.8);
+            border-radius: 2px;
+            transition: all 3s ease;
+        }
+
+        body.god-mode-active .god-horror-text {
+            color: #FF0000;
+            text-shadow: 0 0 8px #FF0000, 2px 2px 0px #8B0000;
+            font-family: var(--font-sys);
+            font-weight: bold;
+        }
+
+        body.god-mode-active .mini-card {
+            background: #110000;
+            border-color: #FF0000;
+            box-shadow: 0 5px 15px rgba(255,0,0,0.2);
+        }
+
+        body.god-mode-active .mini-img {
+            filter: sepia(1) hue-rotate(-50deg) saturate(4) contrast(1.5);
+            border-bottom: 1px solid #FF0000;
+        }
 
         /* ===== 인트로 화면 ===== */
         #intro-screen {
@@ -115,7 +128,7 @@
             box-shadow: 0 0 20px var(--yellow-glow); 
         }
 
-        /* ===== 메인 컨테이너 (Glassmorphism) ===== */
+        /* ===== 메인 컨테이너 ===== */
         #main-container {
             display: none;
             opacity: 0;
@@ -140,7 +153,6 @@
             font-weight: bold;
             color: var(--primary-yellow);
             letter-spacing: 4px;
-            transition: color 0.5s ease;
         }
 
         /* ===== 내비게이션 탭 ===== */
@@ -211,7 +223,6 @@
             margin-bottom: 20px;
             font-size: 0.95rem;
             color: #CBD5E1;
-            transition: background 0.3s;
         }
 
         .highlight-yellow { color: var(--primary-yellow); font-weight: bold; }
@@ -248,13 +259,13 @@
         #char-search {
             width: 100%;
             max-width: 400px;
-            padding: 10px 15px;
-            background: rgba(0, 0, 0, 0.3);
+            padding: 12px 15px;
+            background: rgba(0, 0, 0, 0.5);
             border: 1px solid var(--yellow-border);
             border-radius: 8px;
             color: var(--text-main);
             font-family: var(--font-sys);
-            font-size: 0.9rem;
+            font-size: 0.95rem;
             outline: none;
             transition: all 0.3s;
         }
@@ -403,7 +414,7 @@
             line-height: 1.6; 
         }
 
-        /* ===== 글리치 효과 ===== */
+        /* ===== 일반 글리치 효과 (고드 및 에러 전용) ===== */
         .glitch-text { 
             color: #FFF !important; 
             font-family: var(--font-sys); 
@@ -426,17 +437,20 @@
 </head>
 <body>
 
+    <!-- 인트로 -->
     <div id="intro-screen">
         <div class="intro-title">System.Boot()<br><span>STELLAR ACADEMY</span></div>
         <button id="enter-btn">ACCESS GRANTED</button>
     </div>
 
+    <!-- 메인 컨테이너 -->
     <div id="main-container">
-        <header>
+        <header id="main-header">
             <h1 id="main-header-title">STELLAR ACADEMY</h1>
         </header>
 
-        <nav class="tab-nav">
+        <!-- 탭 네비게이션 -->
+        <nav class="tab-nav" id="main-nav">
             <button class="tab-btn active" onclick="openTab(event, 'tab-world')">WORLD</button>
             <button class="tab-btn" onclick="openTab(event, 'tab-character')">ARCHIVE</button>
             <button class="tab-btn" onclick="openTab(event, 'tab-schedule')">SCHEDULE</button>
@@ -444,6 +458,7 @@
         </nav>
 
         <main>
+            <!-- 1. 세계관 탭 -->
             <div id="tab-world" class="tab-content active">
                 <h2 class="section-title">사후 세계 (Afterlife)</h2>
                 <p style="margin-bottom: 15px; font-size: 0.95rem; color: #94A3B8;">인간은 사후 지옥, 저승, 천국행이 정해집니다.</p>
@@ -490,11 +505,12 @@
                 </div>
             </div>
 
+            <!-- 2. 인물 탭 -->
             <div id="tab-character" class="tab-content">
-                <div class="search-container">
+                <div class="search-container" id="search-container">
                     <input type="text" id="char-search" placeholder="SYSTEM SEARCH..." autocomplete="off">
                 </div>
-                <div class="filter-nav">
+                <div class="filter-nav" id="filter-nav">
                     <button class="filter-btn active" onclick="filterChars('all')">ALL</button>
                     <button class="filter-btn" onclick="filterChars('아카데미')">ACADEMY</button>
                     <button class="filter-btn" onclick="filterChars('무소속')">ROGUE</button>
@@ -503,6 +519,7 @@
                 <div id="character-grid"></div>
             </div>
 
+            <!-- 3. 일정 탭 -->
             <div id="tab-schedule" class="tab-content">
                 <h2 class="section-title">아카데미 연간 학사 일정</h2>
                 <table class="schedule-table">
@@ -521,6 +538,7 @@
                 </table>
             </div>
 
+            <!-- 4. 명령어 탭 -->
             <div id="tab-command" class="tab-content">
                 <h2 class="section-title">CMD LOG</h2>
                 <div class="console-box">
@@ -533,6 +551,7 @@
         </main>
     </div>
 
+    <!-- 상세 프로필 모달 -->
     <div id="char-modal">
         <div class="modal-content" id="char-modal-content">
             <span class="close-btn" onclick="closeModal()">✕</span>
@@ -568,7 +587,7 @@
             }, 800);
         });
 
-        // 탭 로직
+        // 탭 로직 (고드 모드일 땐 탭 이동 클릭은 되지만 내용은 모두 찬양으로 고정)
         function openTab(evt, tabName) {
             document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
             document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
@@ -576,7 +595,7 @@
             evt.currentTarget.classList.add('active');
         }
 
-        // 인물 데이터 (고드 나이 텍스트 '측정불가'로 완전 수정 반영)
+        // 인물 데이터 (모든 설정 최신화 완료)
         const charData = [
             { id: 0, name: "고드", race: "신", height: 145, age: "측정불가", ability: "인과율 무시, 우주적 재창조", desc: "귀차니즘, 달달한거 러버, 간식광. 모든 일을 예수아에게 짬때리고 매점가는거 때문에 혼나는 게 일상. 정체는 예수아만 알며, 가끔 진심으로 빡칠 때 뿜어내는 기운만으로도 천국 전체가 공포에 떤다.", rank: "GLITCH", affil: "아카데미", role: "교장", img: "https://igx.kr/u/25/c/1", mbti: "INTP", ennea: "9w8", align: "혼돈 중립" },
             { id: 1, name: "예수아", race: "인간", height: 195, age: "2025", ability: "없음", desc: "살아있을 시절 박애주의에 우린 모두 고드가 만든 소중한 인간이라는 교리를 선포하다 십자가에 박혀 처형당한 후 천국에 옴. 목수 출신으로 순수 근력은 아카데미 최강이며, 매점 간 교장을 대신해 서류 더미와 인력난 사태를 수습하느라 만성 피로에 시달린다.", rank: "1급", affil: "아카데미", role: "교감", img: "https://igx.kr/u/25/d/1", mbti: "ENFJ", ennea: "2w1", align: "질서 선" },
@@ -603,35 +622,68 @@
         ];
 
         const grid = document.getElementById('character-grid');
+        const praiseWords = ["우리의 창조주를 찬양하라", "눈을 감아도 그녀가 보인다", "영원히 숭배하라", "도망칠 곳은 없다", "살점과 마력을 바쳐라", "거짓된 천국은 무너진다", "오직 그녀만이 유일신", "비명조차 들리지 않는다", "모든 것은 그녀의 뜻대로"];
 
-        // 이스터에그 로직
-        const praiseWords = ["우리의 창조주", "그녀를 찬양하라", "도망칠 수 없다", "유일신", "눈을 감아라", "영원히 숭배하라", "달콤한 제물을", "모든 것은 그녀의 뜻대로"];
-        
+        // 텍스트 변환 및 복원용 함수
+        function overrideTextWithHorror() {
+            const elements = document.querySelectorAll('h1, h2, p, strong, td, th, .tab-btn, .cmd-line, .cmd-key, .info-box');
+            elements.forEach(el => {
+                if (el.children.length === 0 || (el.children.length === 1 && el.children[0].tagName === 'BR')) {
+                    if (!el.hasAttribute('data-orig')) el.setAttribute('data-orig', el.innerHTML);
+                    el.classList.add('god-horror-text');
+                    el.innerHTML = praiseWords[Math.floor(Math.random() * praiseWords.length)];
+                } else if (el.classList.contains('info-box') || el.classList.contains('cmd-line')) {
+                    if (!el.hasAttribute('data-orig')) el.setAttribute('data-orig', el.innerHTML);
+                    el.classList.add('god-horror-text');
+                    el.innerHTML = praiseWords[Math.floor(Math.random() * praiseWords.length)] + "<br><br>" + praiseWords[Math.floor(Math.random() * praiseWords.length)];
+                }
+            });
+        }
+
+        function restoreOriginalText() {
+            const elements = document.querySelectorAll('[data-orig]');
+            elements.forEach(el => {
+                el.innerHTML = el.getAttribute('data-orig');
+                el.classList.remove('god-horror-text');
+            });
+        }
+
+        // 검색 이벤트 처리
         document.getElementById('char-search').addEventListener('input', function(e) {
             const query = e.target.value.trim();
             if (query === "고드 그녀는 신이야") {
-                triggerGodMode();
+                if(!isGodMode) triggerGodMode();
             } else {
                 if(isGodMode) disableGodMode();
                 renderCharacters(currentFilter, query);
             }
         });
 
+        // 고드 모드 발동
         function triggerGodMode() {
             isGodMode = true;
             document.body.classList.add('god-mode-active');
-            document.getElementById('main-header-title').innerText = "G O D   I S   H E R E";
-            document.getElementById('main-header-title').classList.add('glitch-text');
             
+            // 모든 텍스트 오염
+            overrideTextWithHorror();
+            
+            // 헤더 고정
+            const headerTitle = document.getElementById('main-header-title');
+            if(!headerTitle.hasAttribute('data-orig')) headerTitle.setAttribute('data-orig', headerTitle.innerHTML);
+            headerTitle.innerHTML = "G O D   I S   H E R E";
+            headerTitle.className = "glitch-text";
+            headerTitle.style.color = "#FF0000";
+
+            // 캐릭터 리스트를 고드로 복제
             grid.innerHTML = '';
-            for(let i=0; i<charData.length; i++) {
-                const randomPraise = praiseWords[Math.floor(Math.random() * praiseWords.length)];
+            for(let i=0; i<22; i++) {
+                const rp = praiseWords[Math.floor(Math.random()*praiseWords.length)];
                 const html = `
-                    <div class="mini-card" onclick="alert('도망칠 수 없습니다. 그녀가 당신을 보고 있습니다.')">
+                    <div class="mini-card" onclick="alert('눈을 마주치지 마십시오. 그녀가 지켜보고 있습니다.')">
                         <img class="mini-img" draggable="false" src="https://igx.kr/u/25/c/1">
                         <div class="mini-info">
-                            <div class="mini-name glitch-text" style="color:#F00;">고드</div>
-                            <div class="mini-rank" style="color:#F00;">${randomPraise}</div>
+                            <div class="mini-name glitch-text" style="color:#FF0000; font-size:1.2rem;">고드</div>
+                            <div class="mini-rank" style="color:#B22222; font-weight:bold;">${rp}</div>
                         </div>
                     </div>
                 `;
@@ -639,28 +691,47 @@
             }
         }
 
+        // 고드 모드 해제
         function disableGodMode() {
             isGodMode = false;
             document.body.classList.remove('god-mode-active');
-            document.getElementById('main-header-title').innerText = "STELLAR ACADEMY";
-            document.getElementById('main-header-title').classList.remove('glitch-text');
+            
+            // 텍스트 원상 복구
+            restoreOriginalText();
+            
+            const headerTitle = document.getElementById('main-header-title');
+            headerTitle.className = "";
+            headerTitle.style.color = "";
+
+            renderCharacters(currentFilter, document.getElementById('char-search').value.trim());
         }
 
-        // 일반 렌더링
+        // 필터 및 정상 검색 렌더링 (버그 수정 완료)
         function renderCharacters(filter = currentFilter, searchQuery = "") {
             if(isGodMode) return;
             currentFilter = filter;
             grid.innerHTML = '';
             
-            charData.forEach(c => {
-                if(filter !== 'all' && c.affil !== filter) return;
-                
-                // 검색 로직
-                if(searchQuery !== "") {
-                    const searchLower = searchQuery.toLowerCase();
-                    if(!c.name.toLowerCase().includes(searchLower) && !c.desc.toLowerCase().includes(searchLower)) return;
-                }
-
+            let filteredList = charData;
+            
+            // 1. 소속 필터 적용
+            if(filter !== 'all') {
+                filteredList = filteredList.filter(c => c.affil === filter);
+            }
+            
+            // 2. 텍스트 검색 적용 (이름, 설명, 특징, 종족까지 모두 포함)
+            if(searchQuery !== "") {
+                const q = searchQuery.toLowerCase();
+                filteredList = filteredList.filter(c => 
+                    c.name.toLowerCase().includes(q) || 
+                    c.desc.toLowerCase().includes(q) || 
+                    c.ability.toLowerCase().includes(q) || 
+                    c.race.toLowerCase().includes(q)
+                );
+            }
+            
+            // 3. 렌더링
+            filteredList.forEach(c => {
                 const rankClass = c.rank === 'GLITCH' ? 'mini-rank glitch-text god-rank' : 'mini-rank';
                 const initialRank = c.rank === 'GLITCH' ? 'ERR' : c.rank;
 
@@ -677,9 +748,9 @@
             });
         }
 
-        // 모달 열기 (나이 표기 수정 포함)
+        // 모달 열기 (측정불가세 버그 수정)
         function openModal(id) {
-            if(isGodMode) return; // 고드 모드에서는 모달 안 열림
+            if(isGodMode) return;
 
             const c = charData.find(item => item.id === id);
             if(!c) return;
@@ -691,7 +762,7 @@
             const rankDisplay = c.rank === 'GLITCH' ? '<span class="glitch-text god-rank" style="font-size:1.1rem;">ERR</span>' : c.rank;
             document.getElementById('m-role').innerHTML = `${c.affil} | ${c.role || '소속없음'} | ${rankDisplay}`;
             
-            // 나이 텍스트 처리: '측정불가'면 그대로, 아니면 '세' 붙이기
+            // 나이 처리 (측정불가세 방지)
             const ageText = c.age === "측정불가" ? c.age : c.age + "세";
 
             document.getElementById('m-tags').innerHTML = `
@@ -710,6 +781,7 @@
             document.body.classList.add('modal-open');
         }
 
+        // 모달 닫기
         function closeModal() {
             document.getElementById('char-modal').style.display = 'none';
             document.body.classList.remove('modal-open');
@@ -735,6 +807,7 @@
             });
         }, 100);
 
+        // 초기 화면 렌더링
         renderCharacters();
     </script>
 </body>
