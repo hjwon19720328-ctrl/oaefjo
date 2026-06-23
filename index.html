@@ -39,6 +39,11 @@
             background-size: 30px 30px;
         }
 
+        /* 모달 활성화 시 배경 스크롤 방지용 클래스 */
+        body.modal-open {
+            overflow: hidden;
+        }
+
         /* ===== 인트로 화면 ===== */
         #intro-screen {
             position: fixed;
@@ -271,6 +276,8 @@
             overflow-y: auto;
             position: relative;
             padding: 20px;
+            /* 스크롤 전이(Overscroll Chaining) 방지 */
+            overscroll-behavior: contain; 
         }
         .modal-content::-webkit-scrollbar { width: 4px; }
         .modal-content::-webkit-scrollbar-thumb { background: var(--primary-yellow); }
@@ -330,19 +337,16 @@
 </head>
 <body>
 
-    <!-- 인트로 -->
     <div id="intro-screen">
         <div class="intro-title">System.Boot()<br><span style="font-size: 1.2rem; color: #FFE600;">Stellar Academy</span></div>
         <button id="enter-btn">Access</button>
     </div>
 
-    <!-- 메인 컨테이너 -->
     <div id="main-container">
         <header>
             <h1>STELLAR ACADEMY</h1>
         </header>
 
-        <!-- 탭 네비게이션 -->
         <nav class="tab-nav">
             <button class="tab-btn active" onclick="openTab(event, 'tab-world')">세계관</button>
             <button class="tab-btn" onclick="openTab(event, 'tab-character')">인물</button>
@@ -351,7 +355,6 @@
         </nav>
 
         <main>
-            <!-- 1. 세계관 탭 -->
             <div id="tab-world" class="tab-content active">
                 <h2 class="section-title">사후 세계</h2>
                 <p style="margin-bottom: 10px; font-size: 0.9rem;">인간은 사후 지옥, 저승, 천국행이 정해집니다.</p>
@@ -398,7 +401,6 @@
                 </div>
             </div>
 
-            <!-- 2. 인물 탭 -->
             <div id="tab-character" class="tab-content">
                 <div class="filter-nav">
                     <button class="filter-btn active" onclick="filterChars('all')">ALL</button>
@@ -407,11 +409,9 @@
                     <button class="filter-btn" onclick="filterChars('악귀')">악귀</button>
                 </div>
                 <div id="character-grid">
-                    <!-- 미니 카드 렌더링 공간 -->
-                </div>
+                    </div>
             </div>
 
-            <!-- 3. 일정 탭 (1년 연간 일정표) -->
             <div id="tab-schedule" class="tab-content">
                 <h2 class="section-title">아카데미 연간 학사 일정</h2>
                 <table class="schedule-table">
@@ -430,7 +430,6 @@
                 </table>
             </div>
 
-            <!-- 4. 명령어 탭 -->
             <div id="tab-command" class="tab-content">
                 <h2 class="section-title">CMD LOG</h2>
                 <div class="info-box console-box">
@@ -442,9 +441,8 @@
         </main>
     </div>
 
-    <!-- 상세 프로필 모달 -->
     <div id="char-modal">
-        <div class="modal-content">
+        <div class="modal-content" id="char-modal-content">
             <span class="close-btn" onclick="closeModal()">[X]</span>
             <img id="m-img" class="modal-img" src="" alt="">
             <div class="modal-name-wrap">
@@ -482,7 +480,7 @@
             evt.currentTarget.classList.add('active');
         }
 
-        // 인물 데이터 (예수아 수정 및 떡밥 강화)
+        // 인물 데이터 
         const charData = [
             { id: 0, name: "고드", race: "신", height: 145, age: "측정불가", ability: "인과율 무시, 우주적 재창조", desc: "귀차니즘, 달달한거 러버, 간식광. 모든 일을 예수아에게 짬때리고 매점가는거 때문에 혼나는 게 일상. 정체는 예수아만 알며, 가끔 진심으로 빡칠 때 뿜어내는 기운만으로도 천국 전체가 공포에 떤다.", rank: "GLITCH", affil: "아카데미", role: "교장", img: "https://igx.kr/u/25/c/1", mbti: "INTP", ennea: "9w8", align: "혼돈 중립" },
             { id: 1, name: "예수아", race: "인간", height: 195, age: "2025", ability: "없음", desc: "살아있을 시절 박애주의에 우린 모두 고드가 만든 소중한 인간이라는 교리를 선포하다 십자가에 박혀 처형당한 후 천국에 옴. 목수 출신으로 순수 근력은 아카데미 최강이며, 매점 간 교장을 대신해 서류 더미와 인력난 사태를 수습하느라 만성 피로에 시달린다.", rank: "1급", affil: "아카데미", role: "교감", img: "https://igx.kr/u/25/d/1", mbti: "ENFJ", ennea: "2w1", align: "질서 선" },
@@ -538,6 +536,9 @@
             const c = charData.find(item => item.id === id);
             if(!c) return;
 
+            // 스크롤 위치 초기화
+            document.getElementById('char-modal-content').scrollTop = 0;
+
             document.getElementById('m-img').src = c.img;
             document.getElementById('m-name').innerText = c.name;
             
@@ -557,11 +558,15 @@
             document.getElementById('m-desc').innerText = c.desc;
 
             document.getElementById('char-modal').style.display = 'flex';
+            // 모달 오픈 시 배경 스크롤 차단
+            document.body.classList.add('modal-open');
         }
 
         // 모달 닫기
         function closeModal() {
             document.getElementById('char-modal').style.display = 'none';
+            // 모달 종료 시 배경 스크롤 복구
+            document.body.classList.remove('modal-open');
         }
 
         // 모달 바깥(배경) 클릭 시 닫기
