@@ -7,9 +7,9 @@
     <style>
         /* ===== 프리미엄 홀리 사이버 테마 변수 ===== */
         :root {
-            --bg-deep: #0A0B10; /* 아주 깊은 다크 네이비/블랙 */
-            --bg-glass: rgba(20, 22, 28, 0.6); /* 반투명 유리 패널 */
-            --primary-yellow: #FADB5F; /* 눈 안 아픈 부드러운 골드 옐로우 */
+            --bg-deep: #0A0B10; 
+            --bg-glass: rgba(20, 22, 28, 0.6); 
+            --primary-yellow: #FADB5F; 
             --yellow-glow: rgba(250, 219, 95, 0.3);
             --yellow-border: rgba(250, 219, 95, 0.15);
             --cyber-red: #FF4C4C;
@@ -38,9 +38,37 @@
                 linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
             background-size: 100% 100%, 40px 40px, 40px 40px;
             background-attachment: fixed;
+            transition: background-color 2s ease;
         }
 
         body.modal-open { overflow: hidden; }
+
+        /* ===== 이스터에그 (고드 강림 모드) 전용 CSS ===== */
+        /* 발작 방지를 위해 번쩍임(Strobe) 없이 느린 색상 왜곡만 적용 */
+        @keyframes god-distortion {
+            0% { filter: hue-rotate(0deg) contrast(1.2) saturate(1.5); transform: scale(1) rotate(0deg); }
+            33% { filter: hue-rotate(40deg) contrast(1.5) saturate(2); transform: scale(1.02) rotate(0.5deg); }
+            66% { filter: hue-rotate(-30deg) contrast(1.8) saturate(1.2); transform: scale(0.98) rotate(-0.5deg); }
+            100% { filter: hue-rotate(10deg) contrast(2) saturate(3); transform: scale(1.01) rotate(0deg); }
+        }
+        
+        body.god-mode-active {
+            animation: god-distortion 8s infinite alternate ease-in-out;
+            background-color: #200000;
+            color: #FF0000;
+        }
+        
+        body.god-mode-active #main-container {
+            background: rgba(40, 0, 0, 0.8);
+            border-color: #FF0000;
+            box-shadow: 0 0 50px rgba(255, 0, 0, 0.5);
+        }
+
+        body.god-mode-active .tab-btn { color: #800; }
+        body.god-mode-active .tab-btn.active { color: #F00; border-bottom-color: #F00; }
+        body.god-mode-active .section-title { color: #F00; border-left-color: #F00; text-shadow: 0 0 10px #F00; }
+        body.god-mode-active .mini-card { border-color: #F00; background: #300; }
+        body.god-mode-active .mini-img { filter: contrast(1.5) sepia(1) hue-rotate(-50deg) saturate(2); }
 
         /* ===== 인트로 화면 ===== */
         #intro-screen {
@@ -74,7 +102,7 @@
             color: var(--primary-yellow);
             background: rgba(250, 219, 95, 0.05);
             border: 1px solid var(--yellow-border);
-            border-radius: 30px; /* 둥근 버튼으로 세련미 추가 */
+            border-radius: 30px;
             cursor: pointer;
             letter-spacing: 2px;
             backdrop-filter: blur(5px);
@@ -105,17 +133,14 @@
             position: relative;
         }
 
-        header {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-
+        header { text-align: center; margin-bottom: 30px; }
         header h1 {
             font-family: var(--font-sys);
             font-size: 1.6rem;
             font-weight: bold;
             color: var(--primary-yellow);
             letter-spacing: 4px;
+            transition: color 0.5s ease;
         }
 
         /* ===== 내비게이션 탭 ===== */
@@ -141,8 +166,6 @@
             transition: all 0.3s;
             position: relative;
         }
-
-        /* 탭 하단 밑줄 애니메이션 효과 */
         .tab-btn::after {
             content: '';
             position: absolute;
@@ -152,11 +175,9 @@
             transition: all 0.3s ease;
             transform: translateX(-50%);
         }
-
         .tab-btn.active { color: var(--primary-yellow); }
         .tab-btn.active::after { width: 100%; box-shadow: 0 0 8px var(--yellow-glow); }
 
-        /* ===== 탭 콘텐츠 ===== */
         .tab-content { display: none; animation: fadeInUp 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards; }
         .tab-content.active { display: block; }
 
@@ -165,7 +186,6 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* 텍스트 및 박스 스타일 */
         .section-title {
             color: var(--primary-yellow);
             font-family: var(--font-sys);
@@ -175,7 +195,6 @@
             align-items: center;
             gap: 8px;
         }
-        /* 제목 앞 장식 선 */
         .section-title::before {
             content: '';
             display: inline-block;
@@ -194,7 +213,6 @@
             color: #CBD5E1;
             transition: background 0.3s;
         }
-        .info-box:hover { background: rgba(255, 255, 255, 0.04); }
 
         .highlight-yellow { color: var(--primary-yellow); font-weight: bold; }
         .highlight-red { color: var(--cyber-red); font-weight: bold; }
@@ -222,7 +240,29 @@
         }
         .schedule-table td { border-radius: 0 8px 8px 0; border-left: none; }
 
-        /* ===== 인물 탭 ===== */
+        /* ===== 인물 검색 및 필터 ===== */
+        .search-container {
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        #char-search {
+            width: 100%;
+            max-width: 400px;
+            padding: 10px 15px;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--yellow-border);
+            border-radius: 8px;
+            color: var(--text-main);
+            font-family: var(--font-sys);
+            font-size: 0.9rem;
+            outline: none;
+            transition: all 0.3s;
+        }
+        #char-search:focus {
+            border-color: var(--primary-yellow);
+            box-shadow: 0 0 10px var(--yellow-glow);
+        }
+
         .filter-nav {
             display: flex;
             justify-content: flex-start;
@@ -286,7 +326,7 @@
         .mini-name { font-weight: bold; font-size: 1rem; color: #FFF; letter-spacing: 1px; }
         .mini-rank { font-size: 0.75rem; color: var(--text-muted); font-family: var(--font-sys); margin-top: 4px; }
 
-        /* ===== 상세 프로필 모달 (Glassmorphism) ===== */
+        /* ===== 상세 프로필 모달 ===== */
         #char-modal {
             display: none;
             position: fixed;
@@ -363,9 +403,9 @@
             line-height: 1.6; 
         }
 
-        /* ===== 글리치 효과 (세련되게 조절) ===== */
+        /* ===== 글리치 효과 ===== */
         .glitch-text { 
-            color: #FFF; 
+            color: #FFF !important; 
             font-family: var(--font-sys); 
             font-weight: bold;
             display: inline-block;
@@ -393,7 +433,7 @@
 
     <div id="main-container">
         <header>
-            <h1>STELLAR ACADEMY</h1>
+            <h1 id="main-header-title">STELLAR ACADEMY</h1>
         </header>
 
         <nav class="tab-nav">
@@ -451,6 +491,9 @@
             </div>
 
             <div id="tab-character" class="tab-content">
+                <div class="search-container">
+                    <input type="text" id="char-search" placeholder="SYSTEM SEARCH..." autocomplete="off">
+                </div>
                 <div class="filter-nav">
                     <button class="filter-btn active" onclick="filterChars('all')">ALL</button>
                     <button class="filter-btn" onclick="filterChars('아카데미')">ACADEMY</button>
@@ -483,6 +526,7 @@
                 <div class="console-box">
                     <div class="cmd-line"><span class="cmd-key">/요약</span> : 현재 토벌 중인 악귀의 상태나 주변 전황, 혹은 이전까지 진행된 주요 서사를 시스템이 간략히 브리핑합니다.</div>
                     <div class="cmd-line"><span class="cmd-key">/디버그</span> : 관리자 전용 모드. 시스템 오류나 꼬여버린 설정(혹은 전투 로그)을 강제로 초기화하고 수정할 때 사용합니다.</div>
+                    <div class="cmd-line"><span class="cmd-key" style="color:var(--cyber-red);">고드 그녀는 신이야</span> : 검색이 후회할 것입니다.</div>
                     <div class="cmd-line" style="color: #64748B; font-size: 0.85rem;">>_ 추가 다이스 및 판정 명령어 업데이트 대기 중...</div>
                 </div>
             </div>
@@ -508,6 +552,10 @@
     </div>
 
     <script>
+        // 전역 상태
+        let isGodMode = false;
+        let currentFilter = 'all';
+
         // 인트로 로직
         document.getElementById('enter-btn').addEventListener('click', () => {
             const intro = document.getElementById('intro-screen');
@@ -528,7 +576,7 @@
             evt.currentTarget.classList.add('active');
         }
 
-        // 인물 데이터
+        // 인물 데이터 (고드 나이 텍스트 '측정불가'로 완전 수정 반영)
         const charData = [
             { id: 0, name: "고드", race: "신", height: 145, age: "측정불가", ability: "인과율 무시, 우주적 재창조", desc: "귀차니즘, 달달한거 러버, 간식광. 모든 일을 예수아에게 짬때리고 매점가는거 때문에 혼나는 게 일상. 정체는 예수아만 알며, 가끔 진심으로 빡칠 때 뿜어내는 기운만으로도 천국 전체가 공포에 떤다.", rank: "GLITCH", affil: "아카데미", role: "교장", img: "https://igx.kr/u/25/c/1", mbti: "INTP", ennea: "9w8", align: "혼돈 중립" },
             { id: 1, name: "예수아", race: "인간", height: 195, age: "2025", ability: "없음", desc: "살아있을 시절 박애주의에 우린 모두 고드가 만든 소중한 인간이라는 교리를 선포하다 십자가에 박혀 처형당한 후 천국에 옴. 목수 출신으로 순수 근력은 아카데미 최강이며, 매점 간 교장을 대신해 서류 더미와 인력난 사태를 수습하느라 만성 피로에 시달린다.", rank: "1급", affil: "아카데미", role: "교감", img: "https://igx.kr/u/25/d/1", mbti: "ENFJ", ennea: "2w1", align: "질서 선" },
@@ -556,11 +604,62 @@
 
         const grid = document.getElementById('character-grid');
 
-        // 렌더링
-        function renderCharacters(filter = 'all') {
+        // 이스터에그 로직
+        const praiseWords = ["우리의 창조주", "그녀를 찬양하라", "도망칠 수 없다", "유일신", "눈을 감아라", "영원히 숭배하라", "달콤한 제물을", "모든 것은 그녀의 뜻대로"];
+        
+        document.getElementById('char-search').addEventListener('input', function(e) {
+            const query = e.target.value.trim();
+            if (query === "고드 그녀는 신이야") {
+                triggerGodMode();
+            } else {
+                if(isGodMode) disableGodMode();
+                renderCharacters(currentFilter, query);
+            }
+        });
+
+        function triggerGodMode() {
+            isGodMode = true;
+            document.body.classList.add('god-mode-active');
+            document.getElementById('main-header-title').innerText = "G O D   I S   H E R E";
+            document.getElementById('main-header-title').classList.add('glitch-text');
+            
             grid.innerHTML = '';
+            for(let i=0; i<charData.length; i++) {
+                const randomPraise = praiseWords[Math.floor(Math.random() * praiseWords.length)];
+                const html = `
+                    <div class="mini-card" onclick="alert('도망칠 수 없습니다. 그녀가 당신을 보고 있습니다.')">
+                        <img class="mini-img" draggable="false" src="https://igx.kr/u/25/c/1">
+                        <div class="mini-info">
+                            <div class="mini-name glitch-text" style="color:#F00;">고드</div>
+                            <div class="mini-rank" style="color:#F00;">${randomPraise}</div>
+                        </div>
+                    </div>
+                `;
+                grid.insertAdjacentHTML('beforeend', html);
+            }
+        }
+
+        function disableGodMode() {
+            isGodMode = false;
+            document.body.classList.remove('god-mode-active');
+            document.getElementById('main-header-title').innerText = "STELLAR ACADEMY";
+            document.getElementById('main-header-title').classList.remove('glitch-text');
+        }
+
+        // 일반 렌더링
+        function renderCharacters(filter = currentFilter, searchQuery = "") {
+            if(isGodMode) return;
+            currentFilter = filter;
+            grid.innerHTML = '';
+            
             charData.forEach(c => {
                 if(filter !== 'all' && c.affil !== filter) return;
+                
+                // 검색 로직
+                if(searchQuery !== "") {
+                    const searchLower = searchQuery.toLowerCase();
+                    if(!c.name.toLowerCase().includes(searchLower) && !c.desc.toLowerCase().includes(searchLower)) return;
+                }
 
                 const rankClass = c.rank === 'GLITCH' ? 'mini-rank glitch-text god-rank' : 'mini-rank';
                 const initialRank = c.rank === 'GLITCH' ? 'ERR' : c.rank;
@@ -578,8 +677,10 @@
             });
         }
 
-        // 모달 열기
+        // 모달 열기 (나이 표기 수정 포함)
         function openModal(id) {
+            if(isGodMode) return; // 고드 모드에서는 모달 안 열림
+
             const c = charData.find(item => item.id === id);
             if(!c) return;
 
@@ -590,10 +691,13 @@
             const rankDisplay = c.rank === 'GLITCH' ? '<span class="glitch-text god-rank" style="font-size:1.1rem;">ERR</span>' : c.rank;
             document.getElementById('m-role').innerHTML = `${c.affil} | ${c.role || '소속없음'} | ${rankDisplay}`;
             
+            // 나이 텍스트 처리: '측정불가'면 그대로, 아니면 '세' 붙이기
+            const ageText = c.age === "측정불가" ? c.age : c.age + "세";
+
             document.getElementById('m-tags').innerHTML = `
                 <span>${c.race}</span>
                 <span>${c.height}cm</span>
-                <span>${c.age}세</span>
+                <span>${ageText}</span>
                 <span class="highlight-tag">${c.mbti}</span>
                 <span class="highlight-tag">${c.ennea}</span>
                 <span class="align-tag">${c.align}</span>
@@ -606,7 +710,6 @@
             document.body.classList.add('modal-open');
         }
 
-        // 모달 닫기
         function closeModal() {
             document.getElementById('char-modal').style.display = 'none';
             document.body.classList.remove('modal-open');
@@ -616,14 +719,15 @@
             if (e.target === this) closeModal();
         });
 
-        // 필터 변경
+        // 필터 버튼 기능
         function filterChars(type) {
             document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
             event.target.classList.add('active');
-            renderCharacters(type);
+            const query = document.getElementById('char-search').value.trim();
+            renderCharacters(type, query);
         }
 
-        // 글리치
+        // 글리치 효과 텍스트 랜덤 변경
         const glitchRanks = ["특급", "1급", "2급", "3급", "4급", "측정불가", "ERR", "#@!%"];
         setInterval(() => {
             document.querySelectorAll('.god-rank').forEach(el => {
