@@ -5,18 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Stellar Academy System</title>
     <style>
-        /* ===== 옐로우 사이버 & 다크 테마 변수 ===== */
+        /* ===== 프리미엄 홀리 사이버 테마 변수 ===== */
         :root {
-            --bg-black: #050505;
-            --bg-panel: rgba(20, 20, 15, 0.9);
-            --primary-yellow: #FFE600;
-            --yellow-glow: rgba(255, 230, 0, 0.5);
-            --dark-yellow: #B3A100;
-            --cyber-red: #FF003C;
-            --text-main: #EAEAEA;
-            --text-muted: #888877;
+            --bg-deep: #0A0B10; /* 아주 깊은 다크 네이비/블랙 */
+            --bg-glass: rgba(20, 22, 28, 0.6); /* 반투명 유리 패널 */
+            --primary-yellow: #FADB5F; /* 눈 안 아픈 부드러운 골드 옐로우 */
+            --yellow-glow: rgba(250, 219, 95, 0.3);
+            --yellow-border: rgba(250, 219, 95, 0.15);
+            --cyber-red: #FF4C4C;
+            --text-main: #E2E8F0;
+            --text-muted: #94A3B8;
             --font-sys: 'Courier New', Courier, monospace;
-            --border-width: 2px;
         }
 
         * {
@@ -26,23 +25,22 @@
             -webkit-tap-highlight-color: transparent;
         }
 
-        /* 은은한 배경 격자 */
+        /* 은은한 배경 효과 */
         body {
             font-family: 'Pretendard', -apple-system, sans-serif;
-            background-color: var(--bg-black);
+            background-color: var(--bg-deep);
             color: var(--text-main);
             overflow-x: hidden;
-            line-height: 1.6;
+            line-height: 1.7;
             background-image: 
-                linear-gradient(rgba(255, 230, 0, 0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255, 230, 0, 0.03) 1px, transparent 1px);
-            background-size: 30px 30px;
+                radial-gradient(circle at 50% 0%, rgba(250, 219, 95, 0.05) 0%, transparent 50%),
+                linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+            background-size: 100% 100%, 40px 40px, 40px 40px;
+            background-attachment: fixed;
         }
 
-        /* 모달 활성화 시 배경 스크롤 방지용 클래스 */
-        body.modal-open {
-            overflow: hidden;
-        }
+        body.modal-open { overflow: hidden; }
 
         /* ===== 인트로 화면 ===== */
         #intro-screen {
@@ -52,76 +50,81 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            background: #000;
+            background: var(--bg-deep);
             z-index: 1000;
             transition: opacity 0.8s ease;
         }
 
         .intro-title {
             font-family: var(--font-sys);
-            font-size: 2.5rem;
-            font-weight: bold;
+            font-size: 2.2rem;
             color: var(--primary-yellow);
-            text-shadow: 0 0 10px var(--yellow-glow), 0 0 20px var(--yellow-glow);
+            text-shadow: 0 0 15px var(--yellow-glow);
             text-align: center;
-            margin-bottom: 30px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
+            margin-bottom: 40px;
+            letter-spacing: 3px;
+            font-weight: 300;
         }
+        .intro-title span { font-weight: bold; font-size: 1.3em; display: block; margin-top: 10px; }
 
         #enter-btn {
-            padding: 12px 30px;
+            padding: 12px 35px;
             font-family: var(--font-sys);
-            font-size: 1.1rem;
-            font-weight: bold;
+            font-size: 1rem;
             color: var(--primary-yellow);
-            background: transparent;
-            border: 1px solid var(--primary-yellow);
+            background: rgba(250, 219, 95, 0.05);
+            border: 1px solid var(--yellow-border);
+            border-radius: 30px; /* 둥근 버튼으로 세련미 추가 */
             cursor: pointer;
-            text-transform: uppercase;
-            box-shadow: 0 0 10px var(--yellow-glow), inset 0 0 10px var(--yellow-glow);
-            transition: all 0.3s;
+            letter-spacing: 2px;
+            backdrop-filter: blur(5px);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        #enter-btn:active { transform: scale(0.95); background: var(--primary-yellow); color: #000; }
+        #enter-btn:hover, #enter-btn:active { 
+            background: var(--primary-yellow); 
+            color: #000; 
+            box-shadow: 0 0 20px var(--yellow-glow); 
+        }
 
-        /* ===== 메인 컨테이너 ===== */
+        /* ===== 메인 컨테이너 (Glassmorphism) ===== */
         #main-container {
             display: none;
             opacity: 0;
             transition: opacity 0.8s ease;
-            max-width: 600px;
-            margin: 20px auto;
-            padding: 20px 15px;
-            background: var(--bg-panel);
-            border: var(--border-width) solid var(--primary-yellow);
-            border-radius: 4px;
-            box-shadow: 0 0 15px var(--yellow-glow), inset 0 0 10px var(--yellow-glow);
+            max-width: 650px;
+            margin: 30px auto;
+            padding: 30px 20px;
+            background: var(--bg-glass);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-top: 1px solid rgba(250, 219, 95, 0.2);
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
             position: relative;
         }
 
         header {
             text-align: center;
-            margin-bottom: 20px;
-            padding-bottom: 15px;
-            border-bottom: 1px dashed var(--primary-yellow);
+            margin-bottom: 30px;
         }
 
         header h1 {
             font-family: var(--font-sys);
-            font-size: 1.8rem;
+            font-size: 1.6rem;
+            font-weight: bold;
             color: var(--primary-yellow);
-            text-shadow: 0 0 8px var(--yellow-glow);
-            letter-spacing: 1px;
+            letter-spacing: 4px;
         }
 
         /* ===== 내비게이션 탭 ===== */
         .tab-nav {
             display: flex;
             overflow-x: auto;
-            gap: 8px;
-            margin-bottom: 20px;
-            padding-bottom: 5px;
+            gap: 12px;
+            margin-bottom: 30px;
+            padding-bottom: 10px;
             scrollbar-width: none;
         }
         .tab-nav::-webkit-scrollbar { display: none; }
@@ -129,89 +132,120 @@
         .tab-btn {
             flex: 0 0 auto;
             background: transparent;
-            border: 1px solid var(--text-muted);
+            border: none;
             color: var(--text-muted);
             font-family: var(--font-sys);
-            font-size: 0.9rem;
-            padding: 8px 15px;
+            font-size: 0.95rem;
+            padding: 8px 4px;
             cursor: pointer;
             transition: all 0.3s;
-            text-transform: uppercase;
+            position: relative;
         }
 
-        .tab-btn.active {
-            border-color: var(--primary-yellow);
-            color: var(--primary-yellow);
-            box-shadow: inset 0 0 8px var(--yellow-glow);
+        /* 탭 하단 밑줄 애니메이션 효과 */
+        .tab-btn::after {
+            content: '';
+            position: absolute;
+            bottom: 0; left: 50%;
+            width: 0; height: 2px;
+            background: var(--primary-yellow);
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
         }
+
+        .tab-btn.active { color: var(--primary-yellow); }
+        .tab-btn.active::after { width: 100%; box-shadow: 0 0 8px var(--yellow-glow); }
 
         /* ===== 탭 콘텐츠 ===== */
-        .tab-content { display: none; animation: fadeIn 0.4s ease forwards; }
+        .tab-content { display: none; animation: fadeInUp 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards; }
         .tab-content.active { display: block; }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(5px); }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(15px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* 세계관 타이포그래피 */
+        /* 텍스트 및 박스 스타일 */
         .section-title {
             color: var(--primary-yellow);
             font-family: var(--font-sys);
-            font-size: 1.2rem;
-            margin: 25px 0 10px 0;
-            padding: 5px 10px;
-            border-left: 4px solid var(--primary-yellow);
-            background: rgba(255, 230, 0, 0.1);
-            text-shadow: 0 0 5px var(--yellow-glow);
+            font-size: 1.1rem;
+            margin: 35px 0 12px 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        /* 제목 앞 장식 선 */
+        .section-title::before {
+            content: '';
+            display: inline-block;
+            width: 15px; height: 2px;
+            background: var(--primary-yellow);
+            box-shadow: 0 0 5px var(--yellow-glow);
         }
 
         .info-box {
-            background: rgba(0,0,0,0.6);
-            border: 1px solid var(--text-muted);
-            padding: 15px;
-            margin-bottom: 15px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
             font-size: 0.95rem;
-            color: #CCC;
+            color: #CBD5E1;
+            transition: background 0.3s;
         }
+        .info-box:hover { background: rgba(255, 255, 255, 0.04); }
 
-        .highlight-yellow { color: var(--primary-yellow); font-weight: bold; text-shadow: 0 0 3px var(--yellow-glow); }
-        .highlight-red { color: var(--cyber-red); font-weight: bold; text-shadow: 0 0 3px rgba(255,0,60,0.5); }
+        .highlight-yellow { color: var(--primary-yellow); font-weight: bold; }
+        .highlight-red { color: var(--cyber-red); font-weight: bold; }
 
         /* ===== 일정 탭 테이블 ===== */
         .schedule-table {
             width: 100%;
-            border-collapse: collapse;
+            border-collapse: separate;
+            border-spacing: 0 8px;
             margin-top: 10px;
             font-size: 0.9rem;
         }
         .schedule-table th, .schedule-table td {
-            border: 1px solid var(--primary-yellow);
-            padding: 12px 10px;
-            text-align: left;
+            background: rgba(255, 255, 255, 0.02);
+            padding: 14px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
         }
-        .schedule-table th { background: rgba(255, 230, 0, 0.1); color: var(--primary-yellow); font-family: var(--font-sys); width: 80px; text-align: center; }
+        .schedule-table th { 
+            color: var(--primary-yellow); 
+            font-family: var(--font-sys); 
+            width: 70px; 
+            text-align: center; 
+            border-radius: 8px 0 0 8px;
+            border-right: none;
+        }
+        .schedule-table td { border-radius: 0 8px 8px 0; border-left: none; }
 
-        /* ===== 인물 탭 (미니 프로필 그리드) ===== */
+        /* ===== 인물 탭 ===== */
         .filter-nav {
             display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 8px;
-            margin-bottom: 15px;
+            justify-content: flex-start;
+            overflow-x: auto;
+            gap: 10px;
+            margin-bottom: 25px;
+            scrollbar-width: none;
         }
         .filter-btn {
-            background: transparent;
-            border: 1px solid var(--text-muted);
-            color: var(--text-main);
-            padding: 5px 12px;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.1);
+            color: var(--text-muted);
+            padding: 6px 16px;
+            border-radius: 20px;
             font-size: 0.8rem;
             font-family: var(--font-sys);
+            white-space: nowrap;
+            transition: all 0.3s;
         }
         .filter-btn.active {
+            background: rgba(250, 219, 95, 0.1);
             border-color: var(--primary-yellow);
             color: var(--primary-yellow);
-            box-shadow: 0 0 8px var(--yellow-glow);
         }
 
         #character-grid {
@@ -221,125 +255,140 @@
         }
 
         .mini-card {
-            background: rgba(0,0,0,0.8);
-            border: 1px solid var(--text-muted);
+            background: rgba(255,255,255,0.02);
+            border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 12px;
+            overflow: hidden;
             cursor: pointer;
-            transition: transform 0.2s, box-shadow 0.2s;
-            position: relative;
-            /* 모달 띄워진 상태에서 뒤쪽 프로필 드래그 방지용 CSS 추가 */
+            transition: all 0.3s ease;
             user-select: none;
-            -webkit-user-select: none;
             -webkit-user-drag: none;
         }
         .mini-card:hover, .mini-card:active {
-            transform: translateY(-2px);
-            border-color: var(--primary-yellow);
-            box-shadow: 0 0 10px var(--yellow-glow);
+            transform: translateY(-4px);
+            border-color: var(--yellow-border);
+            background: rgba(255,255,255,0.05);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.4);
         }
         
-        .mini-card[data-affiliation="아카데미"] { border-bottom: 3px solid var(--primary-yellow); }
-        .mini-card[data-affiliation="무소속"] { border-bottom: 3px solid #888; }
-        .mini-card[data-affiliation="악귀"] { border-bottom: 3px solid var(--cyber-red); }
+        .mini-card[data-affiliation="아카데미"] { border-bottom: 2px solid var(--primary-yellow); }
+        .mini-card[data-affiliation="무소속"] { border-bottom: 2px solid #64748B; }
+        .mini-card[data-affiliation="악귀"] { border-bottom: 2px solid var(--cyber-red); }
 
         .mini-img {
             width: 100%;
-            height: 160px;
+            height: 180px;
             object-fit: cover;
-            border-bottom: 1px solid #333;
-            filter: brightness(0.85) contrast(1.1);
-            /* 이미지 클릭/드래그 시 고스팅 방지 */
+            filter: brightness(0.9) contrast(1.05);
             -webkit-user-drag: none;
-            user-select: none;
         }
-        .mini-info { padding: 8px; text-align: center; }
-        .mini-name { font-weight: bold; font-size: 1rem; color: #FFF; }
-        .mini-rank { font-size: 0.75rem; color: var(--primary-yellow); font-family: var(--font-sys); margin-top: 3px; }
+        .mini-info { padding: 12px; text-align: center; }
+        .mini-name { font-weight: bold; font-size: 1rem; color: #FFF; letter-spacing: 1px; }
+        .mini-rank { font-size: 0.75rem; color: var(--text-muted); font-family: var(--font-sys); margin-top: 4px; }
 
-        /* ===== 상세 프로필 모달 ===== */
+        /* ===== 상세 프로필 모달 (Glassmorphism) ===== */
         #char-modal {
             display: none;
             position: fixed;
             top: 0; left: 0; width: 100vw; height: 100vh;
-            background: rgba(0,0,0,0.9);
+            background: rgba(5, 5, 8, 0.85);
             z-index: 2000;
             justify-content: center;
             align-items: center;
-            backdrop-filter: blur(5px);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
         }
+        
         .modal-content {
-            background: var(--bg-panel);
-            border: 2px solid var(--primary-yellow);
-            box-shadow: 0 0 25px var(--yellow-glow);
+            background: rgba(20, 22, 28, 0.7);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-top: 1px solid rgba(250, 219, 95, 0.3);
+            border-radius: 16px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.6);
             width: 90%;
-            max-width: 400px;
-            max-height: 85vh;
+            max-width: 420px;
+            max-height: 80vh;
             overflow-y: auto;
             position: relative;
-            padding: 20px;
-            /* 스크롤 전이(Overscroll Chaining) 방지 */
+            padding: 25px;
             overscroll-behavior: contain; 
         }
         .modal-content::-webkit-scrollbar { width: 4px; }
-        .modal-content::-webkit-scrollbar-thumb { background: var(--primary-yellow); }
+        .modal-content::-webkit-scrollbar-thumb { background: rgba(250, 219, 95, 0.5); border-radius: 4px; }
 
         .close-btn {
             position: absolute;
-            top: 10px; right: 15px;
-            color: var(--cyber-red);
-            font-size: 1.5rem;
-            font-weight: bold;
+            top: 15px; right: 20px;
+            color: var(--text-muted);
+            font-size: 1.2rem;
             cursor: pointer;
             font-family: var(--font-sys);
+            transition: color 0.3s;
         }
+        .close-btn:hover { color: #FFF; }
 
         .modal-img {
             width: 100%;
-            height: 200px;
+            height: 220px;
             object-fit: cover;
-            border: 1px solid var(--primary-yellow);
-            margin-bottom: 15px;
-            pointer-events: none; /* 모달 내 이미지 드래그 원천 차단 */
+            border-radius: 8px;
+            margin-bottom: 20px;
+            pointer-events: none;
         }
 
-        .modal-name-wrap { border-bottom: 1px dashed var(--text-muted); padding-bottom: 10px; margin-bottom: 10px; }
-        .modal-name { font-size: 1.5rem; font-weight: bold; color: var(--primary-yellow); }
-        .modal-role { font-size: 0.85rem; color: var(--text-muted); font-family: var(--font-sys); }
+        .modal-name-wrap { text-align: center; margin-bottom: 20px; }
+        .modal-name { font-size: 1.8rem; font-weight: bold; color: #FFF; letter-spacing: 2px; }
+        .modal-role { font-size: 0.85rem; color: var(--primary-yellow); font-family: var(--font-sys); margin-top: 5px; }
         
-        .modal-tags { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 15px; }
-        .modal-tags span { background: rgba(255, 230, 0, 0.1); border: 1px solid var(--primary-yellow); color: var(--primary-yellow); padding: 2px 6px; font-size: 0.75rem; font-family: var(--font-sys); }
-        .modal-tags .align-tag { border-color: var(--cyber-red); color: var(--cyber-red); }
+        .modal-tags { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px; margin-bottom: 25px; }
+        .modal-tags span { 
+            background: rgba(255,255,255,0.05); 
+            border: 1px solid rgba(255,255,255,0.1); 
+            color: var(--text-muted); 
+            padding: 4px 10px; 
+            border-radius: 20px; 
+            font-size: 0.75rem; 
+        }
+        .modal-tags .highlight-tag { border-color: var(--yellow-border); color: var(--primary-yellow); }
+        .modal-tags .align-tag { border-color: rgba(255,76,76,0.3); color: var(--cyber-red); }
 
-        .modal-desc-title { font-size: 0.9rem; color: var(--text-muted); margin-top: 10px; }
-        .modal-desc-body { font-size: 0.95rem; color: #FFF; background: rgba(255,255,255,0.05); padding: 8px; border-left: 2px solid var(--primary-yellow); line-height: 1.5; }
+        .modal-desc-title { font-size: 0.85rem; color: var(--primary-yellow); margin-top: 10px; font-family: var(--font-sys); }
+        .modal-desc-body { 
+            font-size: 0.95rem; 
+            color: #CBD5E1; 
+            background: rgba(0,0,0,0.2); 
+            padding: 15px; 
+            border-radius: 8px;
+            margin-top: 8px;
+            line-height: 1.6; 
+        }
 
-        /* ===== 글리치 효과 대폭 강화 (고드 전용) ===== */
+        /* ===== 글리치 효과 (세련되게 조절) ===== */
         .glitch-text { 
             color: #FFF; 
             font-family: var(--font-sys); 
             font-weight: bold;
             display: inline-block;
-            animation: insane-glitch 0.1s infinite linear alternate-reverse; 
+            animation: elegant-glitch 0.15s infinite linear alternate-reverse; 
         }
-        @keyframes insane-glitch {
-            0% { transform: skew(0deg) translate(0px, 0px); text-shadow: 3px 0 0 var(--cyber-red), -3px 0 0 var(--primary-yellow); opacity: 1; color: #FFF; }
-            20% { transform: skew(-15deg) translate(-2px, 2px); text-shadow: -4px 2px 0 var(--primary-yellow), 4px -2px 0 #FFF; opacity: 0.8; color: var(--cyber-red); }
-            40% { transform: skew(15deg) translate(3px, -2px); text-shadow: 5px -1px 0 var(--cyber-red), -2px 3px 0 var(--primary-yellow); opacity: 0.9; }
-            60% { transform: skew(-5deg) translate(-1px, -1px); text-shadow: -3px -3px 0 var(--primary-yellow), 3px 3px 0 var(--cyber-red); opacity: 1; color: var(--primary-yellow); }
-            80% { transform: skew(25deg) translate(4px, 1px); text-shadow: 2px 4px 0 var(--cyber-red), -4px -1px 0 var(--primary-yellow); opacity: 0.7; }
-            100% { transform: skew(0deg) translate(0px, 0px); text-shadow: -2px 0 0 var(--primary-yellow), 2px 0 0 var(--cyber-red); opacity: 1; color: #FFF; }
+        @keyframes elegant-glitch {
+            0% { transform: translate(0); text-shadow: 2px 0 0 rgba(255,0,60,0.8), -2px 0 0 rgba(250,219,95,0.8); }
+            50% { transform: translate(-1px, 1px); text-shadow: -2px 0 0 rgba(255,0,60,0.8), 2px 0 0 rgba(250,219,95,0.8); color: var(--primary-yellow); }
+            100% { transform: translate(1px, -1px); text-shadow: 2px 0 0 rgba(250,219,95,0.8), -2px 0 0 rgba(255,0,60,0.8); color: #FFF; }
         }
 
-        /* 명령어 탭 콘솔 스타일 */
-        .console-box { font-family: var(--font-sys); font-size: 0.9rem; line-height: 1.8; color: var(--primary-yellow); }
-        .cmd-line { margin-bottom: 10px; border-bottom: 1px dashed rgba(255,230,0,0.3); padding-bottom: 5px; }
-        .cmd-key { font-weight: bold; color: #FFF; }
+        /* 명령어 탭 */
+        .console-box { font-family: var(--font-sys); padding: 20px; background: rgba(0,0,0,0.5); border-radius: 8px; }
+        .cmd-line { margin-bottom: 15px; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 10px; }
+        .cmd-line:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+        .cmd-key { color: var(--primary-yellow); font-weight: bold; }
     </style>
 </head>
 <body>
 
     <div id="intro-screen">
-        <div class="intro-title">System.Boot()<br><span style="font-size: 1.2rem; color: #FFE600;">Stellar Academy</span></div>
-        <button id="enter-btn">Access</button>
+        <div class="intro-title">System.Boot()<br><span>STELLAR ACADEMY</span></div>
+        <button id="enter-btn">ACCESS GRANTED</button>
     </div>
 
     <div id="main-container">
@@ -348,55 +397,55 @@
         </header>
 
         <nav class="tab-nav">
-            <button class="tab-btn active" onclick="openTab(event, 'tab-world')">세계관</button>
-            <button class="tab-btn" onclick="openTab(event, 'tab-character')">인물</button>
-            <button class="tab-btn" onclick="openTab(event, 'tab-schedule')">일정</button>
-            <button class="tab-btn" onclick="openTab(event, 'tab-command')">명령어</button>
+            <button class="tab-btn active" onclick="openTab(event, 'tab-world')">WORLD</button>
+            <button class="tab-btn" onclick="openTab(event, 'tab-character')">ARCHIVE</button>
+            <button class="tab-btn" onclick="openTab(event, 'tab-schedule')">SCHEDULE</button>
+            <button class="tab-btn" onclick="openTab(event, 'tab-command')">CMD</button>
         </nav>
 
         <main>
             <div id="tab-world" class="tab-content active">
-                <h2 class="section-title">사후 세계</h2>
-                <p style="margin-bottom: 10px; font-size: 0.9rem;">인간은 사후 지옥, 저승, 천국행이 정해집니다.</p>
-                <div class="info-box" style="border-left: 3px solid var(--cyber-red);">
-                    <strong class="highlight-red">지옥</strong><br>
+                <h2 class="section-title">사후 세계 (Afterlife)</h2>
+                <p style="margin-bottom: 15px; font-size: 0.95rem; color: #94A3B8;">인간은 사후 지옥, 저승, 천국행이 정해집니다.</p>
+                <div class="info-box" style="border-left: 2px solid var(--cyber-red);">
+                    <strong class="highlight-red">지옥 (Hell)</strong><br>
                     자유, 능력주의지만 그만큼 고통받아도 아무도 신경을 안 쓰며 악마가 태어납니다.
                 </div>
-                <div class="info-box" style="border-left: 3px solid #888;">
-                    <strong style="color: #888; font-weight: bold;">저승</strong><br>
+                <div class="info-box" style="border-left: 2px solid #64748B;">
+                    <strong style="color: #CBD5E1; font-weight: bold;">저승 (Limbo)</strong><br>
                     평범한 사람들이 가고 평범하게 살다가 환생 or 영원한 안식을 선택합니다.
                 </div>
-                <div class="info-box" style="border-left: 3px solid var(--primary-yellow);">
-                    <strong class="highlight-yellow">천국</strong><br>
+                <div class="info-box" style="border-left: 2px solid var(--primary-yellow);">
+                    <strong class="highlight-yellow">천국 (Heaven)</strong><br>
                     규칙, 평화주의이고 스텔라 아카데미가 존재하고 천사들이 태어나며 원할 시 영원히 평온하게 살 수 있습니다. 대신 규칙을 파괴하려 하면 저승 or 지옥으로 추방당할 수 있습니다.
                 </div>
 
-                <h2 class="section-title">마력 설명</h2>
+                <h2 class="section-title">마력과 술식</h2>
                 <div class="info-box">
                     마력은 모두 존재하지만 그렇다고 악귀가 보이는 건 아니며 마력이 충분하면 보입니다. 하지만 그중에서 <span class="highlight-yellow">술식(고유능력)</span>이 존재하는 인간 or 천사는 매우 희귀합니다.
                 </div>
 
-                <h2 class="section-title">제령사</h2>
+                <h2 class="section-title">제령사 (Exorcist)</h2>
                 <div class="info-box">
-                    악귀를 제령하는 직업. 재능이 9할이며 등급에 따라 알맞은 업무에 배정되며 <span class="highlight-yellow">스텔라 아카데미</span>에서 양성합니다.<br><br>
-                    <span style="color: var(--cyber-red); font-weight: bold;">[SYSTEM WARNING] 극심한 인력난</span><br>
-                    현재 제령 업계는 최악의 인력난을 겪고 있습니다. 이로 인해 실전 경험을 쌓는다는 명목하에, 하위 등급의 아카데미 학생들조차 수시로 위험한 토벌 임무에 등 떠밀려 강제 투입되고 있는 실정입니다.
+                    악귀를 제령하는 직업. 재능이 9할이며 등급에 따라 알맞은 업무에 배정되며 스텔라 아카데미에서 양성합니다.<br><br>
+                    <span style="color: var(--cyber-red); font-size: 0.85rem;">[SYSTEM WARNING] 극심한 인력난</span><br>
+                    <span style="font-size: 0.9rem; color: #94A3B8;">현재 제령 업계는 최악의 인력난을 겪고 있습니다. 이로 인해 실전 경험을 쌓는다는 명목하에, 하위 등급의 아카데미 학생들조차 수시로 위험한 토벌 임무에 등 떠밀려 강제 투입되고 있는 실정입니다.</span>
                 </div>
 
-                <h2 class="section-title">악귀</h2>
+                <h2 class="section-title">악귀 (Curse)</h2>
                 <div class="info-box">
                     인간, 악마, 천사 등등에게서 버려진 부정적인 감정이 모인 마력으로 태어나는 존재. 그들을 잡아먹어 완전한 하나가 되고 싶은 본능을 따르며 높은 등급의 악령은 보통 지능이 높습니다. 마력으로 이루어졌기 때문에 마력만 충분하면 완전 재생 가능합니다.
                 </div>
 
-                <h2 class="section-title">등급</h2>
-                <p style="font-size: 0.85rem; margin-bottom: 10px;">해당 등급은 악귀 기준이며 제령사는 해당 등급의 악귀를 상성 상관없이 무조건 이길 수 있어야 합니다. (특급은 국가전복 가능한지 여부이기 때문에 제외)</p>
-                <div class="info-box" style="font-family: var(--font-sys);">
+                <h2 class="section-title">토벌 등급</h2>
+                <p style="font-size: 0.85rem; margin-bottom: 15px; color: #94A3B8;">해당 등급은 악귀 기준이며 제령사는 해당 등급의 악귀를 상성 상관없이 무조건 이길 수 있어야 합니다. (특급은 국가전복 가능한지 여부이기 때문에 제외)</p>
+                <div class="info-box" style="font-family: var(--font-sys); font-size: 0.9rem;">
                     <ul style="list-style: none;">
-                        <li style="margin-bottom: 6px;"><strong class="highlight-red">[특급]</strong> 단독으로 국가전복이 가능, 집속탄이나 융단폭격이 필요</li>
-                        <li style="margin-bottom: 6px;"><strong class="highlight-yellow">[1급]</strong> 전차로도 불안</li>
-                        <li style="margin-bottom: 6px;"><strong style="color:#FFF;">[2급]</strong> 근접 산탄총으로 아슬아슬</li>
-                        <li style="margin-bottom: 6px;"><strong style="color:#CCC;">[3급]</strong> 권총 있으면 안심</li>
-                        <li><strong style="color:#AAA;">[4급]</strong> 나무 야구배트로도 바름</li>
+                        <li style="margin-bottom: 8px;"><strong class="highlight-red">[특급]</strong> 단독 국가전복 가능 (집속탄/융단폭격 필요)</li>
+                        <li style="margin-bottom: 8px;"><strong class="highlight-yellow">[1급]</strong> 전차로도 불안</li>
+                        <li style="margin-bottom: 8px;"><strong style="color:#FFF;">[2급]</strong> 근접 산탄총으로 아슬아슬</li>
+                        <li style="margin-bottom: 8px;"><strong style="color:#94A3B8;">[3급]</strong> 권총 있으면 안심</li>
+                        <li><strong style="color:#64748B;">[4급]</strong> 나무 야구배트로도 바름</li>
                     </ul>
                 </div>
             </div>
@@ -404,12 +453,11 @@
             <div id="tab-character" class="tab-content">
                 <div class="filter-nav">
                     <button class="filter-btn active" onclick="filterChars('all')">ALL</button>
-                    <button class="filter-btn" onclick="filterChars('아카데미')">아카데미</button>
-                    <button class="filter-btn" onclick="filterChars('무소속')">무소속</button>
-                    <button class="filter-btn" onclick="filterChars('악귀')">악귀</button>
+                    <button class="filter-btn" onclick="filterChars('아카데미')">ACADEMY</button>
+                    <button class="filter-btn" onclick="filterChars('무소속')">ROGUE</button>
+                    <button class="filter-btn" onclick="filterChars('악귀')">CURSE</button>
                 </div>
-                <div id="character-grid">
-                    </div>
+                <div id="character-grid"></div>
             </div>
 
             <div id="tab-schedule" class="tab-content">
@@ -419,12 +467,12 @@
                     <tr><th>4월</th><td>이론 집중 교육 (악귀 생태학 및 마력학)</td></tr>
                     <tr><th>5월</th><td>1학기 중간 실전 평가 (저위험구역 투입)</td></tr>
                     <tr><th>6월</th><td>천국-저승 경계선 실지 답사 및 모의 훈련</td></tr>
-                    <tr><th>7월</th><td><span style="color: var(--cyber-red); font-weight:bold;">[인력난 지원]</span> 하계 저승 경계선 방어 실습 투입</td></tr>
+                    <tr><th>7월</th><td><span style="color: var(--cyber-red);">[인력난 지원]</span> 하계 저승 경계선 방어 실습 투입</td></tr>
                     <tr><th>8월</th><td>하계 특별 보충 및 무기(주구) 정비 기간</td></tr>
                     <tr><th>9월</th><td>2학기 개강 및 심화 술식 발현 훈련</td></tr>
                     <tr><th>10월</th><td>천국·지옥 친선(을 위장한) 무력 교류전</td></tr>
                     <tr><th>11월</th><td>2학기 기말 실전 토벌 평가 (개인/팀 단위)</td></tr>
-                    <tr><th>12월</th><td><span style="color: var(--cyber-red); font-weight:bold;">[인력난 지원]</span> 동계 특급/1급 악귀 토벌 강제 동원</td></tr>
+                    <tr><th>12월</th><td><span style="color: var(--cyber-red);">[인력난 지원]</span> 동계 특급/1급 악귀 토벌 강제 동원</td></tr>
                     <tr><th>1월</th><td>부상자 회복 및 생존자 대상 전술 피드백</td></tr>
                     <tr><th>2월</th><td>졸업식 및 정식 제령사 임관 (부대 배치)</td></tr>
                 </table>
@@ -432,10 +480,10 @@
 
             <div id="tab-command" class="tab-content">
                 <h2 class="section-title">CMD LOG</h2>
-                <div class="info-box console-box">
+                <div class="console-box">
                     <div class="cmd-line"><span class="cmd-key">/요약</span> : 현재 토벌 중인 악귀의 상태나 주변 전황, 혹은 이전까지 진행된 주요 서사를 시스템이 간략히 브리핑합니다.</div>
                     <div class="cmd-line"><span class="cmd-key">/디버그</span> : 관리자 전용 모드. 시스템 오류나 꼬여버린 설정(혹은 전투 로그)을 강제로 초기화하고 수정할 때 사용합니다.</div>
-                    <div class="cmd-line" style="color: #888;">>_ 추가 다이스 및 판정 명령어 업데이트 대기 중...</div>
+                    <div class="cmd-line" style="color: #64748B; font-size: 0.85rem;">>_ 추가 다이스 및 판정 명령어 업데이트 대기 중...</div>
                 </div>
             </div>
         </main>
@@ -443,7 +491,7 @@
 
     <div id="char-modal">
         <div class="modal-content" id="char-modal-content">
-            <span class="close-btn" onclick="closeModal()">[X]</span>
+            <span class="close-btn" onclick="closeModal()">✕</span>
             <img id="m-img" class="modal-img" src="" alt="">
             <div class="modal-name-wrap">
                 <div id="m-name" class="modal-name">NAME</div>
@@ -451,10 +499,10 @@
             </div>
             <div id="m-tags" class="modal-tags"></div>
             
-            <div class="modal-desc-title">[ 술식 / 능력 ]</div>
-            <div id="m-ability" class="modal-desc-body" style="margin-bottom: 10px;"></div>
+            <div class="modal-desc-title">ABILITY</div>
+            <div id="m-ability" class="modal-desc-body" style="margin-bottom: 20px;"></div>
             
-            <div class="modal-desc-title">[ 특징 / 상세 정보 ]</div>
+            <div class="modal-desc-title">ARCHIVE DATA</div>
             <div id="m-desc" class="modal-desc-body"></div>
         </div>
     </div>
@@ -480,7 +528,7 @@
             evt.currentTarget.classList.add('active');
         }
 
-        // 인물 데이터 
+        // 인물 데이터
         const charData = [
             { id: 0, name: "고드", race: "신", height: 145, age: "측정불가", ability: "인과율 무시, 우주적 재창조", desc: "귀차니즘, 달달한거 러버, 간식광. 모든 일을 예수아에게 짬때리고 매점가는거 때문에 혼나는 게 일상. 정체는 예수아만 알며, 가끔 진심으로 빡칠 때 뿜어내는 기운만으로도 천국 전체가 공포에 떤다.", rank: "GLITCH", affil: "아카데미", role: "교장", img: "https://igx.kr/u/25/c/1", mbti: "INTP", ennea: "9w8", align: "혼돈 중립" },
             { id: 1, name: "예수아", race: "인간", height: 195, age: "2025", ability: "없음", desc: "살아있을 시절 박애주의에 우린 모두 고드가 만든 소중한 인간이라는 교리를 선포하다 십자가에 박혀 처형당한 후 천국에 옴. 목수 출신으로 순수 근력은 아카데미 최강이며, 매점 간 교장을 대신해 서류 더미와 인력난 사태를 수습하느라 만성 피로에 시달린다.", rank: "1급", affil: "아카데미", role: "교감", img: "https://igx.kr/u/25/d/1", mbti: "ENFJ", ennea: "2w1", align: "질서 선" },
@@ -508,16 +556,15 @@
 
         const grid = document.getElementById('character-grid');
 
-        // 미니 프로필 렌더링
+        // 렌더링
         function renderCharacters(filter = 'all') {
             grid.innerHTML = '';
             charData.forEach(c => {
                 if(filter !== 'all' && c.affil !== filter) return;
 
                 const rankClass = c.rank === 'GLITCH' ? 'mini-rank glitch-text god-rank' : 'mini-rank';
-                const initialRank = c.rank === 'GLITCH' ? '특급' : c.rank;
+                const initialRank = c.rank === 'GLITCH' ? 'ERR' : c.rank;
 
-                // img 태그에 draggable="false" 추가
                 const html = `
                     <div class="mini-card" data-affiliation="${c.affil}" onclick="openModal(${c.id})">
                         <img class="mini-img" draggable="false" src="${c.img}" alt="${c.name}">
@@ -536,21 +583,19 @@
             const c = charData.find(item => item.id === id);
             if(!c) return;
 
-            // 스크롤 위치 초기화
             document.getElementById('char-modal-content').scrollTop = 0;
-
             document.getElementById('m-img').src = c.img;
             document.getElementById('m-name').innerText = c.name;
             
-            const rankDisplay = c.rank === 'GLITCH' ? '<span class="glitch-text god-rank" style="font-size:1.2rem;">ERROR</span>' : c.rank;
+            const rankDisplay = c.rank === 'GLITCH' ? '<span class="glitch-text god-rank" style="font-size:1.1rem;">ERR</span>' : c.rank;
             document.getElementById('m-role').innerHTML = `${c.affil} | ${c.role || '소속없음'} | ${rankDisplay}`;
             
             document.getElementById('m-tags').innerHTML = `
                 <span>${c.race}</span>
                 <span>${c.height}cm</span>
                 <span>${c.age}세</span>
-                <span style="border-color:var(--primary-yellow); color:var(--primary-yellow);">${c.mbti}</span>
-                <span style="border-color:var(--primary-yellow); color:var(--primary-yellow);">${c.ennea}</span>
+                <span class="highlight-tag">${c.mbti}</span>
+                <span class="highlight-tag">${c.ennea}</span>
                 <span class="align-tag">${c.align}</span>
             `;
 
@@ -558,22 +603,17 @@
             document.getElementById('m-desc').innerText = c.desc;
 
             document.getElementById('char-modal').style.display = 'flex';
-            // 모달 오픈 시 배경 스크롤 차단
             document.body.classList.add('modal-open');
         }
 
         // 모달 닫기
         function closeModal() {
             document.getElementById('char-modal').style.display = 'none';
-            // 모달 종료 시 배경 스크롤 복구
             document.body.classList.remove('modal-open');
         }
 
-        // 모달 바깥(배경) 클릭 시 닫기
         document.getElementById('char-modal').addEventListener('click', function(e) {
-            if (e.target === this) {
-                closeModal();
-            }
+            if (e.target === this) closeModal();
         });
 
         // 필터 변경
@@ -583,15 +623,14 @@
             renderCharacters(type);
         }
 
-        // 고드 등급 글리치 효과 유지
-        const glitchRanks = ["특급", "1급", "2급", "3급", "4급", "측정불가", "!@#$%", "SYSTEM_ERR"];
+        // 글리치
+        const glitchRanks = ["특급", "1급", "2급", "3급", "4급", "측정불가", "ERR", "#@!%"];
         setInterval(() => {
             document.querySelectorAll('.god-rank').forEach(el => {
                 el.innerText = glitchRanks[Math.floor(Math.random() * glitchRanks.length)];
             });
-        }, 80);
+        }, 100);
 
-        // 초기 로드
         renderCharacters();
     </script>
 </body>
