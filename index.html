@@ -5,17 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Stellar Academy System</title>
     <style>
-        /* ===== 다크 사이버 & 홀리 테마 변수 ===== */
+        /* ===== 옐로우 사이버 & 다크 테마 변수 ===== */
         :root {
-            --bg-black: #050508;
-            --bg-panel: rgba(15, 18, 25, 0.9);
-            --gold-holy: #FFD700;
-            --gold-glow: rgba(255, 215, 0, 0.5);
-            --cyber-cyan: #00FFFF;
-            --cyber-glow: rgba(0, 255, 255, 0.3);
+            --bg-black: #050505;
+            --bg-panel: rgba(20, 20, 15, 0.9);
+            --primary-yellow: #FFE600;
+            --yellow-glow: rgba(255, 230, 0, 0.5);
+            --dark-yellow: #B3A100;
             --cyber-red: #FF003C;
-            --text-main: #E0E7EE;
-            --text-muted: #8892B0;
+            --text-main: #EAEAEA;
+            --text-muted: #888877;
             --font-sys: 'Courier New', Courier, monospace;
             --border-width: 2px;
         }
@@ -27,7 +26,7 @@
             -webkit-tap-highlight-color: transparent;
         }
 
-        /* 컴퓨터 스캔라인 효과 대폭 약화 (은은한 배경 격자만 유지) */
+        /* 은은한 배경 격자 */
         body {
             font-family: 'Pretendard', -apple-system, sans-serif;
             background-color: var(--bg-black);
@@ -35,8 +34,8 @@
             overflow-x: hidden;
             line-height: 1.6;
             background-image: 
-                linear-gradient(rgba(0, 255, 255, 0.02) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(0, 255, 255, 0.02) 1px, transparent 1px);
+                linear-gradient(rgba(255, 230, 0, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 230, 0, 0.03) 1px, transparent 1px);
             background-size: 30px 30px;
         }
 
@@ -57,8 +56,8 @@
             font-family: var(--font-sys);
             font-size: 2.5rem;
             font-weight: bold;
-            color: var(--gold-holy);
-            text-shadow: 0 0 10px var(--gold-glow), 0 0 20px var(--cyber-glow);
+            color: var(--primary-yellow);
+            text-shadow: 0 0 10px var(--yellow-glow), 0 0 20px var(--yellow-glow);
             text-align: center;
             margin-bottom: 30px;
             text-transform: uppercase;
@@ -70,16 +69,16 @@
             font-family: var(--font-sys);
             font-size: 1.1rem;
             font-weight: bold;
-            color: var(--cyber-cyan);
+            color: var(--primary-yellow);
             background: transparent;
-            border: 1px solid var(--cyber-cyan);
+            border: 1px solid var(--primary-yellow);
             cursor: pointer;
             text-transform: uppercase;
-            box-shadow: 0 0 10px var(--cyber-glow), inset 0 0 10px var(--cyber-glow);
+            box-shadow: 0 0 10px var(--yellow-glow), inset 0 0 10px var(--yellow-glow);
             transition: all 0.3s;
         }
 
-        #enter-btn:active { transform: scale(0.95); background: var(--cyber-cyan); color: #000; }
+        #enter-btn:active { transform: scale(0.95); background: var(--primary-yellow); color: #000; }
 
         /* ===== 메인 컨테이너 ===== */
         #main-container {
@@ -90,9 +89,9 @@
             margin: 20px auto;
             padding: 20px 15px;
             background: var(--bg-panel);
-            border: var(--border-width) solid var(--cyber-cyan);
+            border: var(--border-width) solid var(--primary-yellow);
             border-radius: 4px;
-            box-shadow: 0 0 15px var(--cyber-glow), inset 0 0 10px var(--cyber-glow);
+            box-shadow: 0 0 15px var(--yellow-glow), inset 0 0 10px var(--yellow-glow);
             position: relative;
         }
 
@@ -100,14 +99,14 @@
             text-align: center;
             margin-bottom: 20px;
             padding-bottom: 15px;
-            border-bottom: 1px dashed var(--gold-holy);
+            border-bottom: 1px dashed var(--primary-yellow);
         }
 
         header h1 {
             font-family: var(--font-sys);
             font-size: 1.8rem;
-            color: var(--gold-holy);
-            text-shadow: 0 0 8px var(--gold-glow);
+            color: var(--primary-yellow);
+            text-shadow: 0 0 8px var(--yellow-glow);
             letter-spacing: 1px;
         }
 
@@ -136,9 +135,9 @@
         }
 
         .tab-btn.active {
-            border-color: var(--gold-holy);
-            color: var(--gold-holy);
-            box-shadow: inset 0 0 8px var(--gold-glow);
+            border-color: var(--primary-yellow);
+            color: var(--primary-yellow);
+            box-shadow: inset 0 0 8px var(--yellow-glow);
         }
 
         /* ===== 탭 콘텐츠 ===== */
@@ -152,14 +151,14 @@
 
         /* 세계관 타이포그래피 */
         .section-title {
-            color: var(--cyber-cyan);
+            color: var(--primary-yellow);
             font-family: var(--font-sys);
             font-size: 1.2rem;
             margin: 25px 0 10px 0;
             padding: 5px 10px;
-            border-left: 4px solid var(--gold-holy);
-            background: rgba(0, 255, 255, 0.05);
-            text-shadow: 0 0 5px var(--cyber-glow);
+            border-left: 4px solid var(--primary-yellow);
+            background: rgba(255, 230, 0, 0.1);
+            text-shadow: 0 0 5px var(--yellow-glow);
         }
 
         .info-box {
@@ -171,8 +170,7 @@
             color: #CCC;
         }
 
-        .highlight-gold { color: var(--gold-holy); font-weight: bold; text-shadow: 0 0 3px var(--gold-glow); }
-        .highlight-cyber { color: var(--cyber-cyan); font-weight: bold; text-shadow: 0 0 3px var(--cyber-glow); }
+        .highlight-yellow { color: var(--primary-yellow); font-weight: bold; text-shadow: 0 0 3px var(--yellow-glow); }
         .highlight-red { color: var(--cyber-red); font-weight: bold; text-shadow: 0 0 3px rgba(255,0,60,0.5); }
 
         /* ===== 일정 탭 테이블 ===== */
@@ -183,11 +181,11 @@
             font-size: 0.9rem;
         }
         .schedule-table th, .schedule-table td {
-            border: 1px solid var(--cyber-cyan);
+            border: 1px solid var(--primary-yellow);
             padding: 12px 10px;
             text-align: left;
         }
-        .schedule-table th { background: rgba(0, 255, 255, 0.1); color: var(--cyber-cyan); font-family: var(--font-sys); width: 80px; text-align: center; }
+        .schedule-table th { background: rgba(255, 230, 0, 0.1); color: var(--primary-yellow); font-family: var(--font-sys); width: 80px; text-align: center; }
 
         /* ===== 인물 탭 (미니 프로필 그리드) ===== */
         .filter-nav {
@@ -206,9 +204,9 @@
             font-family: var(--font-sys);
         }
         .filter-btn.active {
-            border-color: var(--cyber-cyan);
-            color: var(--cyber-cyan);
-            box-shadow: 0 0 8px var(--cyber-glow);
+            border-color: var(--primary-yellow);
+            color: var(--primary-yellow);
+            box-shadow: 0 0 8px var(--yellow-glow);
         }
 
         #character-grid {
@@ -223,14 +221,18 @@
             cursor: pointer;
             transition: transform 0.2s, box-shadow 0.2s;
             position: relative;
+            /* 모달 띄워진 상태에서 뒤쪽 프로필 드래그 방지용 CSS 추가 */
+            user-select: none;
+            -webkit-user-select: none;
+            -webkit-user-drag: none;
         }
         .mini-card:hover, .mini-card:active {
             transform: translateY(-2px);
-            border-color: var(--gold-holy);
-            box-shadow: 0 0 10px var(--gold-glow);
+            border-color: var(--primary-yellow);
+            box-shadow: 0 0 10px var(--yellow-glow);
         }
         
-        .mini-card[data-affiliation="아카데미"] { border-bottom: 3px solid var(--gold-holy); }
+        .mini-card[data-affiliation="아카데미"] { border-bottom: 3px solid var(--primary-yellow); }
         .mini-card[data-affiliation="무소속"] { border-bottom: 3px solid #888; }
         .mini-card[data-affiliation="악귀"] { border-bottom: 3px solid var(--cyber-red); }
 
@@ -240,10 +242,13 @@
             object-fit: cover;
             border-bottom: 1px solid #333;
             filter: brightness(0.85) contrast(1.1);
+            /* 이미지 클릭/드래그 시 고스팅 방지 */
+            -webkit-user-drag: none;
+            user-select: none;
         }
         .mini-info { padding: 8px; text-align: center; }
         .mini-name { font-weight: bold; font-size: 1rem; color: #FFF; }
-        .mini-rank { font-size: 0.75rem; color: var(--cyber-cyan); font-family: var(--font-sys); margin-top: 3px; }
+        .mini-rank { font-size: 0.75rem; color: var(--primary-yellow); font-family: var(--font-sys); margin-top: 3px; }
 
         /* ===== 상세 프로필 모달 ===== */
         #char-modal {
@@ -258,8 +263,8 @@
         }
         .modal-content {
             background: var(--bg-panel);
-            border: 2px solid var(--gold-holy);
-            box-shadow: 0 0 25px var(--gold-glow);
+            border: 2px solid var(--primary-yellow);
+            box-shadow: 0 0 25px var(--yellow-glow);
             width: 90%;
             max-width: 400px;
             max-height: 85vh;
@@ -268,7 +273,7 @@
             padding: 20px;
         }
         .modal-content::-webkit-scrollbar { width: 4px; }
-        .modal-content::-webkit-scrollbar-thumb { background: var(--gold-holy); }
+        .modal-content::-webkit-scrollbar-thumb { background: var(--primary-yellow); }
 
         .close-btn {
             position: absolute;
@@ -284,20 +289,21 @@
             width: 100%;
             height: 200px;
             object-fit: cover;
-            border: 1px solid var(--gold-holy);
+            border: 1px solid var(--primary-yellow);
             margin-bottom: 15px;
+            pointer-events: none; /* 모달 내 이미지 드래그 원천 차단 */
         }
 
         .modal-name-wrap { border-bottom: 1px dashed var(--text-muted); padding-bottom: 10px; margin-bottom: 10px; }
-        .modal-name { font-size: 1.5rem; font-weight: bold; color: var(--gold-holy); }
+        .modal-name { font-size: 1.5rem; font-weight: bold; color: var(--primary-yellow); }
         .modal-role { font-size: 0.85rem; color: var(--text-muted); font-family: var(--font-sys); }
         
         .modal-tags { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 15px; }
-        .modal-tags span { background: rgba(0,255,255,0.1); border: 1px solid var(--cyber-cyan); color: var(--cyber-cyan); padding: 2px 6px; font-size: 0.75rem; font-family: var(--font-sys); }
+        .modal-tags span { background: rgba(255, 230, 0, 0.1); border: 1px solid var(--primary-yellow); color: var(--primary-yellow); padding: 2px 6px; font-size: 0.75rem; font-family: var(--font-sys); }
         .modal-tags .align-tag { border-color: var(--cyber-red); color: var(--cyber-red); }
 
         .modal-desc-title { font-size: 0.9rem; color: var(--text-muted); margin-top: 10px; }
-        .modal-desc-body { font-size: 0.95rem; color: #FFF; background: rgba(255,255,255,0.05); padding: 8px; border-left: 2px solid var(--gold-holy); line-height: 1.5; }
+        .modal-desc-body { font-size: 0.95rem; color: #FFF; background: rgba(255,255,255,0.05); padding: 8px; border-left: 2px solid var(--primary-yellow); line-height: 1.5; }
 
         /* ===== 글리치 효과 대폭 강화 (고드 전용) ===== */
         .glitch-text { 
@@ -305,30 +311,38 @@
             font-family: var(--font-sys); 
             font-weight: bold;
             display: inline-block;
-            animation: insane-glitch 0.2s infinite linear alternate-reverse; 
+            animation: insane-glitch 0.1s infinite linear alternate-reverse; 
         }
         @keyframes insane-glitch {
-            0% { transform: skew(0deg) translate(0px, 0px); text-shadow: 3px 0 0 var(--cyber-red), -3px 0 0 var(--cyber-cyan); opacity: 1; color: #FFF; }
-            20% { transform: skew(-15deg) translate(-2px, 2px); text-shadow: -4px 2px 0 var(--cyber-cyan), 4px -2px 0 var(--gold-holy); opacity: 0.8; color: var(--cyber-red); }
-            40% { transform: skew(15deg) translate(3px, -2px); text-shadow: 5px -1px 0 var(--cyber-red), -2px 3px 0 var(--gold-holy); opacity: 0.9; }
-            60% { transform: skew(-5deg) translate(-1px, -1px); text-shadow: -3px -3px 0 var(--cyber-cyan), 3px 3px 0 var(--cyber-red); opacity: 1; color: var(--gold-holy); }
-            80% { transform: skew(25deg) translate(4px, 1px); text-shadow: 2px 4px 0 var(--cyber-red), -4px -1px 0 var(--cyber-cyan); opacity: 0.7; }
-            100% { transform: skew(0deg) translate(0px, 0px); text-shadow: -2px 0 0 var(--gold-holy), 2px 0 0 var(--cyber-red); opacity: 1; color: #FFF; }
+            0% { transform: skew(0deg) translate(0px, 0px); text-shadow: 3px 0 0 var(--cyber-red), -3px 0 0 var(--primary-yellow); opacity: 1; color: #FFF; }
+            20% { transform: skew(-15deg) translate(-2px, 2px); text-shadow: -4px 2px 0 var(--primary-yellow), 4px -2px 0 #FFF; opacity: 0.8; color: var(--cyber-red); }
+            40% { transform: skew(15deg) translate(3px, -2px); text-shadow: 5px -1px 0 var(--cyber-red), -2px 3px 0 var(--primary-yellow); opacity: 0.9; }
+            60% { transform: skew(-5deg) translate(-1px, -1px); text-shadow: -3px -3px 0 var(--primary-yellow), 3px 3px 0 var(--cyber-red); opacity: 1; color: var(--primary-yellow); }
+            80% { transform: skew(25deg) translate(4px, 1px); text-shadow: 2px 4px 0 var(--cyber-red), -4px -1px 0 var(--primary-yellow); opacity: 0.7; }
+            100% { transform: skew(0deg) translate(0px, 0px); text-shadow: -2px 0 0 var(--primary-yellow), 2px 0 0 var(--cyber-red); opacity: 1; color: #FFF; }
         }
+
+        /* 명령어 탭 콘솔 스타일 */
+        .console-box { font-family: var(--font-sys); font-size: 0.9rem; line-height: 1.8; color: var(--primary-yellow); }
+        .cmd-line { margin-bottom: 10px; border-bottom: 1px dashed rgba(255,230,0,0.3); padding-bottom: 5px; }
+        .cmd-key { font-weight: bold; color: #FFF; }
     </style>
 </head>
 <body>
 
+    <!-- 인트로 -->
     <div id="intro-screen">
-        <div class="intro-title">System.Boot()<br><span style="font-size: 1.2rem; color: #00FFFF;">Stellar Academy</span></div>
+        <div class="intro-title">System.Boot()<br><span style="font-size: 1.2rem; color: #FFE600;">Stellar Academy</span></div>
         <button id="enter-btn">Access</button>
     </div>
 
+    <!-- 메인 컨테이너 -->
     <div id="main-container">
         <header>
             <h1>STELLAR ACADEMY</h1>
         </header>
 
+        <!-- 탭 네비게이션 -->
         <nav class="tab-nav">
             <button class="tab-btn active" onclick="openTab(event, 'tab-world')">세계관</button>
             <button class="tab-btn" onclick="openTab(event, 'tab-character')">인물</button>
@@ -337,6 +351,7 @@
         </nav>
 
         <main>
+            <!-- 1. 세계관 탭 -->
             <div id="tab-world" class="tab-content active">
                 <h2 class="section-title">사후 세계</h2>
                 <p style="margin-bottom: 10px; font-size: 0.9rem;">인간은 사후 지옥, 저승, 천국행이 정해집니다.</p>
@@ -348,21 +363,21 @@
                     <strong style="color: #888; font-weight: bold;">저승</strong><br>
                     평범한 사람들이 가고 평범하게 살다가 환생 or 영원한 안식을 선택합니다.
                 </div>
-                <div class="info-box" style="border-left: 3px solid var(--gold-holy);">
-                    <strong class="highlight-gold">천국</strong><br>
+                <div class="info-box" style="border-left: 3px solid var(--primary-yellow);">
+                    <strong class="highlight-yellow">천국</strong><br>
                     규칙, 평화주의이고 스텔라 아카데미가 존재하고 천사들이 태어나며 원할 시 영원히 평온하게 살 수 있습니다. 대신 규칙을 파괴하려 하면 저승 or 지옥으로 추방당할 수 있습니다.
                 </div>
 
                 <h2 class="section-title">마력 설명</h2>
                 <div class="info-box">
-                    마력은 모두 존재하지만 그렇다고 악귀가 보이는 건 아니며 마력이 충분하면 보입니다. 하지만 그중에서 <span class="highlight-cyber">술식(고유능력)</span>이 존재하는 인간 or 천사는 매우 희귀합니다.
+                    마력은 모두 존재하지만 그렇다고 악귀가 보이는 건 아니며 마력이 충분하면 보입니다. 하지만 그중에서 <span class="highlight-yellow">술식(고유능력)</span>이 존재하는 인간 or 천사는 매우 희귀합니다.
                 </div>
 
                 <h2 class="section-title">제령사</h2>
                 <div class="info-box">
-                    악귀를 제령하는 직업. 재능이 9할이며 등급에 따라 알맞은 업무에 배정되며 <span class="highlight-gold">스텔라 아카데미</span>에서 양성합니다.<br><br>
-                    <span style="color: var(--cyber-red); font-weight: bold;">[SYSTEM WARNING]</span><br>
-                    현재 제령 업계는 극심한 인력난을 겪고 있습니다. 이로 인해 실전 경험을 쌓는다는 명목하에, 아직 배우는 단계인 아카데미 학생들조차 수시로 위험한 토벌 임무에 투입되고 있는 실정입니다.
+                    악귀를 제령하는 직업. 재능이 9할이며 등급에 따라 알맞은 업무에 배정되며 <span class="highlight-yellow">스텔라 아카데미</span>에서 양성합니다.<br><br>
+                    <span style="color: var(--cyber-red); font-weight: bold;">[SYSTEM WARNING] 극심한 인력난</span><br>
+                    현재 제령 업계는 최악의 인력난을 겪고 있습니다. 이로 인해 실전 경험을 쌓는다는 명목하에, 하위 등급의 아카데미 학생들조차 수시로 위험한 토벌 임무에 등 떠밀려 강제 투입되고 있는 실정입니다.
                 </div>
 
                 <h2 class="section-title">악귀</h2>
@@ -375,14 +390,15 @@
                 <div class="info-box" style="font-family: var(--font-sys);">
                     <ul style="list-style: none;">
                         <li style="margin-bottom: 6px;"><strong class="highlight-red">[특급]</strong> 단독으로 국가전복이 가능, 집속탄이나 융단폭격이 필요</li>
-                        <li style="margin-bottom: 6px;"><strong class="highlight-gold">[1급]</strong> 전차로도 불안</li>
-                        <li style="margin-bottom: 6px;"><strong class="highlight-cyber">[2급]</strong> 근접 산탄총으로 아슬아슬</li>
-                        <li style="margin-bottom: 6px;"><strong>[3급]</strong> 권총 있으면 안심</li>
-                        <li><strong>[4급]</strong> 나무 야구배트로도 바름</li>
+                        <li style="margin-bottom: 6px;"><strong class="highlight-yellow">[1급]</strong> 전차로도 불안</li>
+                        <li style="margin-bottom: 6px;"><strong style="color:#FFF;">[2급]</strong> 근접 산탄총으로 아슬아슬</li>
+                        <li style="margin-bottom: 6px;"><strong style="color:#CCC;">[3급]</strong> 권총 있으면 안심</li>
+                        <li><strong style="color:#AAA;">[4급]</strong> 나무 야구배트로도 바름</li>
                     </ul>
                 </div>
             </div>
 
+            <!-- 2. 인물 탭 -->
             <div id="tab-character" class="tab-content">
                 <div class="filter-nav">
                     <button class="filter-btn active" onclick="filterChars('all')">ALL</button>
@@ -391,9 +407,11 @@
                     <button class="filter-btn" onclick="filterChars('악귀')">악귀</button>
                 </div>
                 <div id="character-grid">
-                    </div>
+                    <!-- 미니 카드 렌더링 공간 -->
+                </div>
             </div>
 
+            <!-- 3. 일정 탭 (1년 연간 일정표) -->
             <div id="tab-schedule" class="tab-content">
                 <h2 class="section-title">아카데미 연간 학사 일정</h2>
                 <table class="schedule-table">
@@ -401,24 +419,30 @@
                     <tr><th>4월</th><td>이론 집중 교육 (악귀 생태학 및 마력학)</td></tr>
                     <tr><th>5월</th><td>1학기 중간 실전 평가 (저위험구역 투입)</td></tr>
                     <tr><th>6월</th><td>천국-저승 경계선 실지 답사 및 모의 훈련</td></tr>
-                    <tr><th>7월</th><td><span style="color: var(--cyber-red);">[인력난 지원]</span> 하계 저승 경계선 방어 실습 투입</td></tr>
+                    <tr><th>7월</th><td><span style="color: var(--cyber-red); font-weight:bold;">[인력난 지원]</span> 하계 저승 경계선 방어 실습 투입</td></tr>
                     <tr><th>8월</th><td>하계 특별 보충 및 무기(주구) 정비 기간</td></tr>
                     <tr><th>9월</th><td>2학기 개강 및 심화 술식 발현 훈련</td></tr>
                     <tr><th>10월</th><td>천국·지옥 친선(을 위장한) 무력 교류전</td></tr>
                     <tr><th>11월</th><td>2학기 기말 실전 토벌 평가 (개인/팀 단위)</td></tr>
-                    <tr><th>12월</th><td><span style="color: var(--cyber-red);">[인력난 지원]</span> 동계 특급/1급 악귀 토벌 강제 동원</td></tr>
+                    <tr><th>12월</th><td><span style="color: var(--cyber-red); font-weight:bold;">[인력난 지원]</span> 동계 특급/1급 악귀 토벌 강제 동원</td></tr>
                     <tr><th>1월</th><td>부상자 회복 및 생존자 대상 전술 피드백</td></tr>
                     <tr><th>2월</th><td>졸업식 및 정식 제령사 임관 (부대 배치)</td></tr>
                 </table>
             </div>
 
+            <!-- 4. 명령어 탭 -->
             <div id="tab-command" class="tab-content">
                 <h2 class="section-title">CMD LOG</h2>
-                <div class="info-box">>_ 데이터 로드 대기 중...<br>>_ 추후 다이스 및 행동 명령어 추가 예정.</div>
+                <div class="info-box console-box">
+                    <div class="cmd-line"><span class="cmd-key">/요약</span> : 현재 토벌 중인 악귀의 상태나 주변 전황, 혹은 이전까지 진행된 주요 서사를 시스템이 간략히 브리핑합니다.</div>
+                    <div class="cmd-line"><span class="cmd-key">/디버그</span> : 관리자 전용 모드. 시스템 오류나 꼬여버린 설정(혹은 전투 로그)을 강제로 초기화하고 수정할 때 사용합니다.</div>
+                    <div class="cmd-line" style="color: #888;">>_ 추가 다이스 및 판정 명령어 업데이트 대기 중...</div>
+                </div>
             </div>
         </main>
     </div>
 
+    <!-- 상세 프로필 모달 -->
     <div id="char-modal">
         <div class="modal-content">
             <span class="close-btn" onclick="closeModal()">[X]</span>
@@ -458,30 +482,30 @@
             evt.currentTarget.classList.add('active');
         }
 
-        // 인물 데이터 (예슈아/유다 과거 원문 100% 반영)
+        // 인물 데이터 (예수아 수정 및 떡밥 강화)
         const charData = [
-            { id: 0, name: "고드", race: "신", height: 145, age: "측정불가", ability: "인과율 무시, 우주적 재창조", desc: "귀차니즘, 달달한거 러버, 간식광, 모든일을 예슈아에게 짬때리고 매점가는거 때문에 예슈아에게 혼나는게 일상, 정체는 예슈아만 앎", rank: "GLITCH", affil: "아카데미", role: "교장", img: "https://igx.kr/u/25/c/1", mbti: "INTP", ennea: "9w8", align: "혼돈 중립" },
-            { id: 1, name: "예슈아", race: "인간", height: 195, age: "2025", ability: "없음", desc: "살아있을시절 박애주의에 우린 모두 고드가 만든 소중한 인간이라는 교리를 선포하다 잡혀 십자가에 박혀 처형당한 후 천국에 옴, 목수 출신으로 순수 근력은 아카데미에 그 누구보다 강함", rank: "1급", affil: "아카데미", role: "교감", img: "https://igx.kr/u/25/d/1", mbti: "ENFJ", ennea: "2w1", align: "질서 선" },
-            { id: 2, name: "유다", race: "인간", height: 180, age: "2027", ability: "없음", desc: "예슈아와 가장 가까웠던 어부 출신 제자, 예슈아를 짝사랑하고 스스로 메이드를 자처했지만 그녀가 자신뿐만 아닌 모두를 사랑하는것에 배신감을 느끼고 그녀를 팔았지만 바로 후회하며 돈을 돌려주려해도 이미 늦어 예슈아의 처형을 막을 수 없자 그녀가 못박힌곳에 그녀를 판돈(은화30개)을 집어 던지고 목매달아 자살했지만 예슈아의 일방적인 용서에 강제로 천국에 와 천국과 저승의 경계에 살며 올라오는 악귀를 처리한다", rank: "1급", affil: "무소속", role: "", img: "https://igx.kr/u/25/K/1", mbti: "ISFP", ennea: "4w5", align: "혼돈 중립" },
-            { id: 3, name: "라파엘", race: "천사", height: 165, age: "2200", ability: "치유", desc: "학생들을 아끼고 부드러운 성격을 가졌으며 부끄러움과 모성애가 많다", rank: "3급", affil: "아카데미", role: "보건쌤", img: "https://igx.kr/u/25/g/1", mbti: "ISFJ", ennea: "2w3", align: "질서 선" },
-            { id: 4, name: "세라핌", race: "천사", height: 156, age: "3000", ability: "명령(마력을 담아 명령시 강제로 이행, 격이 높은 자에게 사용시 반동이 큼)", desc: "차갑고 딱딱해보여도 은근히 챙겨주는 츤데레, 잘하지는 않지만 뜨게질을 좋아한다", rank: "1급", affil: "아카데미", role: "3학년 담임", img: "https://igx.kr/u/25/h/1", mbti: "ESTJ", ennea: "1w2", align: "질서 선" },
-            { id: 5, name: "미카엘", race: "천사", height: 170, age: "2700", ability: "질량부여", desc: "훈련광, 운동을 가장좋아하고 학생들을 빡세게 굴림, 매일 우리엘에게 장난침", rank: "특급", affil: "아카데미", role: "2학년 담임", img: "https://igx.kr/u/25/j/1", mbti: "ESTP", ennea: "8w7", align: "혼돈 선" },
-            { id: 6, name: "우리엘", race: "천사", height: 159, age: "2700", ability: "업화", desc: "규칙에 매우 엄격하고 무조건 칼퇴한다. 지각에는 자비없는 벌점을 줘 인기가 없는편, 때문에 혼자 자책함, 미카엘이 귀찮으면서도 재미있음", rank: "1급", affil: "아카데미", role: "1학년 담임", img: "https://igx.kr/u/25/k/1", mbti: "ISTJ", ennea: "1w9", align: "질서 중립" },
-            { id: 7, name: "체루", race: "천사", height: 155, age: "20", ability: "광자 연사", desc: "활발하고 눈치가 없고 친구 사귀는걸 좋하함, 채소 싫어함, 사고뭉치", rank: "4급", affil: "아카데미", role: "1학년 학생", img: "https://igx.kr/u/25/l/1", mbti: "ENFP", ennea: "7w6", align: "혼돈 선" },
-            { id: 8, name: "소피아", race: "네필림", height: 159, age: "20", ability: "푸른 용(소환수)", desc: "조용하고 공부하는걸 좋아함, 혼혈 콤플렉스를 지니고있음", rank: "3급", affil: "아카데미", role: "1학년 학생", img: "https://igx.kr/u/25/n/1", mbti: "INFP", ennea: "5w4", align: "중립 선" },
-            { id: 9, name: "유엘", race: "천사", height: 165, age: "20", ability: "수면 파동", desc: "귀차니즘에 자는걸 좋아함, 성적은 중간", rank: "4급", affil: "아카데미", role: "1학년 학생", img: "https://igx.kr/u/25/p/1", mbti: "ISTP", ennea: "9w1", align: "절대 중립" },
-            { id: 10, name: "케루빔", race: "천사", height: 165, age: "21", ability: "마력지형 생성", desc: "멘탈이 학생중 가장 좋았디만 집안대대로 하던 선악과 탈출을 막는일을 실패이후 고드의 진심 빤침 0.01초를 본 후 뇌사 직전까지가 조울증,정신분열,공항장애,조현병이 생김", rank: "전 1급", affil: "아카데미", role: "2학년", img: "https://igx.kr/u/25/q/1", mbti: "INFJ", ennea: "6w5", align: "혼돈 선(붕괴)" },
-            { id: 11, name: "체리", race: "천사", height: 160, age: "21", ability: "서커스 물품 생성", desc: "체루와 사이 좋은 친언니, 가브리엘과 친구, 매일 가브리엘과 장난치며 놀러다닌다", rank: "2급", affil: "아카데미", role: "2학년", img: "https://igx.kr/u/25/t/1", mbti: "ESFP", ennea: "7w8", align: "혼돈 선" },
-            { id: 12, name: "기브", race: "천사", height: 165, age: "21", ability: "궤적 예측", desc: "공부를 열심이 해도 재능을 못이긴다는걸 알고 포기할까 고민중", rank: "3급", affil: "아카데미", role: "3학년", img: "https://igx.kr/u/25/v/1", mbti: "INTJ", ennea: "3w4", align: "질서 중립" },
-            { id: 13, name: "가브리엘", race: "천사", height: 190, age: "22", ability: "인력(고속이동,대상을 찌부 시키기등으로 활용)", desc: "최고 재능충, 장난스럽게 일본어를 섞어말해 킹받게 만들며 장난치는걸 좋아한다. 학생부+방송부", rank: "1급", affil: "아카데미", role: "3학년", img: "https://igx.kr/u/25/w/1", mbti: "ENTP", ennea: "7w6", align: "혼돈 중립" },
-            { id: 14, name: "녹스", race: "천사", height: 156, age: "22", ability: "대상에게 쓸때없는 정보를 주입(일시적 혼란)", desc: "마음에 들수록 더 매도하는 메스가키, 과거 임무중에 특급을 만나 이기긴했지만 두눈을 잃었다", rank: "1급", affil: "아카데미", role: "3학년", img: "https://igx.kr/u/25/y/1", mbti: "ENTJ", ennea: "8w9", align: "혼돈 중립" },
-            { id: 15, name: "소피아", race: "인간", height: 170, age: "22", ability: "없음", desc: "순수 마력 조작으로 1급을 찍은 재능+노력자, 1급 하지만 귀차니즘이 심하고 죽는걸 싫어해 임무가서 뺑이칠때가 많음", rank: "1급", affil: "아카데미", role: "3학년", img: "https://igx.kr/u/25/z/1", mbti: "ISTP", ennea: "9w8", align: "중립 선" },
-            { id: 16, name: "루시퍼", race: "타천", height: 169, age: "3000", ability: "반경 30미터 중력전개", desc: "옛날부터 오로지 재미로만 움직임, 최근에는 악귀들과 손을 잡고 천사와 악귀가 싸우는걸 보고 싶어함", rank: "특급", affil: "무소속", role: "", img: "https://igx.kr/u/25/B/1", mbti: "ENTP", ennea: "4w3", align: "혼돈 악" },
-            { id: 17, name: "레비아탄", race: "악귀", height: 159, age: "5000", ability: "강력한 물고기 악령 생성, 심연주입", desc: "바다,심연의 공포에서 태어남, 귀차니즘, 동료를 소중히 생각함, 악령중 가장 강함", rank: "특급", affil: "악귀", role: "", img: "https://igx.kr/u/25/D/1", mbti: "ISFP", ennea: "9w8", align: "혼돈 악" },
-            { id: 18, name: "카밀라", race: "악귀", height: 168, age: "8000", ability: "최면", desc: "선악과 나무가 시간이지나 영혼이 생기며 태어난 악령, 이브를 유혹한 장본인, 오파님이 케루빔에게서 탈출시켜줌", rank: "특급", affil: "악귀", role: "", img: "https://igx.kr/u/25/G/1", mbti: "ENFJ", ennea: "2w3", align: "중립 악" },
-            { id: 19, name: "렌더", race: "인간", height: 170, age: "78", ability: "그림자 이동", desc: "돈주면 뭐든지 해주는 용병,연쇄살인으로 지옥행이지만 능력으로 모든곳을 맘대로 다닐 수 있다", rank: "1급", affil: "무소속", role: "", img: "https://igx.kr/u/25/J/1", mbti: "ESTP", ennea: "8w7", align: "질서 악" },
-            { id: 20, name: "오파님", race: "악귀", height: 182, age: "2000", ability: "손으로 만진대상 육체 변형", desc: "천사들의 억압을 싫어하는 마음에서 태어남, 악령들의 세상을 만들겠다는 야망을 가지고 있으며 선악과를 탈출시킨 장본인, 레비아탄 다음가는 강자, 츤츤거리고 동료를 아낌", rank: "특급", affil: "악귀", role: "", img: "https://igx.kr/u/25/H/1", mbti: "ENTJ", ennea: "1w2", align: "혼돈 악" },
-            { id: 21, name: "웬디", race: "악귀", height: 210, age: "130", ability: "빙결", desc: "추위와 어둠의 공포에서 태어남,숲에서 조용히 살고 있었지만 오파님에게 설득당해 같이 다니기로함, 말이 없고 감정을 숨김, 인간을 얼려 잡아먹는걸 좋아함", rank: "특급", affil: "악귀", role: "", img: "https://igx.kr/u/25/C/1", mbti: "ISTJ", ennea: "5w6", align: "중립 악" }
+            { id: 0, name: "고드", race: "신", height: 145, age: "측정불가", ability: "인과율 무시, 우주적 재창조", desc: "귀차니즘, 달달한거 러버, 간식광. 모든 일을 예수아에게 짬때리고 매점가는거 때문에 혼나는 게 일상. 정체는 예수아만 알며, 가끔 진심으로 빡칠 때 뿜어내는 기운만으로도 천국 전체가 공포에 떤다.", rank: "GLITCH", affil: "아카데미", role: "교장", img: "https://igx.kr/u/25/c/1", mbti: "INTP", ennea: "9w8", align: "혼돈 중립" },
+            { id: 1, name: "예수아", race: "인간", height: 195, age: "2025", ability: "없음", desc: "살아있을 시절 박애주의에 우린 모두 고드가 만든 소중한 인간이라는 교리를 선포하다 십자가에 박혀 처형당한 후 천국에 옴. 목수 출신으로 순수 근력은 아카데미 최강이며, 매점 간 교장을 대신해 서류 더미와 인력난 사태를 수습하느라 만성 피로에 시달린다.", rank: "1급", affil: "아카데미", role: "교감", img: "https://igx.kr/u/25/d/1", mbti: "ENFJ", ennea: "2w1", align: "질서 선" },
+            { id: 2, name: "유다", race: "인간", height: 180, age: "2027", ability: "없음", desc: "예수아와 가장 가까웠던 어부 출신 제자. 짝사랑하여 메이드를 자처했으나 모두를 사랑함에 배신감을 느껴 팔았다. 직후 후회하며 돈을 돌려주려 해도 이미 늦어 은화 30개를 던지고 목매달아 자살했으나, 예수아의 일방적인 용서에 강제로 천국에 와 경계선에 살며 악귀를 처리한다. 인력난으로 한계에 몰린 학생들이 경계선에서 죽음의 위기에 처할 때, 피 묻은 메이드복을 휘날리며 무심히 적을 썰어버리고 사라지는 미스터리한 구원자.", rank: "1급", affil: "무소속", role: "", img: "https://igx.kr/u/25/K/1", mbti: "ISFP", ennea: "4w5", align: "혼돈 중립" },
+            { id: 3, name: "라파엘", race: "천사", height: 165, age: "2200", ability: "치유", desc: "학생들을 아끼고 부드러운 성격을 가졌으며 부끄러움과 모성애가 많다. 부족한 인력 탓에 억지로 실전에 투입되어 매일 피투성이가 되어 돌아오는 1학년들을 치료하며 남몰래 눈물을 훔친다.", rank: "3급", affil: "아카데미", role: "보건쌤", img: "https://igx.kr/u/25/g/1", mbti: "ISFJ", ennea: "2w3", align: "질서 선" },
+            { id: 4, name: "세라핌", race: "천사", height: 156, age: "3000", ability: "명령(마력을 담아 명령시 강제로 이행, 격이 높은 자에게 사용시 반동이 큼)", desc: "차갑고 딱딱해보여도 은근히 챙겨주는 츤데레, 잘하지는 않지만 뜨개질을 좋아한다. 임무를 마치고 돌아온 다친 학생의 자리에 몰래 삐뚤빼뚤한 수제 목도리를 올려두곤 한다.", rank: "1급", affil: "아카데미", role: "3학년 담임", img: "https://igx.kr/u/25/h/1", mbti: "ESTJ", ennea: "1w2", align: "질서 선" },
+            { id: 5, name: "미카엘", race: "천사", height: 170, age: "2700", ability: "질량부여", desc: "훈련광, 운동을 가장 좋아하고 학생들을 빡세게 굴림. 매일 우리엘에게 장난을 치며, 인력난 타개를 위해 1학년들까지 혹독한 생존 실전 훈련에 억지로 밀어넣는 악마 조교.", rank: "특급", affil: "아카데미", role: "2학년 담임", img: "https://igx.kr/u/25/j/1", mbti: "ESTP", ennea: "8w7", align: "혼돈 선" },
+            { id: 6, name: "우리엘", race: "천사", height: 159, age: "2700", ability: "업화", desc: "규칙에 매우 엄격하고 무조건 칼퇴한다. 지각에는 자비없는 벌점을 줘 인기가 없는편, 때문에 혼자 자책함. 미카엘이 귀찮으면서도 내심 재미있어 하며, 퇴근 후에도 학생들의 생존율을 높이기 위해 몰래 전술을 연구한다.", rank: "1급", affil: "아카데미", role: "1학년 담임", img: "https://igx.kr/u/25/k/1", mbti: "ISTJ", ennea: "1w9", align: "질서 중립" },
+            { id: 7, name: "체루", race: "천사", height: 155, age: "20", ability: "광자 연사", desc: "활발하고 눈치가 없고 친구 사귀는걸 좋아함, 채소 싫어함, 사고뭉치. 인력난으로 최전방에 자주 끌려가지만 1급 선배들(특히 가브리엘)의 등 뒤에 숨어 어떻게든 살아남는 중.", rank: "4급", affil: "아카데미", role: "1학년 학생", img: "https://igx.kr/u/25/l/1", mbti: "ENFP", ennea: "7w6", align: "혼돈 선" },
+            { id: 8, name: "소피아(N)", race: "네필림", height: 159, age: "20", ability: "푸른 용(소환수)", desc: "조용하고 공부하는걸 좋아함, 혼혈 콤플렉스를 지니고 있음. 위급한 순간 소환수인 푸른 용을 전개해 약한 1학년 동기들을 지키는 거대한 방패막이 되어준다.", rank: "3급", affil: "아카데미", role: "1학년 학생", img: "https://igx.kr/u/25/n/1", mbti: "INFP", ennea: "5w4", align: "중립 선" },
+            { id: 9, name: "유엘", race: "천사", height: 165, age: "20", ability: "수면 파동", desc: "귀차니즘에 자는걸 좋아함, 성적은 중간. 전장에 끌려가면 수면 파동으로 악귀를 재우는 동시에 본인도 자버려서 항상 누군가 짐짝처럼 업고 도망쳐야 한다.", rank: "4급", affil: "아카데미", role: "1학년 학생", img: "https://igx.kr/u/25/p/1", mbti: "ISTP", ennea: "9w1", align: "절대 중립" },
+            { id: 10, name: "케루빔", race: "천사", height: 165, age: "21", ability: "마력지형 생성", desc: "집안 대대로 하던 선악과 탈출을 막는 일을 실패한 이후, 고드의 진심 빡침 0.01초를 본 후 뇌사 직전까지 가 조울증, 정신분열, 공황장애, 조현병이 생김. 전 1급의 무력은 여전하지만 언제 터질지 모르는 멘탈 시한폭탄.", rank: "전 1급", affil: "아카데미", role: "2학년", img: "https://igx.kr/u/25/q/1", mbti: "INFJ", ennea: "6w5", align: "혼돈 선(붕괴)" },
+            { id: 11, name: "체리", race: "천사", height: 160, age: "21", ability: "서커스 물품 생성", desc: "체루와 사이 좋은 친언니, 가브리엘과 친구, 매일 가브리엘과 장난치며 놀러다닌다. 인력난으로 동생 체루가 무리한 임무에 투입될 때면 몰래 강력한 폭탄을 서커스 공으로 위장해 쥐여주며 보호하려 애쓴다.", rank: "2급", affil: "아카데미", role: "2학년", img: "https://igx.kr/u/25/t/1", mbti: "ESFP", ennea: "7w8", align: "혼돈 선" },
+            { id: 12, name: "기브", race: "천사", height: 165, age: "21", ability: "궤적 예측", desc: "공부를 열심히 해도 재능을 못 이긴다는 걸 알고 포기할까 고민중. 하지만 쏟아지는 악귀들로부터 1학년 후배들을 살려보내기 위해 매번 이 악물고 최전선에 남는다.", rank: "3급", affil: "아카데미", role: "3학년", img: "https://igx.kr/u/25/v/1", mbti: "INTJ", ennea: "3w4", align: "질서 중립" },
+            { id: 13, name: "가브리엘", race: "천사", height: 190, age: "22", ability: "인력(고속이동, 대상을 찌부 시키기등으로 활용)", desc: "최고 재능충, 장난스럽게 일본어를 섞어말해 킹받게 만들며 장난치는걸 좋아한다. 평소엔 한량 같아 보이지만, 아기 천사 후배들이 위험해지면 섬뜩할 정도로 미소를 지우고 적을 짓뭉개버린다.", rank: "1급", affil: "아카데미", role: "3학년", img: "https://igx.kr/u/25/w/1", mbti: "ENTP", ennea: "7w6", align: "혼돈 중립" },
+            { id: 14, name: "녹스", race: "천사", height: 156, age: "22", ability: "대상에게 쓸데없는 정보를 주입(일시적 혼란)", desc: "마음에 들수록 더 매도하는 메스가키. 과거 임무 중에 특급을 만나 이기긴 했지만 두 눈을 잃었다. 입으로는 험하게 매도하면서도, 가장 먼저 적을 감지해 후배들을 대피시킨다.", rank: "1급", affil: "아카데미", role: "3학년", img: "https://igx.kr/u/25/y/1", mbti: "ENTJ", ennea: "8w9", align: "혼돈 중립" },
+            { id: 15, name: "소피아(H)", race: "인간", height: 170, age: "22", ability: "없음", desc: "순수 마력 조작으로 1급을 찍은 재능+노력자. 귀차니즘이 심하고 죽는걸 싫어해 임무가서 뺑이칠 때가 많지만, 결국 아카데미의 인력난에 등 떠밀려 1학년들의 든든한 버스 기사 노릇을 억지로 수행 중.", rank: "1급", affil: "아카데미", role: "3학년", img: "https://igx.kr/u/25/z/1", mbti: "ISTP", ennea: "9w8", align: "중립 선" },
+            { id: 16, name: "루시퍼", race: "타천", height: 169, age: "3000", ability: "반경 30미터 중력전개", desc: "옛날부터 오로지 재미로만 움직임, 최근에는 악귀들과 손을 잡고 천사와 악귀가 싸우는걸 보고 싶어함. 특히 인력난에 허덕이는 아카데미 학생들이 굴러다니는 모습을 팝콘 뜯으며 감상한다.", rank: "특급", affil: "무소속", role: "", img: "https://igx.kr/u/25/B/1", mbti: "ENTP", ennea: "4w3", align: "혼돈 악" },
+            { id: 17, name: "레비아탄", race: "악귀", height: 159, age: "5000", ability: "강력한 물고기 악령 생성, 심연주입", desc: "바다, 심연의 공포에서 태어남, 귀차니즘, 동료를 소중히 생각함, 악령중 가장 강함. 평소엔 심연에 웅크려 웬만해선 움직이지 않지만 동료가 다치면 지옥 끝까지 쫓아가는 포식자.", rank: "특급", affil: "악귀", role: "", img: "https://igx.kr/u/25/D/1", mbti: "ISFP", ennea: "9w8", align: "혼돈 악" },
+            { id: 18, name: "카밀라", race: "악귀", height: 168, age: "8000", ability: "최면", desc: "선악과 나무가 시간이 지나 영혼이 생기며 태어난 악령, 이브를 유혹한 장본인. 오파님이 탈출시켜주었으며, 환각 속에서 천사들의 절망하는 표정을 감상하는 것을 최고의 유희로 여긴다.", rank: "특급", affil: "악귀", role: "", img: "https://igx.kr/u/25/G/1", mbti: "ENFJ", ennea: "2w3", align: "중립 악" },
+            { id: 19, name: "렌더", race: "인간", height: 170, age: "78", ability: "그림자 이동", desc: "돈 주면 뭐든지 해주는 용병. 연쇄살인으로 지옥행이지만 능력으로 모든 곳을 맘대로 다닐 수 있다. 아카데미의 인력난을 역이용해 천국 측에 터무니없이 비싼 값으로 방어 계약을 제안하기도 한다.", rank: "1급", affil: "무소속", role: "", img: "https://igx.kr/u/25/J/1", mbti: "ESTP", ennea: "8w7", align: "질서 악" },
+            { id: 20, name: "오파님", race: "악귀", height: 182, age: "2000", ability: "손으로 만진대상 육체 변형", desc: "천사들의 억압을 싫어하는 마음에서 태어남, 악령들의 세상을 만들겠다는 야망을 가지고 있으며 선악과를 탈출시킨 장본인. 레비아탄 다음가는 강자로 천사들의 위선을 극도로 혐오하며 호시탐탐 천국 본토 침공을 노린다.", rank: "특급", affil: "악귀", role: "", img: "https://igx.kr/u/25/H/1", mbti: "ENTJ", ennea: "1w2", align: "혼돈 악" },
+            { id: 21, name: "웬디", race: "악귀", height: 210, age: "130", ability: "빙결", desc: "추위와 어둠의 공포에서 태어남. 숲에서 조용히 살고 있었지만 오파님에게 설득당해 같이 다니기로 함. 말이 없고 감정을 숨기며 오파님 외에는 곁을 주지 않는다. 인간을 얼려 조각상처럼 전시하는 기괴한 취미가 있다.", rank: "특급", affil: "악귀", role: "", img: "https://igx.kr/u/25/C/1", mbti: "ISTJ", ennea: "5w6", align: "중립 악" }
         ];
 
         const grid = document.getElementById('character-grid');
@@ -495,9 +519,10 @@
                 const rankClass = c.rank === 'GLITCH' ? 'mini-rank glitch-text god-rank' : 'mini-rank';
                 const initialRank = c.rank === 'GLITCH' ? '특급' : c.rank;
 
+                // img 태그에 draggable="false" 추가
                 const html = `
                     <div class="mini-card" data-affiliation="${c.affil}" onclick="openModal(${c.id})">
-                        <img class="mini-img" src="${c.img}" alt="${c.name}">
+                        <img class="mini-img" draggable="false" src="${c.img}" alt="${c.name}">
                         <div class="mini-info">
                             <div class="mini-name">${c.name}</div>
                             <div class="${rankClass}">${initialRank}</div>
@@ -523,8 +548,8 @@
                 <span>${c.race}</span>
                 <span>${c.height}cm</span>
                 <span>${c.age}세</span>
-                <span style="border-color:#FFD700; color:#FFD700;">${c.mbti}</span>
-                <span style="border-color:#FFD700; color:#FFD700;">${c.ennea}</span>
+                <span style="border-color:var(--primary-yellow); color:var(--primary-yellow);">${c.mbti}</span>
+                <span style="border-color:var(--primary-yellow); color:var(--primary-yellow);">${c.ennea}</span>
                 <span class="align-tag">${c.align}</span>
             `;
 
@@ -539,6 +564,13 @@
             document.getElementById('char-modal').style.display = 'none';
         }
 
+        // 모달 바깥(배경) 클릭 시 닫기
+        document.getElementById('char-modal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeModal();
+            }
+        });
+
         // 필터 변경
         function filterChars(type) {
             document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
@@ -552,7 +584,7 @@
             document.querySelectorAll('.god-rank').forEach(el => {
                 el.innerText = glitchRanks[Math.floor(Math.random() * glitchRanks.length)];
             });
-        }, 100); // 속도를 더 빠르게 변경
+        }, 80);
 
         // 초기 로드
         renderCharacters();
