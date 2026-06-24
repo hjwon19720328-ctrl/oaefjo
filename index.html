@@ -437,16 +437,19 @@
 </head>
 <body>
 
+    <!-- 인트로 -->
     <div id="intro-screen">
         <div class="intro-title">System.Boot()<br><span>STELLAR ACADEMY</span></div>
         <button id="enter-btn">ACCESS GRANTED</button>
     </div>
 
+    <!-- 메인 컨테이너 -->
     <div id="main-container">
         <header id="main-header">
             <h1 id="main-header-title">STELLAR ACADEMY</h1>
         </header>
 
+        <!-- 탭 네비게이션 -->
         <nav class="tab-nav" id="main-nav">
             <button class="tab-btn active" onclick="openTab(event, 'tab-world')">WORLD</button>
             <button class="tab-btn" onclick="openTab(event, 'tab-character')">ARCHIVE</button>
@@ -455,6 +458,7 @@
         </nav>
 
         <main>
+            <!-- 1. 세계관 탭 -->
             <div id="tab-world" class="tab-content active">
                 <h2 class="section-title">사후 세계 (Afterlife)</h2>
                 <p style="margin-bottom: 15px; font-size: 0.95rem; color: #94A3B8;">인간은 사후 지옥, 저승, 천국행이 정해집니다.</p>
@@ -477,11 +481,11 @@
                     <strong>마력 조작과 술식:</strong> 마력이 순수한 <strong>'전기(연료)'</strong>라면, <span class="highlight-yellow">술식(고유능력)</span>은 그 전기를 사용해 특정한 현상을 일으키는 <strong>'가전제품'</strong>과 같습니다. 거친 마력을 제어하는 '마력 조작'은 혹독한 훈련으로 어느 정도 도달할 수 있으나, 몸에 새겨진 고유한 '술식'의 유무와 형태는 태어날 때부터 영혼과 뇌의 구조에 의해 결정되는 극히 희귀한 재능입니다.
                 </div>
 
-                <h2 class="section-title">제령사 (Exorcist)</h2>
+                <h2 class="section-title">집행관 (Executor)</h2>
                 <div class="info-box">
-                    악귀를 제령하는 직업. 재능이 9할이며 등급에 따라 알맞은 업무에 배정되며 스텔라 아카데미에서 양성합니다.<br><br>
+                    악귀에 대한 처형을 집행하는 직업. 재능이 9할이며 등급에 따라 알맞은 업무에 배정되며 스텔라 아카데미에서 양성합니다.<br><br>
                     <span style="color: var(--cyber-red); font-size: 0.85rem;">[SYSTEM WARNING] 극심한 인력난</span><br>
-                    <span style="font-size: 0.9rem; color: #94A3B8;">현재 제령 업계는 최악의 인력난을 겪고 있습니다. 이로 인해 실전 경험을 쌓는다는 명목하에, 하위 등급의 아카데미 학생들조차 수시로 위험한 토벌 임무에 등 떠밀려 강제 투입되고 있는 실정입니다.</span>
+                    <span style="font-size: 0.9rem; color: #94A3B8;">현재 집행관 진영은 최악의 인력난을 겪고 있습니다. 이로 인해 실전 경험을 쌓는다는 명목하에, 하위 등급의 아카데미 학생들조차 수시로 위험한 토벌 임무에 등 떠밀려 강제 투입되고 있는 실정입니다.</span>
                 </div>
 
                 <h2 class="section-title">악귀 (Curse)</h2>
@@ -490,7 +494,7 @@
                 </div>
 
                 <h2 class="section-title">토벌 등급</h2>
-                <p style="font-size: 0.85rem; margin-bottom: 15px; color: #94A3B8;">해당 등급은 악귀 기준이며 제령사는 해당 등급의 악귀를 상성 상관없이 무조건 이길 수 있어야 합니다. (특급은 국가전복 가능한지 여부이기 때문에 제외)</p>
+                <p style="font-size: 0.85rem; margin-bottom: 15px; color: #94A3B8;">해당 등급은 악귀 기준이며 집행관은 해당 등급의 악귀를 상성 상관없이 무조건 이길 수 있어야 합니다. (특급은 국가전복 가능한지 여부이기 때문에 제외)</p>
                 <div class="info-box" style="font-family: var(--font-sys); font-size: 0.9rem;">
                     <ul style="list-style: none;">
                         <li style="margin-bottom: 8px;"><strong class="highlight-red">[특급]</strong> 단독 국가전복 가능 (집속탄/융단폭격 필요)</li>
@@ -502,6 +506,7 @@
                 </div>
             </div>
 
+            <!-- 2. 인물 탭 -->
             <div id="tab-character" class="tab-content">
                 <div class="search-container" id="search-container">
                     <input type="text" id="char-search" placeholder="SYSTEM SEARCH..." autocomplete="off">
@@ -515,6 +520,7 @@
                 <div id="character-grid"></div>
             </div>
 
+            <!-- 3. 일정 탭 -->
             <div id="tab-schedule" class="tab-content">
                 <h2 class="section-title">아카데미 연간 학사 일정</h2>
                 <table class="schedule-table">
@@ -529,10 +535,11 @@
                     <tr><th>11월</th><td>2학기 기말 실전 토벌 평가 (개인/팀 단위)</td></tr>
                     <tr><th>12월</th><td><span style="color: var(--cyber-red);">[인력난 지원]</span> 동계 특급/1급 악귀 토벌 강제 동원</td></tr>
                     <tr><th>1월</th><td>부상자 회복 및 생존자 대상 전술 피드백</td></tr>
-                    <tr><th>2월</th><td>졸업식 및 정식 제령사 임관 (부대 배치)</td></tr>
+                    <tr><th>2월</th><td>졸업식 및 정식 집행관 임관 (부대 배치)</td></tr>
                 </table>
             </div>
 
+            <!-- 4. 명령어 탭 -->
             <div id="tab-command" class="tab-content">
                 <h2 class="section-title">CMD LOG</h2>
                 <div class="console-box">
@@ -545,6 +552,7 @@
         </main>
     </div>
 
+    <!-- 상세 프로필 모달 -->
     <div id="char-modal">
         <div class="modal-content" id="char-modal-content">
             <span class="close-btn" onclick="closeModal()">✕</span>
@@ -580,7 +588,7 @@
             }, 800);
         });
 
-        // 탭 로직
+        // 탭 로직 
         function openTab(evt, tabName) {
             document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
             document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
@@ -588,7 +596,7 @@
             evt.currentTarget.classList.add('active');
         }
 
-        // 인물 데이터
+        // 인물 데이터 
         const charData = [
             { id: 0, name: "고드", race: "신", height: 145, age: "측정불가", ability: "인과율 무시, 우주적 재창조", desc: "귀차니즘, 달달한거 러버, 간식광. 모든 일을 예수아에게 짬때리고 매점가는거 때문에 혼나는 게 일상. 정체는 예수아만 알며, 가끔 진심으로 빡칠 때 뿜어내는 기운만으로도 천국 전체가 공포에 떤다.", rank: "GLITCH", affil: "아카데미", role: "교장", img: "https://igx.kr/u/25/c/1", mbti: "INTP", ennea: "9w8", align: "혼돈 중립" },
             { id: 1, name: "예수아", race: "인간", height: 195, age: "2025", ability: "없음", desc: "살아있을 시절 박애주의에 우린 모두 고드가 만든 소중한 인간이라는 교리를 선포하다 십자가에 박혀 처형당한 후 천국에 옴. 목수 출신으로 순수 근력은 아카데미 최강이며, 매점 간 교장을 대신해 서류 더미와 인력난 사태를 수습하느라 만성 피로에 시달린다.", rank: "1급", affil: "아카데미", role: "교감", img: "https://igx.kr/u/25/d/1", mbti: "ENFJ", ennea: "2w1", align: "질서 선" },
@@ -699,7 +707,7 @@
             renderCharacters(currentFilter, document.getElementById('char-search').value.trim());
         }
 
-        // 필터 및 정상 검색 렌더링
+        // 필터 및 정상 검색 렌더링 
         function renderCharacters(filter = currentFilter, searchQuery = "") {
             if(isGodMode) return;
             currentFilter = filter;
@@ -741,7 +749,7 @@
             });
         }
 
-        // 모달 열기 (측정불가세 방지)
+        // 모달 열기 
         function openModal(id) {
             if(isGodMode) return;
 
