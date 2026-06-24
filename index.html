@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Stellar Academy System</title>
+    <!-- FontAwesome 추가 (음소거 아이콘용) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         /* ===== 프리미엄 홀리 사이버 테마 변수 ===== */
         :root {
@@ -42,6 +44,30 @@
         }
 
         body.modal-open { overflow: hidden; }
+
+        /* ===== 음소거 버튼 ===== */
+        #mute-btn {
+            display: none; /* 인트로 화면에서는 숨김 */
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1500;
+            background: rgba(20, 22, 28, 0.8);
+            border: 1px solid var(--yellow-border);
+            color: var(--primary-yellow);
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.2rem;
+            backdrop-filter: blur(5px);
+            box-shadow: 0 0 10px rgba(0,0,0,0.5);
+            transition: all 0.3s ease;
+        }
+        #mute-btn:hover {
+            background: rgba(250, 219, 95, 0.2);
+            box-shadow: 0 0 15px var(--yellow-glow);
+        }
 
         /* ===== 이스터에그 (고드 강림 모드) 극대화 기괴 효과 ===== */
         body.god-mode-active {
@@ -82,6 +108,12 @@
             filter: sepia(1) hue-rotate(-50deg) saturate(4) contrast(1.5);
             border-bottom: 1px solid #FF0000;
         }
+        
+        body.god-mode-active #mute-btn {
+            border-color: #FF0000;
+            color: #FF0000;
+            background: rgba(20, 0, 0, 0.8);
+        }
 
         /* ===== 인트로 화면 ===== */
         #intro-screen {
@@ -92,7 +124,7 @@
             justify-content: center;
             align-items: center;
             background: var(--bg-deep);
-            z-index: 1000;
+            z-index: 2000;
             transition: opacity 0.8s ease;
         }
 
@@ -343,7 +375,7 @@
             position: fixed;
             top: 0; left: 0; width: 100vw; height: 100vh;
             background: rgba(5, 5, 8, 0.85);
-            z-index: 2000;
+            z-index: 3000;
             justify-content: center;
             align-items: center;
             backdrop-filter: blur(8px);
@@ -436,6 +468,14 @@
     </style>
 </head>
 <body>
+
+    <!-- 오디오 엘리먼트 -->
+    <audio id="bgm" src="A.mp3" loop></audio>
+
+    <!-- 음소거 버튼 -->
+    <button id="mute-btn" title="Toggle Sound">
+        <i class="fas fa-volume-up"></i>
+    </button>
 
     <!-- 인트로 -->
     <div id="intro-screen">
@@ -576,19 +616,36 @@
         let isGodMode = false;
         let currentFilter = 'all';
 
-        // 인트로 로직
+        // 오디오 제어 로직
+        const bgm = document.getElementById('bgm');
+        const muteBtn = document.getElementById('mute-btn');
+
+        muteBtn.addEventListener('click', () => {
+            bgm.muted = !bgm.muted;
+            if (bgm.muted) {
+                muteBtn.innerHTML = '<i class="fas fa-volume-mute"></i>';
+            } else {
+                muteBtn.innerHTML = '<i class="fas fa-volume-up"></i>';
+            }
+        });
+
+        // 인트로 로직 (오디오 재생 포함)
         document.getElementById('enter-btn').addEventListener('click', () => {
+            // 버튼 클릭 시 오디오 재생 (브라우저 정책 우회)
+            bgm.play().catch(e => console.log('BGM 재생 실패:', e));
+            
             const intro = document.getElementById('intro-screen');
             const main = document.getElementById('main-container');
             intro.style.opacity = '0';
             setTimeout(() => {
                 intro.style.display = 'none';
                 main.style.display = 'block';
+                muteBtn.style.display = 'block'; // 메인 진입 시 음소거 버튼 표시
                 setTimeout(() => main.style.opacity = '1', 50);
             }, 800);
         });
 
-        // 탭 로직 
+        // 탭 로직
         function openTab(evt, tabName) {
             document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
             document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
@@ -596,7 +653,7 @@
             evt.currentTarget.classList.add('active');
         }
 
-        // 인물 데이터 
+        // 인물 데이터
         const charData = [
             { id: 0, name: "고드", race: "신", height: 145, age: "측정불가", ability: "인과율 무시, 우주적 재창조", desc: "귀차니즘, 달달한거 러버, 간식광. 모든 일을 예수아에게 짬때리고 매점가는거 때문에 혼나는 게 일상. 정체는 예수아만 알며, 가끔 진심으로 빡칠 때 뿜어내는 기운만으로도 천국 전체가 공포에 떤다.", rank: "GLITCH", affil: "아카데미", role: "교장", img: "https://igx.kr/u/25/c/1", mbti: "INTP", ennea: "9w8", align: "혼돈 중립" },
             { id: 1, name: "예수아", race: "인간", height: 195, age: "2025", ability: "없음", desc: "살아있을 시절 박애주의에 우린 모두 고드가 만든 소중한 인간이라는 교리를 선포하다 십자가에 박혀 처형당한 후 천국에 옴. 목수 출신으로 순수 근력은 아카데미 최강이며, 매점 간 교장을 대신해 서류 더미와 인력난 사태를 수습하느라 만성 피로에 시달린다.", rank: "1급", affil: "아카데미", role: "교감", img: "https://igx.kr/u/25/d/1", mbti: "ENFJ", ennea: "2w1", align: "질서 선" },
@@ -665,6 +722,9 @@
             isGodMode = true;
             document.body.classList.add('god-mode-active');
             
+            // 오디오 피치 변조 시뮬레이션 (playbackRate 조절)
+            bgm.playbackRate = 0.5;
+            
             // 모든 텍스트 오염
             overrideTextWithHorror();
             
@@ -697,6 +757,9 @@
             isGodMode = false;
             document.body.classList.remove('god-mode-active');
             
+            // 오디오 원상 복구
+            bgm.playbackRate = 1.0;
+            
             // 텍스트 원상 복구
             restoreOriginalText();
             
@@ -707,7 +770,7 @@
             renderCharacters(currentFilter, document.getElementById('char-search').value.trim());
         }
 
-        // 필터 및 정상 검색 렌더링 
+        // 필터 및 정상 검색 렌더링
         function renderCharacters(filter = currentFilter, searchQuery = "") {
             if(isGodMode) return;
             currentFilter = filter;
@@ -749,7 +812,7 @@
             });
         }
 
-        // 모달 열기 
+        // 모달 열기
         function openModal(id) {
             if(isGodMode) return;
 
