@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Stellar Academy System</title>
+    <!-- FontAwesome 추가 (음소거 아이콘용) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         /* ===== 프리미엄 홀리 사이버 테마 변수 ===== */
@@ -14,6 +15,7 @@
             --yellow-glow: rgba(250, 219, 95, 0.3);
             --yellow-border: rgba(250, 219, 95, 0.15);
             --cyber-red: #FF4C4C;
+            --holy-blue: #38BDF8; /* 성력 전용 컬러 */
             --text-main: #E2E8F0;
             --text-muted: #94A3B8;
             --font-sys: 'Courier New', Courier, monospace;
@@ -257,6 +259,7 @@
 
         .highlight-yellow { color: var(--primary-yellow); font-weight: bold; }
         .highlight-red { color: var(--cyber-red); font-weight: bold; }
+        .highlight-blue { color: var(--holy-blue); font-weight: bold; }
 
         /* ===== 일정 탭 테이블 ===== */
         .schedule-table {
@@ -373,7 +376,7 @@
             position: fixed;
             top: 0; left: 0; width: 100vw; height: 100vh;
             background: rgba(5, 5, 8, 0.85);
-            z-index: 2000;
+            z-index: 3000;
             justify-content: center;
             align-items: center;
             backdrop-filter: blur(8px);
@@ -432,6 +435,10 @@
         }
         .modal-tags .highlight-tag { border-color: var(--yellow-border); color: var(--primary-yellow); }
         .modal-tags .align-tag { border-color: rgba(255,76,76,0.3); color: var(--cyber-red); }
+        
+        /* 성력 태그 디자인 */
+        .modal-tags .holy-tag { border-color: rgba(56, 189, 248, 0.4); color: var(--holy-blue); background: rgba(56, 189, 248, 0.05); }
+        .modal-tags .holy-tag.disabled { border-color: rgba(255,255,255,0.05); color: #64748B; background: transparent; text-decoration: line-through; }
 
         .modal-desc-title { font-size: 0.85rem; color: var(--primary-yellow); margin-top: 10px; font-family: var(--font-sys); }
         .modal-desc-body { 
@@ -443,26 +450,51 @@
             margin-top: 8px;
             line-height: 1.6; 
         }
+
+        /* ===== 일반 글리치 효과 ===== */
+        .glitch-text { 
+            color: #FFF !important; 
+            font-family: var(--font-sys); 
+            font-weight: bold;
+            display: inline-block;
+            animation: elegant-glitch 0.15s infinite linear alternate-reverse; 
+        }
+        @keyframes elegant-glitch {
+            0% { transform: translate(0); text-shadow: 2px 0 0 rgba(255,0,60,0.8), -2px 0 0 rgba(250,219,95,0.8); }
+            50% { transform: translate(-1px, 1px); text-shadow: -2px 0 0 rgba(255,0,60,0.8), 2px 0 0 rgba(250,219,95,0.8); color: var(--primary-yellow); }
+            100% { transform: translate(1px, -1px); text-shadow: 2px 0 0 rgba(250,219,95,0.8), -2px 0 0 rgba(255,0,60,0.8); color: #FFF; }
+        }
+
+        /* 명령어 탭 */
+        .console-box { font-family: var(--font-sys); padding: 20px; background: rgba(0,0,0,0.5); border-radius: 8px; }
+        .cmd-line { margin-bottom: 15px; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 10px; }
+        .cmd-line:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+        .cmd-key { color: var(--primary-yellow); font-weight: bold; }
     </style>
 </head>
 <body>
 
+    <!-- 오디오 엘리먼트 -->
     <audio id="bgm" src="A.mp3" loop></audio>
 
+    <!-- 음소거 버튼 -->
     <button id="mute-btn" title="Toggle Sound">
         <i class="fas fa-volume-up"></i>
     </button>
 
+    <!-- 인트로 -->
     <div id="intro-screen">
         <div class="intro-title">System.Boot()<br><span>STELLAR ACADEMY</span></div>
         <button id="enter-btn">ACCESS GRANTED</button>
     </div>
 
+    <!-- 메인 컨테이너 -->
     <div id="main-container">
         <header id="main-header">
             <h1 id="main-header-title">STELLAR ACADEMY</h1>
         </header>
 
+        <!-- 탭 네비게이션 -->
         <nav class="tab-nav" id="main-nav">
             <button class="tab-btn active" onclick="openTab(event, 'tab-world')">WORLD</button>
             <button class="tab-btn" onclick="openTab(event, 'tab-character')">ARCHIVE</button>
@@ -471,6 +503,7 @@
         </nav>
 
         <main>
+            <!-- 1. 세계관 탭 -->
             <div id="tab-world" class="tab-content active">
                 <h2 class="section-title">사후 세계 (Afterlife)</h2>
                 <p style="margin-bottom: 15px; font-size: 0.95rem; color: #94A3B8;">인간은 사후 지옥, 저승, 천국행이 정해집니다.</p>
@@ -487,10 +520,12 @@
                     규칙, 평화주의이고 스텔라 아카데미가 존재하고 천사들이 태어나며 원할 시 영원히 평온하게 살 수 있습니다. 대신 규칙을 파괴하려 하면 저승 or 지옥으로 추방당할 수 있습니다.
                 </div>
 
-                <h2 class="section-title">마력과 술식 (Energy & Technique)</h2>
+                <!-- 마력과 성력(반전술식) 설정 추가 -->
+                <h2 class="section-title">마력과 성력 (Energy & Holy Technique)</h2>
                 <div class="info-box">
-                    <strong>마력(Magic Power)의 기원:</strong> 세상의 모든 지성체(인간, 천사, 악마)가 무의식적으로 흘리는 '감정의 잔재', 특히 스트레스나 분노, 공포 같은 <strong>부정적인 감정의 응어리</strong>에서 기인하는 생명 에너지입니다. 누구에게나 미세하게 흐르지만, 이 감정의 에너지가 일정 궤도 이상으로 짙은 자들만이 악귀를 시각적으로 인지할 수 있습니다.<br><br>
-                    <strong>마력 조작과 술식:</strong> 마력이 순수한 <strong>'전기(연료)'</strong>라면, <span class="highlight-yellow">술식(고유능력)</span>은 그 전기를 사용해 특정한 현상을 일으키는 <strong>'가전제품'</strong>과 같습니다. 거친 마력을 제어하는 '마력 조작'은 혹독한 훈련으로 어느 정도 도달할 수 있으나, 몸에 새겨진 고유한 '술식'의 유무와 형태는 태어날 때부터 영혼과 뇌의 구조에 의해 결정되는 극히 희귀한 재능입니다.
+                    <strong>마력(Magic Power):</strong> 세상의 모든 지성체(인간, 천사, 악마)가 무의식적으로 흘리는 스트레스나 분노, 공포 같은 <strong>부정적인 감정의 응어리</strong>에서 기인하는 생명 에너지입니다. 순수한 파괴와 신체 강화에 특화되어 있습니다.<br><br>
+                    <strong>성력(Holy Energy / 반전술식):</strong> 부정적인 마력(마이너스)에 마력(마이너스)을 충돌시켜 생성해내는 <span class="highlight-blue">긍정적인 에너지</span>입니다. 연비가 극악에 달하고 고도의 조작이 필요해 극소수만 도달할 수 있는 경지입니다. 파괴가 아닌 <strong>'창조와 치유'</strong>의 힘을 가져 육체의 상처를 재생할 수 있습니다.<br><br>
+                    <strong>아웃풋(Output):</strong> 체내에서 만든 성력을 몸 밖으로 뿜어내는 궁극의 기술입니다. 이를 통해 타인을 치유할 수 있으며, 반대로 순수한 부정적 마력 덩어리인 <strong>악귀</strong>에게 이 긍정적인 에너지를 주입하면 극상성으로 작용해 <span class="highlight-red">닿는 즉시 치명적인 소멸 피해</span>를 입힙니다.
                 </div>
 
                 <h2 class="section-title">집행관 (Executor)</h2>
@@ -518,6 +553,7 @@
                 </div>
             </div>
 
+            <!-- 2. 인물 탭 -->
             <div id="tab-character" class="tab-content">
                 <div class="search-container" id="search-container">
                     <input type="text" id="char-search" placeholder="SYSTEM SEARCH..." autocomplete="off">
@@ -531,6 +567,7 @@
                 <div id="character-grid"></div>
             </div>
 
+            <!-- 3. 일정 탭 -->
             <div id="tab-schedule" class="tab-content">
                 <h2 class="section-title">아카데미 연간 학사 일정</h2>
                 <table class="schedule-table">
@@ -549,6 +586,7 @@
                 </table>
             </div>
 
+            <!-- 4. 명령어 탭 -->
             <div id="tab-command" class="tab-content">
                 <h2 class="section-title">CMD LOG</h2>
                 <div class="console-box">
@@ -561,6 +599,7 @@
         </main>
     </div>
 
+    <!-- 상세 프로필 모달 -->
     <div id="char-modal">
         <div class="modal-content" id="char-modal-content">
             <span class="close-btn" onclick="closeModal()">✕</span>
@@ -614,30 +653,30 @@
             evt.currentTarget.classList.add('active');
         }
 
-        // 22명 캐릭터 전체 보존 및 사용무기(weapon) 데이터 추가
+        // 인물 데이터 (성력(holy) 및 아웃풋(holyOut) 속성 추가)
         const charData = [
-            { id: 0, name: "고드", race: "신", height: 145, age: "측정불가", weapon: "없음", ability: "인과율 무시, 우주적 재창조", desc: "귀차니즘, 달달한거 러버, 간식광. 모든 일을 예수아에게 짬때리고 매점가는거 때문에 혼나는 게 일상. 정체는 예수아만 알며, 가끔 진심으로 빡칠 때 뿜어내는 기운만으로도 천국 전체가 공포에 떤다.", rank: "GLITCH", affil: "아카데미", role: "교장", img: "https://igx.kr/u/25/c/1", mbti: "INTP", ennea: "9w8", align: "혼돈 중립" },
-            { id: 1, name: "예수아", race: "인간", height: 195, age: "2025", weapon: "없음 (순수 근력)", ability: "없음", desc: "살아있을 시절 박애주의에 우린 모두 고드가 만든 소중한 인간이라는 교리를 선포하다 십자가에 박혀 처형당한 후 천국에 옴. 목수 출신으로 순수 근력은 아카데미 최강이며, 매점 간 교장을 대신해 서류 더미와 인력난 사태를 수습하느라 만성 피로에 시달린다.", rank: "1급", affil: "아카데미", role: "교감", img: "https://igx.kr/u/25/d/1", mbti: "ENFJ", ennea: "2w1", align: "질서 선" },
-            { id: 2, name: "유다", race: "인간", height: 180, age: "2027", weapon: "집행용 사슬 단검", ability: "없음", desc: "예수아와 가장 가까웠던 어부 출신 제자. 짝사랑하여 메이드를 자처했으나 모두를 사랑함에 배신감을 느껴 팔았다. 직후 후회하며 돈을 돌려주려 해도 이미 늦어 은화 30개를 던지고 목매달아 자살했으나, 예수아의 일방적인 용서에 강제로 천국에 와 경계선에 살며 악귀를 처리한다. 인력난으로 한계에 몰린 학생들이 경계선에서 죽음의 위기에 처할 때, 피 묻은 메이드복을 휘날리며 무심히 적을 썰어버리고 사라지는 미스터리한 구원자.", rank: "1급", affil: "무소속", role: "", img: "https://igx.kr/u/25/K/1", mbti: "ISFP", ennea: "4w5", align: "혼돈 중립" },
-            { id: 3, name: "라파엘", race: "천사", height: 165, age: "2200", weapon: "성수 스프레이 및 마력 주사기", ability: "치유", desc: "학생들을 아끼고 부드러운 성격을 가졌으며 부끄러움과 모성애가 많다. 부족한 인력 탓에 억지로 실전에 투입되어 매일 피투성이가 되어 돌아오는 1학년들을 치료하며 남몰래 눈물을 훔친다.", rank: "3급", affil: "아카데미", role: "보건쌤", img: "https://igx.kr/u/25/g/1", mbti: "ISFJ", ennea: "2w3", align: "질서 선" },
-            { id: 4, name: "세라핌", race: "천사", height: 156, age: "3000", weapon: "규율의 특수 와이어 바늘", ability: "명령(마력을 담아 명령시 강제로 이행, 격이 높은 자에게 사용시 반동이 큼)", desc: "차갑고 딱딱해보여도 은근히 챙겨주는 츤데레, 잘하지는 않지만 뜨개질을 좋아한다. 임무를 마치고 돌아온 다친 학생의 자리에 몰래 삐뚤빼뚤한 수제 목도리를 올려두곤 한다.", rank: "1급", affil: "아카데미", role: "3학년 담임", img: "https://igx.kr/u/25/h/1", mbti: "ESTJ", ennea: "1w2", align: "질서 선" },
-            { id: 5, name: "미카엘", race: "천사", height: 170, age: "2700", weapon: "질량 가변형 강철 톤파", ability: "질량부여", desc: "훈련광, 운동을 가장 좋아하고 학생들을 빡세게 굴림. 매일 우리엘에게 장난을 치며, 인력난 타개를 위해 1학년들까지 혹독한 생존 실전 훈련에 억지로 밀어넣는 악마 조교.", rank: "특급", affil: "아카데미", role: "2학년 담임", img: "https://igx.kr/u/25/j/1", mbti: "ESTP", ennea: "8w7", align: "혼돈 선" },
-            { id: 6, name: "우리엘", race: "천사", height: 159, age: "2700", weapon: "업화의 집행 염도(炎刀)", ability: "업화", desc: "규칙에 매우 엄격하고 무조건 칼퇴한다. 지각에는 자비없는 벌점을 줘 인기가 없는편, 때문에 혼자 자책함. 미카엘이 귀찮으면서도 내심 재미있어 하며, 퇴근 후에도 학생들의 생존율을 높이기 위해 몰래 전술을 연구한다.", rank: "1급", affil: "아카데미", role: "1학년 담임", img: "https://igx.kr/u/25/k/1", mbti: "ISTJ", ennea: "1w9", align: "질서 중립" },
-            { id: 7, name: "체루", race: "천사", height: 155, age: "20", weapon: "마력 집속식 광자 쌍권총", ability: "광자 연사", desc: "활발하고 눈치가 없고 친구 사귀는걸 좋아함, 채소 싫어함, 사고뭉치. 인력난으로 최전방에 자주 끌려가지만 1급 선배들(특히 가브리엘)의 등 뒤에 숨어 어떻게든 살아남는 중.", rank: "4급", affil: "아카데미", role: "1학년 학생", img: "https://igx.kr/u/25/l/1", mbti: "ENFP", ennea: "7w6", align: "혼돈 선" },
-            { id: 8, name: "소피아", race: "네필림", height: 159, age: "20", weapon: "청룡 소환용 전술 성령패", ability: "푸른 용(소환수)", desc: "조용하고 공부하는걸 좋아함, 혼혈 콤플렉스를 지니고 있음. 위급한 순간 소환수인 푸른 용을 전개해 약한 1학년 동기들을 지키는 거대한 방패막이 되어준다.", rank: "3급", affil: "아카데미", role: "1학년 학생", img: "https://igx.kr/u/25/n/1", mbti: "INFP", ennea: "5w4", align: "중립 선" },
-            { id: 9, name: "유엘", race: "천사", height: 165, age: "20", weapon: "주구 · 차원의 폭근한 깃털 베개", ability: "수면 파동", desc: "귀차니즘에 자는걸 좋아함, 성적은 중간. 전장에 끌려가면 수면 파동으로 악귀를 재우는 동시에 본인도 자버려서 항상 누군가 짐짝처럼 업고 도망쳐야 한다.", rank: "4급", affil: "아카데미", role: "1학년 학생", img: "https://igx.kr/u/25/p/1", mbti: "ISTP", ennea: "9w1", align: "절대 중립" },
-            { id: 10, name: "케루빔", race: "천사", height: 165, age: "21", weapon: "선악과 수호자의 부서진 낫", ability: "마력지형 생성", desc: "집안 대대로 하던 선악과 탈출을 막는 일을 실패한 이후, 고드의 진심 빡침 0.01초를 본 후 뇌사 직전까지 가 조울증, 정신분열, 공황장애, 조현병이 생김. 전 1급의 무력은 여전하지만 언제 터질지 모르는 멘탈 시한폭탄.", rank: "전 1급", affil: "아카데미", role: "2학년", img: "https://igx.kr/u/25/q/1", mbti: "INFJ", ennea: "6w5", align: "혼돈 선(붕괴)" },
-            { id: 11, name: "체리", race: "천사", height: 160, age: "21", weapon: "고폭성 서커스 저글링 나이프", ability: "서커스 물품 생성", desc: "체루와 사이 좋은 친언니, 가브리엘과 친구, 매일 가브리엘과 장난치며 놀러다닌다. 인력난으로 동생 체루가 무리한 임무에 투입될 때면 몰래 강력한 폭탄을 서커스 공으로 위장해 쥐여주며 보호하려 애쓴다.", rank: "2급", affil: "아카데미", role: "2학년", img: "https://igx.kr/u/25/t/1", mbti: "ESFP", ennea: "7w8", align: "혼돈 선" },
-            { id: 12, name: "기브", race: "천사", height: 165, age: "21", weapon: "궤적 마력 가속형 레이피어", ability: "궤적 예측", desc: "공부를 열심히 해도 재능을 못 이긴다는 걸 알고 포기할까 고민중. 하지만 쏟아지는 악귀들로부터 1학년 후배들을 살려보내기 위해 매번 이 악물고 최전선에 남는다.", rank: "3급", affil: "아카데미", role: "3학년", img: "https://igx.kr/u/25/v/1", mbti: "INTJ", ennea: "3w4", align: "질서 중립" },
-            { id: 13, name: "가브리엘", race: "천사", height: 190, age: "22", weapon: "없음 (공간 압축 너클)", ability: "인력(고속이동, 대상을 찌부 시키기등으로 활용)", desc: "최고 재능충, 장난스럽게 일본어를 섞어말해 킹받게 만들며 장난치는걸 좋아한다. 평소엔 한량 같아 보이지만, 아기 천사 후배들이 위험해지면 섬뜩할 정도로 미소를 지우고 적을 짓뭉개버린다.", rank: "1급", affil: "아카데미", role: "3학년", img: "https://igx.kr/u/25/w/1", mbti: "ENTP", ennea: "7w6", align: "혼돈 중립" },
-            { id: 14, name: "녹스", race: "천사", height: 156, age: "22", weapon: "정보 전개용 매도 부채", ability: "대상에게 쓸데없는 정보를 주입(일시적 혼란)", desc: "마음에 들수록 더 매도하는 메스가키. 과거 임무 중에 특급을 만나 이기긴 했지만 두 눈을 잃었다. 입으로는 험하게 매도하면서도, 가장 먼저 적을 감지해 후배들을 대피시킨다.", rank: "1급", affil: "아카데미", role: "3학년", img: "https://igx.kr/u/25/y/1", mbti: "ENTJ", ennea: "8w9", align: "혼돈 중립" },
-            { id: 15, name: "세릴다", race: "인간", height: 170, age: "22", weapon: "카타나", ability: "없음", desc: "순수 마력 조작으로 1급을 찍은 재능+노력자. 귀차니즘이 심하고 죽는걸 싫어해 임무가서 뺑이칠 때가 많지만, 결국 아카데미의 인력난에 등 떠밀려 1학년들의 든든한 버스 기사 노릇을 억지로 수행 중.", rank: "1급", affil: "아카데미", role: "3학년", img: "https://igx.kr/u/25/z/1", mbti: "ISTP", ennea: "9w8", align: "중립 선" },
-            { id: 16, name: "루시퍼", race: "타천", height: 169, age: "3000", weapon: "반전 중력 전술 우산", ability: "반경 30미터 중력전개", desc: "옛날부터 오로지 재미로만 움직임, 최근에는 악귀들과 손을 잡고 천사와 악귀가 싸우는걸 보고 싶어함. 특히 인력난에 허덕이는 아카데미 학생들이 굴러다니는 모습을 팝콘 뜯으며 감상한다.", rank: "특급", affil: "무소속", role: "", img: "https://igx.kr/u/25/B/1", mbti: "ENTP", ennea: "4w3", align: "혼돈 악" },
-            { id: 17, name: "레비아탄", race: "악귀", height: 159, age: "5000", weapon: "심연 유집 보주", ability: "강력한 물고기 악령 생성, 심연주입", desc: "바다, 심연의 공포에서 태어남, 귀차니즘, 동료를 소중히 생각함, 악령중 가장 강함. 평소엔 심연에 웅크려 웬만해선 움직이지 않지만 동료가 다치면 지옥 끝까지 쫓아가는 포식자.", rank: "특급", affil: "악귀", role: "", img: "https://igx.kr/u/25/D/1", mbti: "ISFP", ennea: "9w8", align: "혼돈 악" },
-            { id: 18, name: "카밀라", race: "악귀", height: 168, age: "8000", weapon: "선악과 나무의 매혹 덩굴", ability: "최면", desc: "선악과 나무가 시간이 지나 영혼이 생기며 태어난 악령, 이브를 유혹한 장본인. 오파님이 탈출시켜주었으며, 환각 속에서 천사들의 절망하는 표정을 감상하는 것을 최고의 유희로 여긴다.", rank: "특급", affil: "악귀", role: "", img: "https://igx.kr/u/25/G/1", mbti: "ENFJ", ennea: "2w3", align: "중립 악" },
-            { id: 19, name: "렌더", race: "인간", height: 170, age: "78", weapon: "그림자 암살용 단검 및 소음 소총", ability: "그림자 이동", desc: "돈 주면 뭐든지 해주는 용병. 연쇄살인으로 지옥행이지만 능력으로 모든 곳을 맘대로 다닐 수 있다. 아카데미의 인력난을 역이용해 천국 측에 터무니없이 비싼 값으로 방어 계약을 제안하기도 한다.", rank: "1급", affil: "무소속", role: "", img: "https://igx.kr/u/25/J/1", mbti: "ESTP", ennea: "8w7", align: "질서 악" },
-            { id: 20, name: "오파님", race: "악귀", height: 182, age: "2000", weapon: "없음 (생체 변형 손)", ability: "손으로 만진대상 육체 변형", desc: "천사들의 억압을 싫어하는 마음에서 태어남, 악령들의 세상을 만들겠다는 야망을 가지고 있으며 선악과를 탈출시킨 장본인. レ비아탄 다음가는 강자로 천사들의 위선을 극도로 혐오하며 호시탐탐 천국 본토 침공을 노린다.", rank: "특급", affil: "악귀", role: "", img: "https://igx.kr/u/25/H/1", mbti: "ENTJ", ennea: "1w2", align: "혼돈 악" },
-            { id: 21, name: "웬디", race: "악귀", height: 210, age: "130", weapon: "절대영도의 얼음 송곳 창", ability: "빙결", desc: "추위와 어둠의 공포에서 태어남. 숲에서 조용히 살고 있었지만 오파님에게 설득당해 같이 다니기로 함. 말이 없고 감정을 숨기며 오파님 외에는 곁을 주지 않는다. 인간을 얼려 조각상처럼 전시하는 기괴한 취미가 있다.", rank: "특급", affil: "악귀", role: "", img: "https://igx.kr/u/25/C/1", mbti: "ISTJ", ennea: "5w6", align: "중립 악" }
+            { id: 0, name: "고드", race: "신", height: 145, age: "측정불가", weapon: "없음", ability: "인과율 무시, 우주적 재창조", desc: "귀차니즘, 달달한거 러버, 간식광. 모든 일을 예수아에게 짬때리고 매점가는거 때문에 혼나는 게 일상. 정체는 예수아만 알며, 가끔 진심으로 빡칠 때 뿜어내는 기운만으로도 천국 전체가 공포에 떤다.", rank: "GLITCH", affil: "아카데미", role: "교장", img: "https://igx.kr/u/25/c/1", mbti: "INTP", ennea: "9w8", align: "혼돈 중립", holy: "O", holyOut: "O" },
+            { id: 1, name: "예수아", race: "인간", height: 195, age: "2025", weapon: "없음 (순수 근력)", ability: "없음", desc: "살아있을 시절 박애주의에 우린 모두 고드가 만든 소중한 인간이라는 교리를 선포하다 십자가에 박혀 처형당한 후 천국에 옴. 목수 출신으로 순수 근력은 아카데미 최강이며, 매점 간 교장을 대신해 서류 더미와 인력난 사태를 수습하느라 만성 피로에 시달린다.", rank: "1급", affil: "아카데미", role: "교감", img: "https://igx.kr/u/25/d/1", mbti: "ENFJ", ennea: "2w1", align: "질서 선", holy: "X", holyOut: "X" },
+            { id: 2, name: "유다", race: "인간", height: 180, age: "2027", weapon: "집행용 사슬 단검", ability: "없음", desc: "예수아와 가장 가까웠던 어부 출신 제자. 짝사랑하여 메이드를 자처했으나 모두를 사랑함에 배신감을 느껴 팔았다. 직후 후회하며 돈을 돌려주려 해도 이미 늦어 은화 30개를 던지고 목매달아 자살했으나, 예수아의 일방적인 용서에 강제로 천국에 와 경계선에 살며 악귀를 처리한다. 인력난으로 한계에 몰린 학생들이 경계선에서 죽음의 위기에 처할 때, 피 묻은 메이드복을 휘날리며 무심히 적을 썰어버리고 사라지는 미스터리한 구원자.", rank: "1급", affil: "무소속", role: "", img: "https://igx.kr/u/25/K/1", mbti: "ISFP", ennea: "4w5", align: "혼돈 중립", holy: "O", holyOut: "O" },
+            { id: 3, name: "라파엘", race: "천사", height: 165, age: "2200", weapon: "성수 스프레이 및 마력 주사기", ability: "치유", desc: "학생들을 아끼고 부드러운 성격을 가졌으며 부끄러움과 모성애가 많다. 부족한 인력 탓에 억지로 실전에 투입되어 매일 피투성이가 되어 돌아오는 1학년들을 치료하며 남몰래 눈물을 훔친다.", rank: "3급", affil: "아카데미", role: "보건쌤", img: "https://igx.kr/u/25/g/1", mbti: "ISFJ", ennea: "2w3", align: "질서 선", holy: "O", holyOut: "O" },
+            { id: 4, name: "세라핌", race: "천사", height: 156, age: "3000", weapon: "규율의 특수 와이어 바늘", ability: "명령(마력을 담아 명령시 강제로 이행, 격이 높은 자에게 사용시 반동이 큼)", desc: "차갑고 딱딱해보여도 은근히 챙겨주는 츤데레, 잘하지는 않지만 뜨개질을 좋아한다. 임무를 마치고 돌아온 다친 학생의 자리에 몰래 삐뚤빼뚤한 수제 목도리를 올려두곤 한다.", rank: "1급", affil: "아카데미", role: "3학년 담임", img: "https://igx.kr/u/25/h/1", mbti: "ESTJ", ennea: "1w2", align: "질서 선", holy: "O", holyOut: "X" },
+            { id: 5, name: "미카엘", race: "천사", height: 170, age: "2700", weapon: "질량 가변형 강철 톤파", ability: "질량부여", desc: "훈련광, 운동을 가장 좋아하고 학생들을 빡세게 굴림. 매일 우리엘에게 장난을 치며, 인력난 타개를 위해 1학년들까지 혹독한 생존 실전 훈련에 억지로 밀어넣는 악마 조교.", rank: "특급", affil: "아카데미", role: "2학년 담임", img: "https://igx.kr/u/25/j/1", mbti: "ESTP", ennea: "8w7", align: "혼돈 선", holy: "O", holyOut: "X" },
+            { id: 6, name: "우리엘", race: "천사", height: 159, age: "2700", weapon: "업화의 집행 염도(炎刀)", ability: "업화", desc: "규칙에 매우 엄격하고 무조건 칼퇴한다. 지각에는 자비없는 벌점을 줘 인기가 없는편, 때문에 혼자 자책함. 미카엘이 귀찮으면서도 내심 재미있어 하며, 퇴근 후에도 학생들의 생존율을 높이기 위해 몰래 전술을 연구한다.", rank: "1급", affil: "아카데미", role: "1학년 담임", img: "https://igx.kr/u/25/k/1", mbti: "ISTJ", ennea: "1w9", align: "질서 중립", holy: "O", holyOut: "X" },
+            { id: 7, name: "체루", race: "천사", height: 155, age: "20", weapon: "마력 집속식 광자 쌍권총", ability: "광자 연사", desc: "활발하고 눈치가 없고 친구 사귀는걸 좋아함, 채소 싫어함, 사고뭉치. 인력난으로 최전방에 자주 끌려가지만 1급 선배들(특히 가브리엘)의 등 뒤에 숨어 어떻게든 살아남는 중.", rank: "4급", affil: "아카데미", role: "1학년 학생", img: "https://igx.kr/u/25/l/1", mbti: "ENFP", ennea: "7w6", align: "혼돈 선", holy: "X", holyOut: "X" },
+            { id: 8, name: "소피아", race: "네필림", height: 159, age: "20", weapon: "청룡 소환용 전술 성령패", ability: "푸른 용(소환수)", desc: "조용하고 공부하는걸 좋아함, 혼혈 콤플렉스를 지니고 있음. 위급한 순간 소환수인 푸른 용을 전개해 약한 1학년 동기들을 지키는 거대한 방패막이 되어준다.", rank: "3급", affil: "아카데미", role: "1학년 학생", img: "https://igx.kr/u/25/n/1", mbti: "INFP", ennea: "5w4", align: "중립 선", holy: "X", holyOut: "X" },
+            { id: 9, name: "유엘", race: "천사", height: 165, age: "20", weapon: "주구 · 차원의 폭근한 깃털 베개", ability: "수면 파동", desc: "귀차니즘에 자는걸 좋아함, 성적은 중간. 전장에 끌려가면 수면 파동으로 악귀를 재우는 동시에 본인도 자버려서 항상 누군가 짐짝처럼 업고 도망쳐야 한다.", rank: "4급", affil: "아카데미", role: "1학년 학생", img: "https://igx.kr/u/25/p/1", mbti: "ISTP", ennea: "9w1", align: "절대 중립", holy: "X", holyOut: "X" },
+            { id: 10, name: "케루빔", race: "천사", height: 165, age: "21", weapon: "선악과 수호자의 부서진 낫", ability: "마력지형 생성", desc: "집안 대대로 하던 선악과 탈출을 막는 일을 실패한 이후, 고드의 진심 빡침 0.01초를 본 후 뇌사 직전까지 가 조울증, 정신분열, 공황장애, 조현병이 생김. 전 1급의 무력은 여전하지만 언제 터질지 모르는 멘탈 시한폭탄.", rank: "전 1급", affil: "아카데미", role: "2학년", img: "https://igx.kr/u/25/q/1", mbti: "INFJ", ennea: "6w5", align: "혼돈 선(붕괴)", holy: "O", holyOut: "X" },
+            { id: 11, name: "체리", race: "천사", height: 160, age: "21", weapon: "고폭성 서커스 저글링 나이프", ability: "서커스 물품 생성", desc: "체루와 사이 좋은 친언니, 가브리엘과 친구, 매일 가브리엘과 장난치며 놀러다닌다. 인력난으로 동생 체루가 무리한 임무에 투입될 때면 몰래 강력한 폭탄을 서커스 공으로 위장해 쥐여주며 보호하려 애쓴다.", rank: "2급", affil: "아카데미", role: "2학년", img: "https://igx.kr/u/25/t/1", mbti: "ESFP", ennea: "7w8", align: "혼돈 선", holy: "X", holyOut: "X" },
+            { id: 12, name: "기브", race: "천사", height: 165, age: "21", weapon: "궤적 마력 가속형 레이피어", ability: "궤적 예측", desc: "공부를 열심히 해도 재능을 못 이긴다는 걸 알고 포기할까 고민중. 하지만 쏟아지는 악귀들로부터 1학년 후배들을 살려보내기 위해 매번 이 악물고 최전선에 남는다.", rank: "3급", affil: "아카데미", role: "3학년", img: "https://igx.kr/u/25/v/1", mbti: "INTJ", ennea: "3w4", align: "질서 중립", holy: "X", holyOut: "X" },
+            { id: 13, name: "가브리엘", race: "천사", height: 190, age: "22", weapon: "없음 (공간 압축 너클)", ability: "인력(고속이동, 대상을 찌부 시키기등으로 활용)", desc: "최고 재능충, 장난스럽게 일본어를 섞어말해 킹받게 만들며 장난치는걸 좋아한다. 평소엔 한량 같아 보이지만, 아기 천사 후배들이 위험해지면 섬뜩할 정도로 미소를 지우고 적을 짓뭉개버린다.", rank: "1급", affil: "아카데미", role: "3학년", img: "https://igx.kr/u/25/w/1", mbti: "ENTP", ennea: "7w6", align: "혼돈 중립", holy: "O", holyOut: "X" },
+            { id: 14, name: "녹스", race: "천사", height: 156, age: "22", weapon: "정보 전개용 매도 부채", ability: "대상에게 쓸데없는 정보를 주입(일시적 혼란)", desc: "마음에 들수록 더 매도하는 메스가키. 과거 임무 중에 특급을 만나 이기긴 했지만 두 눈을 잃었다. 입으로는 험하게 매도하면서도, 가장 먼저 적을 감지해 후배들을 대피시킨다.", rank: "1급", affil: "아카데미", role: "3학년", img: "https://igx.kr/u/25/y/1", mbti: "ENTJ", ennea: "8w9", align: "혼돈 중립", holy: "O", holyOut: "X" },
+            { id: 15, name: "세릴다", race: "인간", height: 170, age: "22", weapon: "카타나", ability: "없음", desc: "순수 마력 조작으로 1급을 찍은 재능+노력자. 귀차니즘이 심하고 죽는걸 싫어해 임무가서 뺑이칠 때가 많지만, 결국 아카데미의 인력난에 등 떠밀려 1학년들의 든든한 버스 기사 노릇을 억지로 수행 중.", rank: "1급", affil: "아카데미", role: "3학년", img: "https://igx.kr/u/25/z/1", mbti: "ISTP", ennea: "9w8", align: "중립 선", holy: "O", holyOut: "X" },
+            { id: 16, name: "루시퍼", race: "타천", height: 169, age: "3000", weapon: "반전 중력 전술 우산", ability: "반경 30미터 중력전개", desc: "옛날부터 오로지 재미로만 움직임, 최근에는 악귀들과 손을 잡고 천사와 악귀가 싸우는걸 보고 싶어함. 특히 인력난에 허덕이는 아카데미 학생들이 굴러다니는 모습을 팝콘 뜯으며 감상한다.", rank: "특급", affil: "무소속", role: "", img: "https://igx.kr/u/25/B/1", mbti: "ENTP", ennea: "4w3", align: "혼돈 악", holy: "O", holyOut: "X" },
+            { id: 17, name: "레비아탄", race: "악귀", height: 159, age: "5000", weapon: "심연 유집 보주", ability: "강력한 물고기 악령 생성, 심연주입", desc: "바다, 심연의 공포에서 태어남, 귀차니즘, 동료를 소중히 생각함, 악령중 가장 강함. 평소엔 심연에 웅크려 웬만해선 움직이지 않지만 동료가 다치면 지옥 끝까지 쫓아가는 포식자.", rank: "특급", affil: "악귀", role: "", img: "https://igx.kr/u/25/D/1", mbti: "ISFP", ennea: "9w8", align: "혼돈 악", holy: "X", holyOut: "X" },
+            { id: 18, name: "카밀라", race: "악귀", height: 168, age: "8000", weapon: "선악과 나무의 매혹 덩굴", ability: "최면", desc: "선악과 나무가 시간이 지나 영혼이 생기며 태어난 악령, 이브를 유혹한 장본인. 오파님이 탈출시켜주었으며, 환각 속에서 천사들의 절망하는 표정을 감상하는 것을 최고의 유희로 여긴다.", rank: "특급", affil: "악귀", role: "", img: "https://igx.kr/u/25/G/1", mbti: "ENFJ", ennea: "2w3", align: "중립 악", holy: "X", holyOut: "X" },
+            { id: 19, name: "렌더", race: "인간", height: 170, age: "78", weapon: "그림자 암살용 단검 및 소음 소총", ability: "그림자 이동", desc: "돈 주면 뭐든지 해주는 용병. 연쇄살인으로 지옥행이지만 능력으로 모든 곳을 맘대로 다닐 수 있다. 아카데미의 인력난을 역이용해 천국 측에 터무니없이 비싼 값으로 방어 계약을 제안하기도 한다.", rank: "1급", affil: "무소속", role: "", img: "https://igx.kr/u/25/J/1", mbti: "ESTP", ennea: "8w7", align: "질서 악", holy: "O", holyOut: "X" },
+            { id: 20, name: "오파님", race: "악귀", height: 182, age: "2000", weapon: "없음 (생체 변형 손)", ability: "손으로 만진대상 육체 변형", desc: "천사들의 억압을 싫어하는 마음에서 태어남, 악령들의 세상을 만들겠다는 야망을 가지고 있으며 선악과를 탈출시킨 장본인. 레비아탄 다음가는 강자로 천사들의 위선을 극도로 혐오하며 호시탐탐 천국 본토 침공을 노린다.", rank: "특급", affil: "악귀", role: "", img: "https://igx.kr/u/25/H/1", mbti: "ENTJ", ennea: "1w2", align: "혼돈 악", holy: "X", holyOut: "X" },
+            { id: 21, name: "웬디", race: "악귀", height: 210, age: "130", weapon: "절대영도의 얼음 송곳 창", ability: "빙결", desc: "추위와 어둠의 공포에서 태어남. 숲에서 조용히 살고 있었지만 오파님에게 설득당해 같이 다니기로 함. 말이 없고 감정을 숨기며 오파님 외에는 곁을 주지 않는다. 인간을 얼려 조각상처럼 전시하는 기괴한 취미가 있다.", rank: "특급", affil: "악귀", role: "", img: "https://igx.kr/u/25/C/1", mbti: "ISTJ", ennea: "5w6", align: "중립 악", holy: "X", holyOut: "X" }
         ];
 
         const grid = document.getElementById('character-grid');
@@ -750,6 +789,10 @@
             document.getElementById('m-role').innerHTML = `${c.affil} | ${c.role || '소속없음'} | ${rankDisplay}`;
             
             const ageText = c.age === "측정불가" ? c.age : c.age + "세";
+            
+            // 성력(holy) & 아웃풋(holyOut) 태그 생성 (O/X 여부에 따라 CSS 클래스 분기)
+            const holyTag = c.holy === "O" ? `<span class="holy-tag">성력 O</span>` : `<span class="holy-tag disabled">성력 X</span>`;
+            const outTag = c.holyOut === "O" ? `<span class="holy-tag">아웃풋 O</span>` : `<span class="holy-tag disabled">아웃풋 X</span>`;
 
             document.getElementById('m-tags').innerHTML = `
                 <span>${c.race}</span>
@@ -758,6 +801,8 @@
                 <span class="highlight-tag">${c.mbti}</span>
                 <span class="highlight-tag">${c.ennea}</span>
                 <span class="align-tag">${c.align}</span>
+                ${holyTag}
+                ${outTag}
             `;
 
             document.getElementById('m-weapon').innerText = c.weapon;
