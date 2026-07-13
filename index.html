@@ -15,7 +15,7 @@
             --yellow-glow: rgba(250, 219, 95, 0.3);
             --yellow-border: rgba(250, 219, 95, 0.15);
             --cyber-red: #FF4C4C;
-            --holy-blue: #38BDF8; /* 성력 전용 컬러 */
+            --holy-blue: #38BDF8; /* 신성력 전용 컬러 */
             --text-main: #E2E8F0;
             --text-muted: #94A3B8;
             --font-sys: 'Courier New', Courier, monospace;
@@ -41,7 +41,7 @@
                 linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
             background-size: 100% 100%, 40px 40px, 40px 40px;
             background-attachment: fixed;
-            transition: all 2s ease;
+            transition: all 1s ease;
         }
 
         body.modal-open { overflow: hidden; }
@@ -50,7 +50,7 @@
         #particle-canvas {
             position: fixed;
             top: 0; left: 0; width: 100vw; height: 100vh;
-            z-index: 1; /* 최하단에서 은은하게 깔림 */
+            z-index: 1;
             pointer-events: none;
             opacity: 0.6;
         }
@@ -79,7 +79,45 @@
             box-shadow: 0 0 15px var(--yellow-glow);
         }
 
-        /* ===== 이스터에그 (고드 강림 모드) 극대화 기괴 효과 ===== */
+        /* ===== 장난 모드 (체리 전용) ===== */
+        body.prank-mode-active {
+            --bg-deep: #2A0845;
+            --bg-glass: rgba(42, 8, 69, 0.8);
+            --primary-yellow: #FF00FF;
+            --yellow-glow: rgba(255, 0, 255, 0.6);
+            --yellow-border: rgba(255, 0, 255, 0.4);
+            --cyber-red: #00FFCC;
+            --holy-blue: #FFFF00;
+            background-image: 
+                radial-gradient(circle at 50% 50%, rgba(255, 0, 255, 0.1) 0%, transparent 60%),
+                linear-gradient(45deg, rgba(0, 255, 204, 0.05) 25%, transparent 25%, transparent 75%, rgba(0, 255, 204, 0.05) 75%, rgba(0, 255, 204, 0.05)),
+                linear-gradient(45deg, rgba(0, 255, 204, 0.05) 25%, transparent 25%, transparent 75%, rgba(0, 255, 204, 0.05) 75%, rgba(0, 255, 204, 0.05));
+            background-size: 100% 100%, 60px 60px, 60px 60px;
+            background-position: 0 0, 0 0, 30px 30px;
+        }
+
+        body.prank-mode-active #main-container {
+            border-radius: 30px;
+            border: 2px dashed #FF00FF;
+            animation: float-tilt 3s ease-in-out infinite;
+        }
+
+        body.prank-mode-active .mini-card {
+            border-radius: 50% 20% / 10% 40%;
+            border: 2px solid #00FFCC;
+        }
+
+        body.prank-mode-active .section-title::before {
+            background: #00FFCC;
+            box-shadow: 0 0 10px #00FFCC;
+        }
+
+        @keyframes float-tilt {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-10px) rotate(1.5deg); }
+        }
+
+        /* ===== 이스터에그 (고드 강림 모드) ===== */
         body.god-mode-active {
             background-color: #050000;
             background-image: repeating-radial-gradient(circle at 50% 50%, #1a0000 0%, #000000 5%);
@@ -96,7 +134,7 @@
         #main-container {
             display: none;
             opacity: 0;
-            transition: opacity 0.8s ease;
+            transition: opacity 0.8s ease, all 0.5s ease;
             max-width: 650px;
             margin: 30px auto;
             padding: 30px 20px;
@@ -108,7 +146,7 @@
             border-radius: 16px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.5);
             position: relative;
-            z-index: 10; /* 파티클보다 위 */
+            z-index: 10; 
         }
 
         body.god-mode-active #main-container {
@@ -116,7 +154,6 @@
             border: 1px solid #FF0000;
             box-shadow: 0 0 50px rgba(255, 0, 0, 0.4), inset 0 0 30px rgba(139, 0, 0, 0.8);
             border-radius: 2px;
-            transition: all 3s ease;
         }
 
         body.god-mode-active .god-horror-text {
@@ -446,7 +483,7 @@
         .modal-tags .highlight-tag { border-color: var(--yellow-border); color: var(--primary-yellow); }
         .modal-tags .align-tag { border-color: rgba(255,76,76,0.3); color: var(--cyber-red); }
         
-        /* 성력 및 아웃풋 태그 디자인 */
+        /* 신성력 및 개방 태그 디자인 */
         .modal-tags .holy-tag { border-color: rgba(56, 189, 248, 0.4); color: var(--holy-blue); background: rgba(56, 189, 248, 0.05); font-weight: bold; }
         .modal-tags .holy-tag.disabled { border-color: rgba(255,255,255,0.05); color: #64748B; background: transparent; text-decoration: line-through; font-weight: normal;}
 
@@ -459,6 +496,28 @@
             border-radius: 8px;
             margin-top: 8px;
             line-height: 1.6; 
+        }
+
+        /* ===== 체리 전용 장난 버튼 ===== */
+        .prank-btn {
+            margin-top: 15px;
+            padding: 12px;
+            width: 100%;
+            background: linear-gradient(45deg, #FF00FF, #00FFCC);
+            border: none;
+            color: #FFF;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            text-shadow: 0 0 5px rgba(0,0,0,0.8);
+            box-shadow: 0 5px 15px rgba(255, 0, 255, 0.4);
+            transition: 0.3s;
+            font-family: var(--font-sys);
+            letter-spacing: 1px;
+        }
+        .prank-btn:hover {
+            transform: scale(1.02);
+            box-shadow: 0 5px 25px rgba(0, 255, 204, 0.6);
         }
 
         /* ===== 일반 글리치 효과 ===== */
@@ -489,6 +548,7 @@
 
     <!-- 오디오 엘리먼트 -->
     <audio id="bgm" src="A.mp3" loop></audio>
+    <audio id="bgm-prank" src="B.mp3" loop></audio>
 
     <!-- 음소거 버튼 -->
     <button id="mute-btn" title="Toggle Sound">
@@ -516,53 +576,57 @@
         </nav>
 
         <main>
-            <!-- 1. 세계관 탭 -->
+            <!-- 1. 세계관 탭 (리뉴얼) -->
             <div id="tab-world" class="tab-content active">
                 <h2 class="section-title">사후 세계 (Afterlife)</h2>
                 <p style="margin-bottom: 15px; font-size: 0.95rem; color: #94A3B8;">인간은 사후 지옥, 저승, 천국행이 정해집니다.</p>
                 <div class="info-box" style="border-left: 2px solid var(--cyber-red);">
                     <strong class="highlight-red">지옥 (Hell)</strong><br>
-                    자유, 능력주의지만 그만큼 고통받아도 아무도 신경을 안 쓰며 악마가 태어납니다.
+                    절대적인 자유와 무력주의가 지배하는 공간. 고통받아도 아무도 구원해주지 않으며, 심연에서 타락체들이 끝없이 태어납니다.
                 </div>
                 <div class="info-box" style="border-left: 2px solid #64748B;">
                     <strong style="color: #CBD5E1; font-weight: bold;">저승 (Limbo)</strong><br>
-                    평범한 사람들이 가고 평범하게 살다가 환생 or 영원한 안식을 선택합니다.
+                    평범한 인간들의 영혼이 머무는 안식처. 평온하게 살아가다 환생을 택하거나 영원한 소멸을 맞이합니다.
                 </div>
                 <div class="info-box" style="border-left: 2px solid var(--primary-yellow);">
                     <strong class="highlight-yellow">천국 (Heaven)</strong><br>
-                    규칙, 평화주의이고 스텔라 아카데미가 존재하고 천사들이 태어나며 원할 시 영원히 평온하게 살 수 있습니다. 대신 규칙을 파괴하려 하면 저승 or 지옥으로 추방당할 수 있습니다.
+                    절대적인 규칙과 질서의 공간. 스텔라 아카데미가 중심에 자리하며 천사들이 탄생합니다. 규율을 파괴하려는 자는 즉시 하위 세계로 추방당합니다.
                 </div>
 
-                <!-- 마력과 성력(반전술식) 설정 -->
-                <h2 class="section-title">마력과 성력 (Energy & Holy Technique)</h2>
+                <!-- 영자(마력)와 권능(술식), 신성력 설정 -->
+                <h2 class="section-title">에테르(마력)와 고유 권능</h2>
                 <div class="info-box">
-                    <strong>마력(Magic Power):</strong> 세상의 모든 지성체(인간, 천사, 악마)가 무의식적으로 흘리는 스트레스나 분노, 공포 같은 <strong>부정적인 감정의 응어리</strong>에서 기인하는 생명 에너지입니다. 순수한 파괴와 신체 강화에 특화되어 있습니다.<br><br>
-                    <strong>성력(Holy Energy / 반전술식):</strong> 부정적인 마력(마이너스)에 마력(마이너스)을 충돌시켜 생성해내는 <span class="highlight-blue">긍정적인 에너지</span>입니다. 연비가 극악에 달하고 고도의 조작이 필요해 극소수만 도달할 수 있는 경지입니다. 파괴가 아닌 <strong>'창조와 치유'</strong>의 힘을 가져 육체의 상처를 재생할 수 있습니다.<br><br>
-                    또한, 이 성력을 자신의 고유 술식에 흘려보내면 <strong>'반대 성질의 술식(술식 반전)'</strong>이 발동됩니다. 이는 기존 술식의 최소 출력 2배에 달하는 압도적인 위력을 자랑하지만, 그만큼 조작 난이도가 기하급수적으로 상승하여 자멸할 위험이 큽니다.<br><br>
-                    <strong>아웃풋(Output):</strong> 생성한 성력을 외부로 방출하는 고등 기술입니다. 성력을 깨우친 자들 중에서도 <strong class="highlight-blue">초초 소수(고드, 유다, 라파엘, 루시퍼)</strong>만이 사용 가능합니다. 타인을 직접 치유할 수 있으며, 특히 성력 아웃풋을 사용하여 많은 양의 긍정적인 에너지가 악귀의 핵심 코어(심장/핵)에 닿는다면 <strong class="highlight-red">악귀는 재생하지 못하고 즉사하게 됩니다.</strong>
+                    <strong>마력 (Aether):</strong> 사후 세계를 떠도는 '영혼의 잔재'와 무질서한 감정의 엔트로피에서 기인하는 근원적 에너지입니다. 기본적으로 파괴와 물리적 간섭력에 특화되어 있습니다.<br><br>
+                    <strong>고유 권능 (Authority):</strong> 마력이 세상을 움직이는 '에너지원'이라면, 권능은 각자의 영혼에 선천적으로 각인된 고유한 <strong>'실행 코드'</strong>입니다. 거친 마력을 제어하는 기술은 훈련으로 습득할 수 있으나, 우주의 법칙을 뒤트는 '고유 권능'의 발현은 극소수의 재능에 불과합니다.
+                </div>
+
+                <h2 class="section-title">신성력과 신성 개방 (Divine Energy)</h2>
+                <div class="info-box">
+                    <strong>신성력 (Divine Aura):</strong> 무질서한 마력과 정반대되는, 천계의 법칙을 강제하는 궁극의 '질서' 에너지입니다. 파괴가 아닌 <strong>'복원과 정화'</strong>의 속성을 지녀 육체의 상처를 재생할 수 있습니다. 연비가 극악에 달해 이를 깨우친 자는 드뭅니다.<br><br>
+                    <strong>신성 개방 (Divine Release):</strong> 체내의 신성력을 외부 공간에 강제로 방출하는 초월적 기술입니다. 천계에서도 <strong class="highlight-blue">오직 극소수(고드, 유다, 라파엘, 루시퍼)</strong>만이 사용 가능합니다. 타인을 직접 치유할 수 있으며, 이 순백의 에너지를 악귀의 핵심인 <strong>'령핵(Soul Core)'</strong>에 직접 꽂아 넣을 경우, 악귀는 어떠한 재생도 하지 못한 채 <span class="highlight-red">즉각적으로 정화(소멸)당합니다.</span>
                 </div>
 
                 <h2 class="section-title">집행관 (Executor)</h2>
                 <div class="info-box">
-                    악귀에 대한 처형을 집행하는 직업. 재능이 9할이며 등급에 따라 알맞은 업무에 배정되며 스텔라 아카데미에서 양성합니다.<br><br>
-                    <span style="color: var(--cyber-red); font-size: 0.85rem;">[SYSTEM WARNING] 극심한 인력난</span><br>
-                    <span style="font-size: 0.9rem; color: #94A3B8;">현재 집행관 진영은 최악의 인력난을 겪고 있습니다. 이로 인해 실전 경험을 쌓는다는 명목하에, 하위 등급의 아카데미 학생들조차 수시로 위험한 토벌 임무에 등 떠밀려 강제 투입되고 있는 실정입니다.</span>
+                    사후 세계의 무질서를 재단하고 악귀들을 처형하는 무력 집단. 스텔라 아카데미에서 이들을 양성합니다.<br><br>
+                    <span style="color: var(--cyber-red); font-size: 0.85rem;">[SYSTEM WARNING] 전시 인력난</span><br>
+                    <span style="font-size: 0.9rem; color: #94A3B8;">현재 집행관 진영은 심각한 인력 고갈에 시달리고 있습니다. 현장 실습이라는 명목하에 하위 등급의 1학년 학생들조차 치명적인 전장으로 내몰리는 중입니다.</span>
                 </div>
 
-                <h2 class="section-title">악귀 (Curse)</h2>
+                <h2 class="section-title">악귀 (Aberration)</h2>
                 <div class="info-box">
-                    인간, 악마, 천사 등등에게서 버려진 부정적인 감정이 모인 마력으로 태어나는 존재. 그들을 잡아먹어 완전한 하나가 되고 싶은 본능을 따르며 높은 등급의 악령은 보통 지능이 높습니다. <strong>단순히 육체가 파괴되어도 마력으로 이루어졌기 때문에, 핵심 코어인 '심장'만 멀쩡하다면 마력이 남아있는 한 무한히 완전 재생이 가능합니다.</strong>
+                    지성체들에게서 버려진 부정적 엔트로피가 뭉쳐 태어난 이형의 괴물. 모든 것을 집어삼켜 완전해지려는 갈망만을 지닙니다. 이들의 육체는 단순한 껍데기일 뿐이며, 체내 깊숙한 곳에 숨겨진 <strong>'령핵(Soul Core)'</strong>이 파괴되지 않는 한 끝없이 재생합니다.
                 </div>
 
-                <h2 class="section-title">토벌 등급</h2>
-                <p style="font-size: 0.85rem; margin-bottom: 15px; color: #94A3B8;">해당 등급은 악귀 기준이며 집행관은 해당 등급의 악귀를 상성 상관없이 무조건 이길 수 있어야 합니다. (특급은 국가전복 가능한지 여부이기 때문에 제외)</p>
+                <h2 class="section-title">위협 등급 (Threat Level)</h2>
+                <p style="font-size: 0.85rem; margin-bottom: 15px; color: #94A3B8;">집행관은 해당 등급의 악귀를 상성 상관없이 제압할 수 있어야 합니다.</p>
                 <div class="info-box" style="font-family: var(--font-sys); font-size: 0.9rem;">
                     <ul style="list-style: none;">
-                        <li style="margin-bottom: 8px;"><strong class="highlight-red">[특급]</strong> 단독 국가전복 가능 (집속탄/융단폭격 필요)</li>
-                        <li style="margin-bottom: 8px;"><strong class="highlight-yellow">[1급]</strong> 전차로도 불안</li>
-                        <li style="margin-bottom: 8px;"><strong style="color:#FFF;">[2급]</strong> 근접 산탄총으로 아슬아슬</li>
-                        <li style="margin-bottom: 8px;"><strong style="color:#94A3B8;">[3급]</strong> 권총 있으면 안심</li>
-                        <li><strong style="color:#64748B;">[4급]</strong> 나무 야구배트로도 바름</li>
+                        <li style="margin-bottom: 8px;"><strong class="highlight-red">[재앙급]</strong> 단독으로 천국/지옥 멸망 가능 (대량 파괴 병기 투입)</li>
+                        <li style="margin-bottom: 8px;"><strong class="highlight-yellow">[위험급]</strong> 중장갑 부대로도 제압 불가</li>
+                        <li style="margin-bottom: 8px;"><strong style="color:#FFF;">[경계급]</strong> 대구경 전술 화기 필요</li>
+                        <li style="margin-bottom: 8px;"><strong style="color:#94A3B8;">[주의급]</strong> 일반 대인 화기로 제압 가능</li>
+                        <li><strong style="color:#64748B;">[일반급]</strong> 비무장 상태로도 격퇴 가능</li>
                     </ul>
                 </div>
             </div>
@@ -585,19 +649,19 @@
             <div id="tab-schedule" class="tab-content">
                 <h2 class="section-title">아카데미 연간 학사 일정</h2>
                 <p style="color: var(--cyber-red); font-size: 0.9rem; margin-bottom: 15px; font-weight: bold;">
-                    ※ [SYSTEM WARNING] 교내외 특급/1급 악귀 출몰 등 비상 상황 발생 시, 예정된 모든 학사 일정은 예고 없이 취소되거나 실전 토벌 임무로 강제 대체될 수 있습니다.
+                    ※ [SYSTEM WARNING] 재앙급/위험급 악귀 출몰 등 비상 상황 발생 시, 예정된 학사 일정은 무기한 취소되며 즉시 실전 처형 임무로 대체됩니다.
                 </p>
                 <table class="schedule-table">
-                    <tr><th>3월</th><td>신입생 입학식 및 마력/술식 측정 평가</td></tr>
-                    <tr><th>4월</th><td>이론 집중 교육 (악귀 생태학 및 마력학)</td></tr>
+                    <tr><th>3월</th><td>신입생 입학식 및 마력/권능 측정 평가</td></tr>
+                    <tr><th>4월</th><td>이론 집중 교육 (심연 생태학 및 영자학)</td></tr>
                     <tr><th>5월</th><td>1학기 중간 실전 평가 (저위험구역 투입)</td></tr>
                     <tr><th>6월</th><td>천국-저승 경계선 실지 답사 및 모의 훈련</td></tr>
-                    <tr><th>7월</th><td><span style="color: var(--cyber-red);">[인력난 지원]</span> 하계 저승 경계선 방어 실습 투입</td></tr>
-                    <tr><th>8월</th><td>하계 특별 보충 및 무기(주구) 정비 기간</td></tr>
-                    <tr><th>9월</th><td>2학기 개강 및 심화 술식 발현 훈련</td></tr>
+                    <tr><th>7월</th><td><span style="color: var(--cyber-red);">[전시 지원]</span> 하계 저승 경계선 방어 실습 투입</td></tr>
+                    <tr><th>8월</th><td>하계 특별 보충 및 전술 주구 정비 기간</td></tr>
+                    <tr><th>9월</th><td>2학기 개강 및 심화 권능 발현 훈련</td></tr>
                     <tr><th>10월</th><td>천국·지옥 친선(을 위장한) 무력 교류전</td></tr>
-                    <tr><th>11월</th><td>2학기 기말 실전 토벌 평가 (개인/팀 단위)</td></tr>
-                    <tr><th>12월</th><td><span style="color: var(--cyber-red);">[인력난 지원]</span> 동계 특급/1급 악귀 토벌 강제 동원</td></tr>
+                    <tr><th>11월</th><td>2학기 기말 실전 집행 평가 (개인/팀 단위)</td></tr>
+                    <tr><th>12월</th><td><span style="color: var(--cyber-red);">[전시 지원]</span> 동계 재앙/위험급 악귀 토벌 강제 동원</td></tr>
                     <tr><th>1월</th><td>부상자 회복 및 생존자 대상 전술 피드백</td></tr>
                     <tr><th>2월</th><td>졸업식 및 정식 집행관 임관 (부대 배치)</td></tr>
                 </table>
@@ -607,10 +671,9 @@
             <div id="tab-command" class="tab-content">
                 <h2 class="section-title">CMD LOG</h2>
                 <div class="console-box">
-                    <div class="cmd-line"><span class="cmd-key">/요약</span> : 현재 토벌 중인 악귀의 상태나 주변 전황, 혹은 이전까지 진행된 주요 서사를 시스템이 간략히 브리핑합니다.</div>
-                    <div class="cmd-line"><span class="cmd-key">/디버그</span> : 관리자 전용 모드. 시스템 오류나 꼬여버린 설정(혹은 전투 로그)을 강제로 초기화하고 수정할 때 사용합니다.</div>
+                    <div class="cmd-line"><span class="cmd-key">/요약</span> : 현재 타겟의 상태나 주변 전황, 혹은 이전까지 진행된 시스템 로그를 브리핑합니다.</div>
+                    <div class="cmd-line"><span class="cmd-key">/디버그</span> : 관리자 전용 모드. 시스템 오류나 꼬여버린 우주적 설정을 강제로 리부트합니다.</div>
                     <div class="cmd-line"><span class="cmd-key" style="color:var(--cyber-red);">고드 그녀는 신이야</span> : 검색이 후회할 것입니다.</div>
-                    <div class="cmd-line" style="color: #64748B; font-size: 0.85rem;">>_ 추가 다이스 및 판정 명령어 업데이트 대기 중...</div>
                 </div>
             </div>
         </main>
@@ -630,16 +693,20 @@
             <div class="modal-desc-title">WEAPON</div>
             <div id="m-weapon" class="modal-desc-body" style="margin-bottom: 20px;"></div>
             
-            <div class="modal-desc-title">ABILITY</div>
+            <div class="modal-desc-title">AUTHORITY</div>
             <div id="m-ability" class="modal-desc-body" style="margin-bottom: 20px;"></div>
             
             <div class="modal-desc-title">ARCHIVE DATA</div>
             <div id="m-desc" class="modal-desc-body"></div>
+
+            <!-- 체리 전용 장난 버튼 렌더링 영역 -->
+            <div id="m-extra"></div>
         </div>
     </div>
 
     <script>
         let isGodMode = false;
+        let isPrankMode = false;
         let currentFilter = 'all';
 
         // ===== 배경 파티클 애니메이션 =====
@@ -700,17 +767,20 @@
         }
         animateParticles();
 
-        // ===== 오디오 제어 =====
-        const bgm = document.getElementById('bgm');
+        // ===== 오디오 및 모드 제어 =====
+        const bgmA = document.getElementById('bgm');
+        const bgmB = document.getElementById('bgm-prank');
         const muteBtn = document.getElementById('mute-btn');
 
         muteBtn.addEventListener('click', () => {
-            bgm.muted = !bgm.muted;
-            muteBtn.innerHTML = bgm.muted ? '<i class="fas fa-volume-mute"></i>' : '<i class="fas fa-volume-up"></i>';
+            const isMuted = !bgmA.muted;
+            bgmA.muted = isMuted;
+            bgmB.muted = isMuted;
+            muteBtn.innerHTML = isMuted ? '<i class="fas fa-volume-mute"></i>' : '<i class="fas fa-volume-up"></i>';
         });
 
         document.getElementById('enter-btn').addEventListener('click', () => {
-            bgm.play().catch(e => console.log('BGM 재생 실패:', e));
+            bgmA.play().catch(e => console.log('BGM 재생 실패:', e));
             const intro = document.getElementById('intro-screen');
             const main = document.getElementById('main-container');
             intro.style.opacity = '0';
@@ -722,6 +792,35 @@
             }, 800);
         });
 
+        function togglePrankMode() {
+            isPrankMode = !isPrankMode;
+            if (isPrankMode) {
+                bgmA.pause();
+                bgmB.currentTime = 0;
+                bgmB.muted = bgmA.muted;
+                bgmB.play().catch(e=>console.log(e));
+                document.body.classList.add('prank-mode-active');
+                
+                // 파티클 서커스 테마 변환
+                particles.forEach(p => {
+                    const colors = ['#FF00FF', '#00FFCC', '#FFFF00'];
+                    p.color = colors[Math.floor(Math.random() * colors.length)];
+                    p.size *= 1.5;
+                    p.speedX = (Math.random() - 0.5) * 2;
+                });
+            } else {
+                bgmB.pause();
+                bgmA.play().catch(e=>console.log(e));
+                document.body.classList.remove('prank-mode-active');
+                
+                particles.forEach(p => {
+                    p.color = p.baseColor;
+                    p.size /= 1.5;
+                    p.speedX = (Math.random() - 0.5) * 0.5;
+                });
+            }
+        }
+
         function openTab(evt, tabName) {
             document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
             document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
@@ -729,37 +828,37 @@
             evt.currentTarget.classList.add('active');
         }
 
-        // 인물 데이터: 유다(단검), 렌더(거대한 낫) 적용 및 아웃풋(holyOut) 태그 부활
+        // 인물 데이터 (새로운 위협 등급 및 권능 적용)
         const charData = [
             { id: 0, name: "고드", race: "신", height: 145, age: "측정불가", weapon: "없음", ability: "인과율 무시, 우주적 재창조", desc: "귀차니즘, 달달한거 러버, 간식광. 모든 일을 예수아에게 짬때리고 매점가는거 때문에 혼나는 게 일상. 정체는 예수아만 알며, 가끔 진심으로 빡칠 때 뿜어내는 기운만으로도 천국 전체가 공포에 떤다.", rank: "GLITCH", affil: "아카데미", role: "교장", img: "https://igx.kr/u/25/c/1", mbti: "INTP", ennea: "9w8", align: "혼돈 중립", holy: "O", holyOut: "O" },
-            { id: 1, name: "예수아", race: "인간", height: 195, age: "2025", weapon: "없음 (맨몸 격투)", ability: "없음", desc: "살아있을 시절 박애주의에 우린 모두 고드가 만든 소중한 인간이라는 교리를 선포하다 십자가에 박혀 처형당한 후 천국에 옴. 목수 출신으로 순수 근력은 아카데미 최강이며, 매점 간 교장을 대신해 서류 더미와 인력난 사태를 수습하느라 만성 피로에 시달린다.", rank: "1급", affil: "아카데미", role: "교감", img: "https://igx.kr/u/25/d/1", mbti: "ENFJ", ennea: "2w1", align: "질서 선", holy: "X", holyOut: "X" },
-            { id: 2, name: "유다", race: "인간", height: 180, age: "2027", weapon: "단검", ability: "없음", desc: "예수아와 가장 가까웠던 어부 출신 제자. 짝사랑하여 메이드를 자처했으나 모두를 사랑함에 배신감을 느껴 팔았다. 직후 후회하며 돈을 돌려주려 해도 이미 늦어 은화 30개를 던지고 목매달아 자살했으나, 예수아의 일방적인 용서에 강제로 천국에 와 경계선에 살며 악귀를 처리한다. 인력난으로 한계에 몰린 학생들이 경계선에서 죽음의 위기에 처할 때, 피 묻은 메이드복을 휘날리며 무심히 적을 썰어버리고 사라지는 미스터리한 구원자.", rank: "1급", affil: "무소속", role: "", img: "https://igx.kr/u/25/K/1", mbti: "ISFP", ennea: "4w5", align: "혼돈 중립", holy: "O", holyOut: "O" },
-            { id: 3, name: "라파엘", race: "천사", height: 165, age: "2200", weapon: "마력 주입식 의료용 메스 및 주사기", ability: "치유", desc: "학생들을 아끼고 부드러운 성격을 가졌으며 부끄러움과 모성애가 많다. 부족한 인력 탓에 억지로 실전에 투입되어 매일 피투성이가 되어 돌아오는 1학년들을 치료하며 남몰래 눈물을 훔친다.", rank: "3급", affil: "아카데미", role: "보건쌤", img: "https://igx.kr/u/25/g/1", mbti: "ISFJ", ennea: "2w3", align: "질서 선", holy: "O", holyOut: "O" },
-            { id: 4, name: "세라핌", race: "천사", height: 156, age: "3000", weapon: "마력 전도성 강철 와이어", ability: "명령(마력을 담아 명령시 강제로 이행, 격이 높은 자에게 사용시 반동이 큼)", desc: "차갑고 딱딱해보여도 은근히 챙겨주는 츤데레, 잘하지는 않지만 뜨개질을 좋아한다. 임무를 마치고 돌아온 다친 학생의 자리에 몰래 삐뚤빼뚤한 수제 목도리를 올려두곤 한다.", rank: "1급", affil: "아카데미", role: "3학년 담임", img: "https://igx.kr/u/25/h/1", mbti: "ESTJ", ennea: "1w2", align: "질서 선", holy: "X", holyOut: "X" },
-            { id: 5, name: "미카엘", race: "천사", height: 170, age: "2700", weapon: "질량 가변형 전술 톤파", ability: "질량부여", desc: "훈련광, 운동을 가장 좋아하고 학생들을 빡세게 굴림. 매일 우리엘에게 장난을 치며, 인력난 타개를 위해 1학년들까지 혹독한 생존 실전 훈련에 억지로 밀어넣는 악마 조교.", rank: "특급", affil: "아카데미", role: "2학년 담임", img: "https://igx.kr/u/25/j/1", mbti: "ESTP", ennea: "8w7", align: "혼돈 선", holy: "O", holyOut: "X" },
-            { id: 6, name: "우리엘", race: "천사", height: 159, age: "2700", weapon: "집행용 흑염도(黑炎刀)", ability: "업화", desc: "규칙에 매우 엄격하고 무조건 칼퇴한다. 지각에는 자비없는 벌점을 줘 인기가 없는편, 때문에 혼자 자책함. 미카엘이 귀찮으면서도 내심 재미있어 하며, 퇴근 후에도 학생들의 생존율을 높이기 위해 몰래 전술을 연구한다.", rank: "1급", affil: "아카데미", role: "1학년 담임", img: "https://igx.kr/u/25/k/1", mbti: "ISTJ", ennea: "1w9", align: "질서 중립", holy: "X", holyOut: "X" },
-            { id: 7, name: "체루", race: "천사", height: 155, age: "20", weapon: "마력 집속식 광자 쌍권총", ability: "광자 연사", desc: "활발하고 눈치가 없고 친구 사귀는걸 좋아함, 채소 싫어함, 사고뭉치. 인력난으로 최전방에 자주 끌려가지만 1급 선배들(특히 가브리엘)의 등 뒤에 숨어 어떻게든 살아남는 중.", rank: "4급", affil: "아카데미", role: "1학년 학생", img: "https://igx.kr/u/25/l/1", mbti: "ENFP", ennea: "7w6", align: "혼돈 선", holy: "X", holyOut: "X" },
-            { id: 8, name: "소피아", race: "네필림", height: 159, age: "20", weapon: "전술 부적 및 성령패", ability: "푸른 용(소환수)", desc: "조용하고 공부하는걸 좋아함, 혼혈 콤플렉스를 지니고 있음. 위급한 순간 소환수인 푸른 용을 전개해 약한 1학년 동기들을 지키는 거대한 방패막이 되어준다.", rank: "3급", affil: "아카데미", role: "1학년 학생", img: "https://igx.kr/u/25/n/1", mbti: "INFP", ennea: "5w4", align: "중립 선", holy: "X", holyOut: "X" },
-            { id: 9, name: "유엘", race: "천사", height: 165, age: "20", weapon: "주구 · 수면 유도용 특수 베개", ability: "수면 파동", desc: "귀차니즘에 자는걸 좋아함, 성적은 중간. 전장에 끌려가면 수면 파동으로 악귀를 재우는 동시에 본인도 자버려서 항상 누군가 짐짝처럼 업고 도망쳐야 한다.", rank: "4급", affil: "아카데미", role: "1학년 학생", img: "https://igx.kr/u/25/p/1", mbti: "ISTP", ennea: "9w1", align: "절대 중립", holy: "X", holyOut: "X" },
-            { id: 10, name: "케루빔", race: "천사", height: 165, age: "21", weapon: "부서진 처형인의 낫", ability: "마력지형 생성", desc: "집안 대대로 하던 선악과 탈출을 막는 일을 실패한 이후, 고드의 진심 빡침 0.01초를 본 후 뇌사 직전까지 가 조울증, 정신분열, 공황장애, 조현병이 생김. 전 1급의 무력은 여전하지만 언제 터질지 모르는 멘탈 시한폭탄.", rank: "전 1급", affil: "아카데미", role: "2학년", img: "https://igx.kr/u/25/q/1", mbti: "INFJ", ennea: "6w5", align: "혼돈 선(붕괴)", holy: "X", holyOut: "X" },
-            { id: 11, name: "체리", race: "천사", height: 160, age: "21", weapon: "고폭성 저글링 나이프 및 특수 폭탄", ability: "서커스 물품 생성", desc: "체루와 사이 좋은 친언니, 가브리엘과 친구, 매일 가브리엘과 장난치며 놀러다닌다. 인력난으로 동생 체루가 무리한 임무에 투입될 때면 몰래 강력한 폭탄을 서커스 공으로 위장해 쥐여주며 보호하려 애쓴다.", rank: "2급", affil: "아카데미", role: "2학년", img: "https://igx.kr/u/25/t/1", mbti: "ESFP", ennea: "7w8", align: "혼돈 선", holy: "X", holyOut: "X" },
-            { id: 12, name: "기브", race: "천사", height: 165, age: "21", weapon: "궤적 가속형 마력 레이피어", ability: "궤적 예측", desc: "공부를 열심히 해도 재능을 못 이긴다는 걸 알고 포기할까 고민중. 하지만 쏟아지는 악귀들로부터 1학년 후배들을 살려보내기 위해 매번 이 악물고 최전선에 남는다.", rank: "3급", affil: "아카데미", role: "3학년", img: "https://igx.kr/u/25/v/1", mbti: "INTJ", ennea: "3w4", align: "질서 중립", holy: "X", holyOut: "X" },
-            { id: 13, name: "가브리엘", race: "천사", height: 190, age: "22", weapon: "마력 압축 너클", ability: "인력(고속이동, 대상을 찌부 시키기등으로 활용)", desc: "최고 재능충, 장난스럽게 일본어를 섞어말해 킹받게 만들며 장난치는걸 좋아한다. 평소엔 한량 같아 보이지만, 아기 천사 후배들이 위험해지면 섬뜩할 정도로 미소를 지우고 적을 짓뭉개버린다.", rank: "1급", affil: "아카데미", role: "3학년", img: "https://igx.kr/u/25/w/1", mbti: "ENTP", ennea: "7w6", align: "혼돈 중립", holy: "X", holyOut: "X" },
-            { id: 14, name: "녹스", race: "천사", height: 156, age: "22", weapon: "정보 교란용 전술 부채", ability: "대상에게 쓸데없는 정보를 주입(일시적 혼란)", desc: "마음에 들수록 더 매도하는 메스가키. 과거 임무 중에 특급을 만나 이기긴 했지만 두 눈을 잃었다. 입으로는 험하게 매도하면서도, 가장 먼저 적을 감지해 후배들을 대피시킨다.", rank: "1급", affil: "아카데미", role: "3학년", img: "https://igx.kr/u/25/y/1", mbti: "ENTJ", ennea: "8w9", align: "혼돈 중립", holy: "X", holyOut: "X" },
-            { id: 15, name: "세릴다", race: "인간", height: 170, age: "22", weapon: "마력 전도성 특주 카타나", ability: "없음", desc: "순수 마력 조작으로 1급을 찍은 재능+노력자. 귀차니즘이 심하고 죽는걸 싫어해 임무가서 뺑이칠 때가 많지만, 결국 아카데미의 인력난에 등 떠밀려 1학년들의 든든한 버스 기사 노릇을 억지로 수행 중.", rank: "1급", affil: "아카데미", role: "3학년", img: "https://igx.kr/u/25/z/1", mbti: "ISTP", ennea: "9w8", align: "중립 선", holy: "X", holyOut: "X" },
-            { id: 16, name: "루시퍼", race: "타천", height: 169, age: "3000", weapon: "반전 중력 전술 우산", ability: "반경 30미터 중력전개", desc: "옛날부터 오로지 재미로만 움직임, 최근에는 악귀들과 손을 잡고 천사와 악귀가 싸우는걸 보고 싶어함. 특히 인력난에 허덕이는 아카데미 학생들이 굴러다니는 모습을 팝콘 뜯으며 감상한다.", rank: "특급", affil: "무소속", role: "", img: "https://igx.kr/u/25/B/1", mbti: "ENTP", ennea: "4w3", align: "혼돈 악", holy: "O", holyOut: "O" },
-            { id: 17, name: "레비아탄", race: "악귀", height: 159, age: "5000", weapon: "무기 사용 안 함 (심연의 마력 자체)", ability: "강력한 물고기 악령 생성, 심연주입", desc: "바다, 심연의 공포에서 태어남, 귀차니즘, 동료를 소중히 생각함, 악령중 가장 강함. 평소엔 심연에 웅크려 웬만해선 움직이지 않지만 동료가 다치면 지옥 끝까지 쫓아가는 포식자.", rank: "특급", affil: "악귀", role: "", img: "https://igx.kr/u/25/D/1", mbti: "ISFP", ennea: "9w8", align: "혼돈 악", holy: "X", holyOut: "X" },
-            { id: 18, name: "카밀라", race: "악귀", height: 168, age: "8000", weapon: "매혹의 덩굴 채찍", ability: "최면", desc: "선악과 나무가 시간이 지나 영혼이 생기며 태어난 악령, 이브를 유혹한 장본인. 오파님이 탈출시켜주었으며, 환각 속에서 천사들의 절망하는 표정을 감상하는 것을 최고의 유희로 여긴다.", rank: "특급", affil: "악귀", role: "", img: "https://igx.kr/u/25/G/1", mbti: "ENFJ", ennea: "2w3", align: "중립 악", holy: "X", holyOut: "X" },
-            { id: 19, name: "렌더", race: "인간", height: 170, age: "78", weapon: "거대한 낫", ability: "그림자 이동", desc: "돈 주면 뭐든지 해주는 용병. 연쇄살인으로 지옥행이지만 능력으로 모든 곳을 맘대로 다닐 수 있다. 아카데미의 인력난을 역이용해 천국 측에 터무니없이 비싼 값으로 방어 계약을 제안하기도 한다.", rank: "1급", affil: "무소속", role: "", img: "https://igx.kr/u/25/J/1", mbti: "ESTP", ennea: "8w7", align: "질서 악", holy: "X", holyOut: "X" },
-            { id: 20, name: "오파님", race: "악귀", height: 182, age: "2000", weapon: "무기 사용 안 함 (생체 변형 육체)", ability: "손으로 만진대상 육체 변형", desc: "천사들의 억압을 싫어하는 마음에서 태어남, 악령들의 세상을 만들겠다는 야망을 가지고 있으며 선악과를 탈출시킨 장본인. 레비아탄 다음가는 강자로 천사들의 위선을 극도로 혐오하며 호시탐탐 천국 본토 침공을 노린다.", rank: "특급", affil: "악귀", role: "", img: "https://igx.kr/u/25/H/1", mbti: "ENTJ", ennea: "1w2", align: "혼돈 악", holy: "X", holyOut: "X" },
-            { id: 21, name: "웬디", race: "악귀", height: 210, age: "130", weapon: "절대영도의 얼음 창", ability: "빙결", desc: "추위와 어둠의 공포에서 태어남. 숲에서 조용히 살고 있었지만 오파님에게 설득당해 같이 다니기로 함. 말이 없고 감정을 숨기며 오파님 외에는 곁을 주지 않는다. 인간을 얼려 조각상처럼 전시하는 기괴한 취미가 있다.", rank: "특급", affil: "악귀", role: "", img: "https://igx.kr/u/25/C/1", mbti: "ISTJ", ennea: "5w6", align: "중립 악", holy: "X", holyOut: "X" }
+            { id: 1, name: "예수아", race: "인간", height: 195, age: "2025", weapon: "없음 (맨몸 격투)", ability: "없음", desc: "살아있을 시절 박애주의에 우린 모두 고드가 만든 소중한 인간이라는 교리를 선포하다 십자가에 박혀 처형당한 후 천국에 옴. 목수 출신으로 순수 근력은 아카데미 최강이며, 매점 간 교장을 대신해 서류 더미와 인력난 사태를 수습하느라 만성 피로에 시달린다.", rank: "위험급", affil: "아카데미", role: "교감", img: "https://igx.kr/u/25/d/1", mbti: "ENFJ", ennea: "2w1", align: "질서 선", holy: "X", holyOut: "X" },
+            { id: 2, name: "유다", race: "인간", height: 180, age: "2027", weapon: "단검", ability: "없음", desc: "예수아와 가장 가까웠던 어부 출신 제자. 짝사랑하여 메이드를 자처했으나 모두를 사랑함에 배신감을 느껴 팔았다. 직후 후회하며 돈을 돌려주려 해도 이미 늦어 은화 30개를 던지고 목매달아 자살했으나, 예수아의 일방적인 용서에 강제로 천국에 와 경계선에 살며 악귀를 처리한다. 인력난으로 한계에 몰린 학생들이 경계선에서 죽음의 위기에 처할 때, 피 묻은 메이드복을 휘날리며 무심히 적을 썰어버리고 사라지는 미스터리한 구원자.", rank: "위험급", affil: "무소속", role: "", img: "https://igx.kr/u/25/K/1", mbti: "ISFP", ennea: "4w5", align: "혼돈 중립", holy: "O", holyOut: "O" },
+            { id: 3, name: "라파엘", race: "천사", height: 165, age: "2200", weapon: "마력 주입식 의료용 메스 및 주사기", ability: "치유", desc: "학생들을 아끼고 부드러운 성격을 가졌으며 부끄러움과 모성애가 많다. 부족한 인력 탓에 억지로 실전에 투입되어 매일 피투성이가 되어 돌아오는 1학년들을 치료하며 남몰래 눈물을 훔친다.", rank: "주의급", affil: "아카데미", role: "보건쌤", img: "https://igx.kr/u/25/g/1", mbti: "ISFJ", ennea: "2w3", align: "질서 선", holy: "O", holyOut: "O" },
+            { id: 4, name: "세라핌", race: "천사", height: 156, age: "3000", weapon: "마력 전도성 강철 와이어", ability: "명령(마력을 담아 명령시 강제로 이행, 격이 높은 자에게 사용시 반동이 큼)", desc: "차갑고 딱딱해보여도 은근히 챙겨주는 츤데레, 잘하지는 않지만 뜨개질을 좋아한다. 임무를 마치고 돌아온 다친 학생의 자리에 몰래 삐뚤빼뚤한 수제 목도리를 올려두곤 한다.", rank: "위험급", affil: "아카데미", role: "3학년 담임", img: "https://igx.kr/u/25/h/1", mbti: "ESTJ", ennea: "1w2", align: "질서 선", holy: "X", holyOut: "X" },
+            { id: 5, name: "미카엘", race: "천사", height: 170, age: "2700", weapon: "질량 가변형 전술 톤파", ability: "질량부여", desc: "훈련광, 운동을 가장 좋아하고 학생들을 빡세게 굴림. 매일 우리엘에게 장난을 치며, 인력난 타개를 위해 1학년들까지 혹독한 생존 실전 훈련에 억지로 밀어넣는 악마 조교.", rank: "재앙급", affil: "아카데미", role: "2학년 담임", img: "https://igx.kr/u/25/j/1", mbti: "ESTP", ennea: "8w7", align: "혼돈 선", holy: "O", holyOut: "X" },
+            { id: 6, name: "우리엘", race: "천사", height: 159, age: "2700", weapon: "집행용 흑염도(黑炎刀)", ability: "업화", desc: "규칙에 매우 엄격하고 무조건 칼퇴한다. 지각에는 자비없는 벌점을 줘 인기가 없는편, 때문에 혼자 자책함. 미카엘이 귀찮으면서도 내심 재미있어 하며, 퇴근 후에도 학생들의 생존율을 높이기 위해 몰래 전술을 연구한다.", rank: "위험급", affil: "아카데미", role: "1학년 담임", img: "https://igx.kr/u/25/k/1", mbti: "ISTJ", ennea: "1w9", align: "질서 중립", holy: "X", holyOut: "X" },
+            { id: 7, name: "체루", race: "천사", height: 155, age: "20", weapon: "마력 집속식 광자 쌍권총", ability: "광자 연사", desc: "활발하고 눈치가 없고 친구 사귀는걸 좋아함, 채소 싫어함, 사고뭉치. 인력난으로 최전방에 자주 끌려가지만 1급 선배들(특히 가브리엘)의 등 뒤에 숨어 어떻게든 살아남는 중.", rank: "일반급", affil: "아카데미", role: "1학년 학생", img: "https://igx.kr/u/25/l/1", mbti: "ENFP", ennea: "7w6", align: "혼돈 선", holy: "X", holyOut: "X" },
+            { id: 8, name: "소피아", race: "네필림", height: 159, age: "20", weapon: "전술 부적 및 성령패", ability: "푸른 용(소환수)", desc: "조용하고 공부하는걸 좋아함, 혼혈 콤플렉스를 지니고 있음. 위급한 순간 소환수인 푸른 용을 전개해 약한 1학년 동기들을 지키는 거대한 방패막이 되어준다.", rank: "주의급", affil: "아카데미", role: "1학년 학생", img: "https://igx.kr/u/25/n/1", mbti: "INFP", ennea: "5w4", align: "중립 선", holy: "X", holyOut: "X" },
+            { id: 9, name: "유엘", race: "천사", height: 165, age: "20", weapon: "주구 · 수면 유도용 특수 베개", ability: "수면 파동", desc: "귀차니즘에 자는걸 좋아함, 성적은 중간. 전장에 끌려가면 수면 파동으로 악귀를 재우는 동시에 본인도 자버려서 항상 누군가 짐짝처럼 업고 도망쳐야 한다.", rank: "일반급", affil: "아카데미", role: "1학년 학생", img: "https://igx.kr/u/25/p/1", mbti: "ISTP", ennea: "9w1", align: "절대 중립", holy: "X", holyOut: "X" },
+            { id: 10, name: "케루빔", race: "천사", height: 165, age: "21", weapon: "부서진 처형인의 낫", ability: "마력지형 생성", desc: "집안 대대로 하던 선악과 탈출을 막는 일을 실패한 이후, 고드의 진심 빡침 0.01초를 본 후 뇌사 직전까지 가 조울증, 정신분열, 공황장애, 조현병이 생김. 여전히 강력한 무력의 멘탈 시한폭탄.", rank: "위험급", affil: "아카데미", role: "2학년", img: "https://igx.kr/u/25/q/1", mbti: "INFJ", ennea: "6w5", align: "혼돈 선(붕괴)", holy: "X", holyOut: "X" },
+            { id: 11, name: "체리", race: "천사", height: 160, age: "21", weapon: "고폭성 저글링 나이프 및 특수 폭탄", ability: "서커스 물품 생성", desc: "체루와 사이 좋은 친언니, 가브리엘과 친구, 매일 가브리엘과 장난치며 놀러다닌다. 인력난으로 동생 체루가 무리한 임무에 투입될 때면 몰래 강력한 폭탄을 서커스 공으로 위장해 쥐여주며 보호하려 애쓴다.", rank: "경계급", affil: "아카데미", role: "2학년", img: "https://igx.kr/u/25/t/1", mbti: "ESFP", ennea: "7w8", align: "혼돈 선", holy: "X", holyOut: "X" },
+            { id: 12, name: "기브", race: "천사", height: 165, age: "21", weapon: "궤적 가속형 마력 레이피어", ability: "궤적 예측", desc: "공부를 열심히 해도 재능을 못 이긴다는 걸 알고 포기할까 고민중. 하지만 쏟아지는 타락체들로부터 1학년 후배들을 살려보내기 위해 매번 이 악물고 최전선에 남는다.", rank: "주의급", affil: "아카데미", role: "3학년", img: "https://igx.kr/u/25/v/1", mbti: "INTJ", ennea: "3w4", align: "질서 중립", holy: "X", holyOut: "X" },
+            { id: 13, name: "가브리엘", race: "천사", height: 190, age: "22", weapon: "마력 압축 너클", ability: "인력(고속이동, 대상을 찌부 시키기등으로 활용)", desc: "최고 재능충, 장난스럽게 일본어를 섞어말해 킹받게 만들며 장난치는걸 좋아한다. 평소엔 한량 같아 보이지만, 아기 천사 후배들이 위험해지면 섬뜩할 정도로 미소를 지우고 적을 짓뭉개버린다.", rank: "위험급", affil: "아카데미", role: "3학년", img: "https://igx.kr/u/25/w/1", mbti: "ENTP", ennea: "7w6", align: "혼돈 중립", holy: "X", holyOut: "X" },
+            { id: 14, name: "녹스", race: "천사", height: 156, age: "22", weapon: "정보 교란용 전술 부채", ability: "대상에게 쓸데없는 정보를 주입(일시적 혼란)", desc: "마음에 들수록 더 매도하는 메스가키. 과거 임무 중에 재앙급을 만나 이기긴 했지만 두 눈을 잃었다. 입으로는 험하게 매도하면서도, 가장 먼저 적을 감지해 후배들을 대피시킨다.", rank: "위험급", affil: "아카데미", role: "3학년", img: "https://igx.kr/u/25/y/1", mbti: "ENTJ", ennea: "8w9", align: "혼돈 중립", holy: "X", holyOut: "X" },
+            { id: 15, name: "세릴다", race: "인간", height: 170, age: "22", weapon: "마력 전도성 특주 카타나", ability: "없음", desc: "순수 마력 조작으로 위험급을 찍은 재능+노력자. 귀차니즘이 심하고 죽는걸 싫어해 임무가서 뺑이칠 때가 많지만, 결국 아카데미의 인력난에 등 떠밀려 1학년들의 든든한 버스 기사 노릇을 억지로 수행 중.", rank: "위험급", affil: "아카데미", role: "3학년", img: "https://igx.kr/u/25/z/1", mbti: "ISTP", ennea: "9w8", align: "중립 선", holy: "X", holyOut: "X" },
+            { id: 16, name: "루시퍼", race: "타천", height: 169, age: "3000", weapon: "특수 중력 전술 우산", ability: "반경 30미터 중력전개", desc: "옛날부터 오로지 재미로만 움직임, 최근에는 악귀들과 손을 잡고 천사와 악귀가 싸우는걸 보고 싶어함. 특히 인력난에 허덕이는 아카데미 학생들이 굴러다니는 모습을 팝콘 뜯으며 감상한다.", rank: "재앙급", affil: "무소속", role: "", img: "https://igx.kr/u/25/B/1", mbti: "ENTP", ennea: "4w3", align: "혼돈 악", holy: "O", holyOut: "O" },
+            { id: 17, name: "레비아탄", race: "악귀", height: 159, age: "5000", weapon: "무기 사용 안 함 (심연의 마력 자체)", ability: "강력한 물고기 악령 생성, 심연주입", desc: "바다, 심연의 공포에서 태어남, 귀차니즘, 동료를 소중히 생각함, 악귀 중 가장 강함. 평소엔 심연에 웅크려 웬만해선 움직이지 않지만 동료가 다치면 지옥 끝까지 쫓아가는 포식자.", rank: "재앙급", affil: "악귀", role: "", img: "https://igx.kr/u/25/D/1", mbti: "ISFP", ennea: "9w8", align: "혼돈 악", holy: "X", holyOut: "X" },
+            { id: 18, name: "카밀라", race: "악귀", height: 168, age: "8000", weapon: "매혹의 덩굴 채찍", ability: "최면", desc: "선악과 나무가 시간이 지나 영혼이 생기며 태어난 악귀, 이브를 유혹한 장본인. 오파님이 탈출시켜주었으며, 환각 속에서 천사들의 절망하는 표정을 감상하는 것을 최고의 유희로 여긴다.", rank: "재앙급", affil: "악귀", role: "", img: "https://igx.kr/u/25/G/1", mbti: "ENFJ", ennea: "2w3", align: "중립 악", holy: "X", holyOut: "X" },
+            { id: 19, name: "렌더", race: "인간", height: 170, age: "78", weapon: "거대한 낫", ability: "그림자 이동", desc: "돈 주면 뭐든지 해주는 용병. 연쇄살인으로 지옥행이지만 권능으로 모든 곳을 맘대로 다닐 수 있다. 아카데미의 인력난을 역이용해 천국 측에 터무니없이 비싼 값으로 방어 계약을 제안하기도 한다.", rank: "위험급", affil: "무소속", role: "", img: "https://igx.kr/u/25/J/1", mbti: "ESTP", ennea: "8w7", align: "질서 악", holy: "X", holyOut: "X" },
+            { id: 20, name: "오파님", race: "악귀", height: 182, age: "2000", weapon: "무기 사용 안 함 (생체 변형 육체)", ability: "손으로 만진대상 육체 변형", desc: "천사들의 억압을 싫어하는 마음에서 태어남, 타락체들의 세상을 만들겠다는 야망을 가지고 있으며 선악과를 탈출시킨 장본인. 천사들의 위선을 극도로 혐오하며 호시탐탐 천국 본토 침공을 노린다.", rank: "재앙급", affil: "악귀", role: "", img: "https://igx.kr/u/25/H/1", mbti: "ENTJ", ennea: "1w2", align: "혼돈 악", holy: "X", holyOut: "X" },
+            { id: 21, name: "웬디", race: "악귀", height: 210, age: "130", weapon: "절대영도의 얼음 창", ability: "빙결", desc: "추위와 어둠의 공포에서 태어남. 숲에서 조용히 살고 있었지만 오파님에게 설득당해 같이 다니기로 함. 말이 없고 감정을 숨기며 오파님 외에는 곁을 주지 않는다. 인간을 얼려 조각상처럼 전시하는 기괴한 취미가 있다.", rank: "재앙급", affil: "악귀", role: "", img: "https://igx.kr/u/25/C/1", mbti: "ISTJ", ennea: "5w6", align: "중립 악", holy: "X", holyOut: "X" }
         ];
 
         const grid = document.getElementById('character-grid');
 
         function overrideTextWithHorror() {
             const elements = document.querySelectorAll('h1, h2, p, strong, td, th, .tab-btn, .cmd-line, .cmd-key, .info-box');
-            const praiseWords = ["우리의 창조주를 찬양하라", "눈을 감아도 그녀가 보인다", "영원히 숭배하라", "도망칠 곳은 없다", "살점과 마력을 바쳐라", "거짓된 천국은 무너진다", "오직 그녀만이 유일신", "비명조차 들리지 않는다", "모든 것은 그녀의 뜻대로"];
+            const praiseWords = ["우리의 창조주를 찬양하라", "눈을 감아도 그녀가 보인다", "영원히 숭배하라", "도망칠 곳은 없다", "살점과 영자를 바쳐라", "거짓된 천국은 무너진다", "오직 그녀만이 우주의 법칙", "비명조차 들리지 않는다", "모든 것은 그녀의 뜻대로"];
             
             elements.forEach(el => {
                 if (el.children.length === 0 || (el.children.length === 1 && el.children[0].tagName === 'BR')) {
@@ -784,12 +883,11 @@
 
         function triggerGodMode() {
             isGodMode = true;
+            if(isPrankMode) togglePrankMode(); // 장난 모드 강제 해제
             document.body.classList.add('god-mode-active');
-            bgm.playbackRate = 0.5;
+            bgmA.playbackRate = 0.5;
             
-            // 파티클 피바다 효과
             particles.forEach(p => { p.color = '#FF0000'; p.speedY *= 5; });
-            
             overrideTextWithHorror();
             
             const headerTitle = document.getElementById('main-header-title');
@@ -817,11 +915,9 @@
         function disableGodMode() {
             isGodMode = false;
             document.body.classList.remove('god-mode-active');
-            bgm.playbackRate = 1.0;
+            bgmA.playbackRate = 1.0;
             
-            // 파티클 원상 복구
             particles.forEach(p => { p.color = p.baseColor; p.speedY /= 5; });
-            
             restoreOriginalText();
             const headerTitle = document.getElementById('main-header-title');
             headerTitle.className = "";
@@ -843,7 +939,8 @@
                     c.name.toLowerCase().includes(q) || 
                     c.desc.toLowerCase().includes(q) || 
                     c.ability.toLowerCase().includes(q) || 
-                    c.race.toLowerCase().includes(q)
+                    c.race.toLowerCase().includes(q) ||
+                    c.rank.toLowerCase().includes(q)
                 );
             }
             
@@ -877,9 +974,9 @@
             
             const ageText = c.age === "측정불가" ? c.age : c.age + "세";
             
-            // 성력 및 아웃풋 태그 생성
-            const holyTag = c.holy === "O" ? `<span class="holy-tag">성력 O</span>` : `<span class="holy-tag disabled">성력 X</span>`;
-            const outTag = c.holyOut === "O" ? `<span class="holy-tag">아웃풋 O</span>` : `<span class="holy-tag disabled">아웃풋 X</span>`;
+            // 신성력 및 신성 개방(아웃풋) 태그
+            const holyTag = c.holy === "O" ? `<span class="holy-tag">신성력 O</span>` : `<span class="holy-tag disabled">신성력 X</span>`;
+            const outTag = c.holyOut === "O" ? `<span class="holy-tag">신성 개방 O</span>` : `<span class="holy-tag disabled">신성 개방 X</span>`;
 
             document.getElementById('m-tags').innerHTML = `
                 <span>${c.race}</span>
@@ -895,6 +992,14 @@
             document.getElementById('m-weapon').innerText = c.weapon;
             document.getElementById('m-ability').innerText = c.ability;
             document.getElementById('m-desc').innerText = c.desc;
+
+            // 체리 장난 모드 버튼 주입
+            const extraDiv = document.getElementById('m-extra');
+            if(c.name === "체리") {
+                extraDiv.innerHTML = `<button class="prank-btn" onclick="togglePrankMode()">🎪 장난 모드 (ON/OFF)</button>`;
+            } else {
+                extraDiv.innerHTML = '';
+            }
 
             document.getElementById('char-modal').style.display = 'flex';
             document.body.classList.add('modal-open');
@@ -925,7 +1030,7 @@
             renderCharacters(type, document.getElementById('char-search').value.trim());
         }
 
-        const glitchRanks = ["특급", "1급", "2급", "3급", "4급", "측정불가", "ERR", "#@!%"];
+        const glitchRanks = ["재앙급", "위험급", "경계급", "주의급", "일반급", "측정불가", "ERR", "#@!%"];
         setInterval(() => {
             document.querySelectorAll('.god-rank').forEach(el => {
                 el.innerText = glitchRanks[Math.floor(Math.random() * glitchRanks.length)];
