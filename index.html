@@ -15,7 +15,7 @@
             --yellow-glow: rgba(250, 219, 95, 0.3);
             --yellow-border: rgba(250, 219, 95, 0.15);
             --cyber-red: #FF4C4C;
-            --holy-blue: #38BDF8; /* 신성력 전용 컬러 */
+            --holy-blue: #38BDF8; 
             --text-main: #E2E8F0;
             --text-muted: #94A3B8;
             --font-sys: 'Courier New', Courier, monospace;
@@ -28,7 +28,6 @@
             -webkit-tap-highlight-color: transparent;
         }
 
-        /* 은은한 배경 효과 */
         body {
             font-family: 'Pretendard', -apple-system, sans-serif;
             background-color: var(--bg-deep);
@@ -41,12 +40,11 @@
                 linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
             background-size: 100% 100%, 40px 40px, 40px 40px;
             background-attachment: fixed;
-            transition: all 1s ease;
+            transition: all 0.8s ease;
         }
 
         body.modal-open { overflow: hidden; }
 
-        /* ===== 배경 파티클 캔버스 ===== */
         #particle-canvas {
             position: fixed;
             top: 0; left: 0; width: 100vw; height: 100vh;
@@ -79,42 +77,48 @@
             box-shadow: 0 0 15px var(--yellow-glow);
         }
 
-        /* ===== 장난 모드 (체리 전용) ===== */
+        /* ===== 체리 장난 모드 (서커스 분위기 극대화) ===== */
         body.prank-mode-active {
-            --bg-deep: #2A0845;
-            --bg-glass: rgba(42, 8, 69, 0.8);
-            --primary-yellow: #FF00FF;
-            --yellow-glow: rgba(255, 0, 255, 0.6);
-            --yellow-border: rgba(255, 0, 255, 0.4);
-            --cyber-red: #00FFCC;
-            --holy-blue: #FFFF00;
-            background-image: 
-                radial-gradient(circle at 50% 50%, rgba(255, 0, 255, 0.1) 0%, transparent 60%),
-                linear-gradient(45deg, rgba(0, 255, 204, 0.05) 25%, transparent 25%, transparent 75%, rgba(0, 255, 204, 0.05) 75%, rgba(0, 255, 204, 0.05)),
-                linear-gradient(45deg, rgba(0, 255, 204, 0.05) 25%, transparent 25%, transparent 75%, rgba(0, 255, 204, 0.05) 75%, rgba(0, 255, 204, 0.05));
-            background-size: 100% 100%, 60px 60px, 60px 60px;
-            background-position: 0 0, 0 0, 30px 30px;
+            background-color: #1a0510;
+            background-image: repeating-linear-gradient(
+                45deg, 
+                rgba(255, 0, 128, 0.15) 0, 
+                rgba(255, 0, 128, 0.15) 40px, 
+                rgba(255, 215, 0, 0.15) 40px, 
+                rgba(255, 215, 0, 0.15) 80px
+            );
+            animation: circus-bg-scroll 2s linear infinite;
+        }
+        @keyframes circus-bg-scroll {
+            0% { background-position: 0 0; }
+            100% { background-position: 113.1px 0; } /* 80 * sqrt(2) */
         }
 
         body.prank-mode-active #main-container {
+            background: rgba(40, 10, 30, 0.85);
+            border: 3px dashed #FF00FF;
+            box-shadow: 0 0 40px rgba(255, 0, 255, 0.4), inset 0 0 20px rgba(0, 255, 255, 0.2);
             border-radius: 30px;
-            border: 2px dashed #FF00FF;
-            animation: float-tilt 3s ease-in-out infinite;
         }
 
         body.prank-mode-active .mini-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid #00FFFF;
             border-radius: 50% 20% / 10% 40%;
-            border: 2px solid #00FFCC;
+            box-shadow: 0 5px 15px rgba(0, 255, 255, 0.2);
         }
 
-        body.prank-mode-active .section-title::before {
-            background: #00FFCC;
-            box-shadow: 0 0 10px #00FFCC;
+        /* 체리식 텍스트 바운스 효과 */
+        .prank-text {
+            display: inline-block;
+            color: #FFFF00 !important;
+            text-shadow: 2px 2px 0px #FF00FF, -2px -2px 0px #00FFFF !important;
+            animation: bounce-text 0.4s infinite alternate ease-in-out;
+            font-weight: bold;
         }
-
-        @keyframes float-tilt {
-            0%, 100% { transform: translateY(0) rotate(0deg); }
-            50% { transform: translateY(-10px) rotate(1.5deg); }
+        @keyframes bounce-text {
+            0% { transform: translateY(0px) rotate(-1deg) scale(1); }
+            100% { transform: translateY(-4px) rotate(2deg) scale(1.02); }
         }
 
         /* ===== 이스터에그 (고드 강림 모드) ===== */
@@ -124,13 +128,25 @@
             animation: slow-horror-pulse 8s infinite alternate ease-in-out;
             color: #8B0000;
         }
-
         @keyframes slow-horror-pulse {
             0% { filter: hue-rotate(0deg) saturate(1) contrast(1.1); transform: scale(1); }
             50% { filter: hue-rotate(-20deg) saturate(1.5) contrast(1.3); transform: scale(1.01) skewX(0.5deg); }
             100% { filter: hue-rotate(10deg) saturate(2) contrast(1.5); transform: scale(0.99) skewX(-0.5deg); }
         }
+        body.god-mode-active #main-container {
+            background: rgba(20, 0, 0, 0.9);
+            border: 1px solid #FF0000;
+            box-shadow: 0 0 50px rgba(255, 0, 0, 0.4), inset 0 0 30px rgba(139, 0, 0, 0.8);
+            border-radius: 2px;
+        }
+        .god-horror-text {
+            color: #FF0000 !important;
+            text-shadow: 0 0 8px #FF0000, 2px 2px 0px #8B0000 !important;
+            font-family: var(--font-sys);
+            font-weight: bold;
+        }
 
+        /* ===== 기본 UI 스타일 ===== */
         #main-container {
             display: none;
             opacity: 0;
@@ -149,38 +165,6 @@
             z-index: 10; 
         }
 
-        body.god-mode-active #main-container {
-            background: rgba(20, 0, 0, 0.9);
-            border: 1px solid #FF0000;
-            box-shadow: 0 0 50px rgba(255, 0, 0, 0.4), inset 0 0 30px rgba(139, 0, 0, 0.8);
-            border-radius: 2px;
-        }
-
-        body.god-mode-active .god-horror-text {
-            color: #FF0000;
-            text-shadow: 0 0 8px #FF0000, 2px 2px 0px #8B0000;
-            font-family: var(--font-sys);
-            font-weight: bold;
-        }
-
-        body.god-mode-active .mini-card {
-            background: #110000;
-            border-color: #FF0000;
-            box-shadow: 0 5px 15px rgba(255,0,0,0.2);
-        }
-
-        body.god-mode-active .mini-img {
-            filter: sepia(1) hue-rotate(-50deg) saturate(4) contrast(1.5);
-            border-bottom: 1px solid #FF0000;
-        }
-
-        body.god-mode-active #char-search {
-            border-color: #FF0000;
-            color: #FF0000;
-            background: rgba(0,0,0,0.8);
-        }
-
-        /* ===== 인트로 화면 ===== */
         #intro-screen {
             position: fixed;
             top: 0; left: 0; width: 100vw; height: 100vh;
@@ -218,12 +202,7 @@
             backdrop-filter: blur(5px);
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
-
-        #enter-btn:hover, #enter-btn:active { 
-            background: var(--primary-yellow); 
-            color: #000; 
-            box-shadow: 0 0 20px var(--yellow-glow); 
-        }
+        #enter-btn:hover { background: var(--primary-yellow); color: #000; box-shadow: 0 0 20px var(--yellow-glow); }
 
         header { text-align: center; margin-bottom: 30px; }
         header h1 {
@@ -234,7 +213,6 @@
             letter-spacing: 4px;
         }
 
-        /* ===== 내비게이션 탭 ===== */
         .tab-nav {
             display: flex;
             overflow-x: auto;
@@ -271,7 +249,6 @@
 
         .tab-content { display: none; animation: fadeInUp 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards; }
         .tab-content.active { display: block; }
-
         @keyframes fadeInUp {
             from { opacity: 0; transform: translateY(15px); }
             to { opacity: 1; transform: translateY(0); }
@@ -308,233 +285,95 @@
         .highlight-red { color: var(--cyber-red); font-weight: bold; }
         .highlight-blue { color: var(--holy-blue); font-weight: bold; }
 
-        /* ===== 일정 탭 테이블 ===== */
-        .schedule-table {
-            width: 100%;
-            border-collapse: separate;
-            border-spacing: 0 8px;
-            margin-top: 10px;
-            font-size: 0.9rem;
-        }
-        .schedule-table th, .schedule-table td {
-            background: rgba(255, 255, 255, 0.02);
-            padding: 14px;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-        }
-        .schedule-table th { 
-            color: var(--primary-yellow); 
-            font-family: var(--font-sys); 
-            width: 70px; 
-            text-align: center; 
-            border-radius: 8px 0 0 8px;
-            border-right: none;
-        }
+        .schedule-table { width: 100%; border-collapse: separate; border-spacing: 0 8px; margin-top: 10px; font-size: 0.9rem; }
+        .schedule-table th, .schedule-table td { background: rgba(255, 255, 255, 0.02); padding: 14px; border: 1px solid rgba(255, 255, 255, 0.05); }
+        .schedule-table th { color: var(--primary-yellow); font-family: var(--font-sys); width: 70px; text-align: center; border-radius: 8px 0 0 8px; border-right: none; }
         .schedule-table td { border-radius: 0 8px 8px 0; border-left: none; }
 
-        /* ===== 인물 검색 및 필터 ===== */
-        .search-container {
-            margin-bottom: 15px;
-            text-align: center;
-        }
+        .search-container { margin-bottom: 15px; text-align: center; }
         #char-search {
-            width: 100%;
-            max-width: 400px;
-            padding: 12px 15px;
-            background: rgba(0, 0, 0, 0.5);
-            border: 1px solid var(--yellow-border);
-            border-radius: 8px;
-            color: var(--text-main);
-            font-family: var(--font-sys);
-            font-size: 0.95rem;
-            outline: none;
-            transition: all 0.3s;
+            width: 100%; max-width: 400px; padding: 12px 15px; background: rgba(0, 0, 0, 0.5);
+            border: 1px solid var(--yellow-border); border-radius: 8px; color: var(--text-main);
+            font-family: var(--font-sys); font-size: 0.95rem; outline: none; transition: all 0.3s;
         }
-        #char-search:focus {
-            border-color: var(--primary-yellow);
-            box-shadow: 0 0 10px var(--yellow-glow);
-        }
+        #char-search:focus { border-color: var(--primary-yellow); box-shadow: 0 0 10px var(--yellow-glow); }
 
-        .filter-nav {
-            display: flex;
-            justify-content: flex-start;
-            overflow-x: auto;
-            gap: 10px;
-            margin-bottom: 25px;
-            scrollbar-width: none;
-        }
+        .filter-nav { display: flex; justify-content: flex-start; overflow-x: auto; gap: 10px; margin-bottom: 25px; scrollbar-width: none; }
         .filter-btn {
-            background: rgba(255,255,255,0.03);
-            border: 1px solid rgba(255,255,255,0.1);
-            color: var(--text-muted);
-            padding: 6px 16px;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-family: var(--font-sys);
-            white-space: nowrap;
-            transition: all 0.3s;
+            background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); color: var(--text-muted);
+            padding: 6px 16px; border-radius: 20px; font-size: 0.8rem; font-family: var(--font-sys);
+            white-space: nowrap; transition: all 0.3s;
         }
-        .filter-btn.active {
-            background: rgba(250, 219, 95, 0.1);
-            border-color: var(--primary-yellow);
-            color: var(--primary-yellow);
-        }
+        .filter-btn.active { background: rgba(250, 219, 95, 0.1); border-color: var(--primary-yellow); color: var(--primary-yellow); }
 
-        #character-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 15px;
-        }
+        #character-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; }
 
         .mini-card {
-            background: rgba(255,255,255,0.02);
-            border: 1px solid rgba(255,255,255,0.05);
-            border-radius: 12px;
-            overflow: hidden;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            user-select: none;
-            -webkit-user-drag: none;
+            background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 12px; overflow: hidden; cursor: pointer; transition: all 0.3s ease; user-select: none;
         }
-        .mini-card:hover, .mini-card:active {
-            transform: translateY(-4px);
-            border-color: var(--yellow-border);
-            background: rgba(255,255,255,0.05);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.4);
-        }
-        
+        .mini-card:hover { transform: translateY(-4px); border-color: var(--yellow-border); background: rgba(255,255,255,0.05); box-shadow: 0 10px 20px rgba(0,0,0,0.4); }
         .mini-card[data-affiliation="아카데미"] { border-bottom: 2px solid var(--primary-yellow); }
         .mini-card[data-affiliation="무소속"] { border-bottom: 2px solid #64748B; }
         .mini-card[data-affiliation="악귀"] { border-bottom: 2px solid var(--cyber-red); }
 
-        .mini-img {
-            width: 100%;
-            height: 180px;
-            object-fit: cover;
-            filter: brightness(0.9) contrast(1.05);
-            -webkit-user-drag: none;
-        }
+        .mini-img { width: 100%; height: 180px; object-fit: cover; filter: brightness(0.9) contrast(1.05); -webkit-user-drag: none; }
         .mini-info { padding: 12px; text-align: center; }
         .mini-name { font-weight: bold; font-size: 1rem; color: #FFF; letter-spacing: 1px; }
         .mini-rank { font-size: 0.75rem; color: var(--text-muted); font-family: var(--font-sys); margin-top: 4px; }
 
         /* ===== 상세 프로필 모달 ===== */
         #char-modal {
-            display: none;
-            position: fixed;
-            top: 0; left: 0; width: 100vw; height: 100vh;
-            background: rgba(5, 5, 8, 0.85);
-            z-index: 3000;
-            justify-content: center;
-            align-items: center;
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
+            display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            background: rgba(5, 5, 8, 0.85); z-index: 3000; justify-content: center; align-items: center; backdrop-filter: blur(8px);
         }
-        
         .modal-content {
-            background: rgba(20, 22, 28, 0.7);
-            border: 1px solid rgba(255,255,255,0.1);
-            border-top: 1px solid rgba(250, 219, 95, 0.3);
-            border-radius: 16px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.6);
-            width: 90%;
-            max-width: 420px;
-            max-height: 80vh;
-            overflow-y: auto;
-            position: relative;
-            padding: 25px;
-            overscroll-behavior: contain; 
+            background: rgba(20, 22, 28, 0.7); border: 1px solid rgba(255,255,255,0.1); border-top: 1px solid rgba(250, 219, 95, 0.3);
+            border-radius: 16px; box-shadow: 0 20px 40px rgba(0,0,0,0.6); width: 90%; max-width: 420px; max-height: 80vh;
+            overflow-y: auto; position: relative; padding: 25px; overscroll-behavior: contain; 
         }
-        .modal-content::-webkit-scrollbar { width: 4px; }
-        .modal-content::-webkit-scrollbar-thumb { background: rgba(250, 219, 95, 0.5); border-radius: 4px; }
-
-        .close-btn {
-            position: absolute;
-            top: 15px; right: 20px;
-            color: var(--text-muted);
-            font-size: 1.2rem;
-            cursor: pointer;
-            font-family: var(--font-sys);
-            transition: color 0.3s;
-        }
+        .close-btn { position: absolute; top: 15px; right: 20px; color: var(--text-muted); font-size: 1.2rem; cursor: pointer; transition: color 0.3s; }
         .close-btn:hover { color: #FFF; }
-
-        .modal-img {
-            width: 100%;
-            height: 220px;
-            object-fit: cover;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            pointer-events: none;
-        }
-
+        .modal-img { width: 100%; height: 220px; object-fit: cover; border-radius: 8px; margin-bottom: 20px; pointer-events: none; }
         .modal-name-wrap { text-align: center; margin-bottom: 20px; }
         .modal-name { font-size: 1.8rem; font-weight: bold; color: #FFF; letter-spacing: 2px; }
         .modal-role { font-size: 0.85rem; color: var(--primary-yellow); font-family: var(--font-sys); margin-top: 5px; }
-        
         .modal-tags { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px; margin-bottom: 25px; }
-        .modal-tags span { 
-            background: rgba(255,255,255,0.05); 
-            border: 1px solid rgba(255,255,255,0.1); 
-            color: var(--text-muted); 
-            padding: 4px 10px; 
-            border-radius: 20px; 
-            font-size: 0.75rem; 
-        }
+        .modal-tags span { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: var(--text-muted); padding: 4px 10px; border-radius: 20px; font-size: 0.75rem; }
         .modal-tags .highlight-tag { border-color: var(--yellow-border); color: var(--primary-yellow); }
         .modal-tags .align-tag { border-color: rgba(255,76,76,0.3); color: var(--cyber-red); }
-        
-        /* 신성력 및 개방 태그 디자인 */
         .modal-tags .holy-tag { border-color: rgba(56, 189, 248, 0.4); color: var(--holy-blue); background: rgba(56, 189, 248, 0.05); font-weight: bold; }
         .modal-tags .holy-tag.disabled { border-color: rgba(255,255,255,0.05); color: #64748B; background: transparent; text-decoration: line-through; font-weight: normal;}
-
         .modal-desc-title { font-size: 0.85rem; color: var(--primary-yellow); margin-top: 10px; font-family: var(--font-sys); }
-        .modal-desc-body { 
-            font-size: 0.95rem; 
-            color: #CBD5E1; 
-            background: rgba(0,0,0,0.2); 
-            padding: 15px; 
-            border-radius: 8px;
-            margin-top: 8px;
-            line-height: 1.6; 
-        }
+        .modal-desc-body { font-size: 0.95rem; color: #CBD5E1; background: rgba(0,0,0,0.2); padding: 15px; border-radius: 8px; margin-top: 8px; line-height: 1.6; }
 
-        /* ===== 체리 전용 장난 버튼 ===== */
-        .prank-btn {
-            margin-top: 15px;
-            padding: 12px;
+        /* ===== 체리 전용 장난 버튼 (시인성 극대화) ===== */
+        .prank-btn-super {
+            margin-top: 25px;
+            padding: 15px;
             width: 100%;
-            background: linear-gradient(45deg, #FF00FF, #00FFCC);
-            border: none;
-            color: #FFF;
-            font-weight: bold;
-            border-radius: 8px;
+            background: linear-gradient(90deg, #FF00FF, #00FFFF, #FFFF00, #FF00FF);
+            background-size: 300% 300%;
+            border: 3px dashed #FFF;
+            color: #000;
+            font-size: 1.15rem;
+            font-weight: 900;
+            border-radius: 12px;
             cursor: pointer;
-            text-shadow: 0 0 5px rgba(0,0,0,0.8);
-            box-shadow: 0 5px 15px rgba(255, 0, 255, 0.4);
-            transition: 0.3s;
+            box-shadow: 0 0 25px rgba(255, 0, 255, 0.8);
+            animation: gradient-shift 3s infinite linear, pulse-btn 0.6s infinite alternate;
             font-family: var(--font-sys);
-            letter-spacing: 1px;
         }
-        .prank-btn:hover {
-            transform: scale(1.02);
-            box-shadow: 0 5px 25px rgba(0, 255, 204, 0.6);
-        }
+        @keyframes gradient-shift { 0% { background-position: 0% 50%; } 100% { background-position: 100% 50%; } }
+        @keyframes pulse-btn { 0% { transform: scale(1); } 100% { transform: scale(1.05); } }
 
-        /* ===== 일반 글리치 효과 ===== */
-        .glitch-text { 
-            color: #FFF !important; 
-            font-family: var(--font-sys); 
-            font-weight: bold;
-            display: inline-block;
-            animation: elegant-glitch 0.15s infinite linear alternate-reverse; 
-        }
+        .glitch-text { color: #FFF !important; font-family: var(--font-sys); font-weight: bold; display: inline-block; animation: elegant-glitch 0.15s infinite linear alternate-reverse; }
         @keyframes elegant-glitch {
             0% { transform: translate(0); text-shadow: 2px 0 0 rgba(255,0,60,0.8), -2px 0 0 rgba(250,219,95,0.8); }
             50% { transform: translate(-1px, 1px); text-shadow: -2px 0 0 rgba(255,0,60,0.8), 2px 0 0 rgba(250,219,95,0.8); color: var(--primary-yellow); }
             100% { transform: translate(1px, -1px); text-shadow: 2px 0 0 rgba(250,219,95,0.8), -2px 0 0 rgba(255,0,60,0.8); color: #FFF; }
         }
 
-        /* 명령어 탭 */
         .console-box { font-family: var(--font-sys); padding: 20px; background: rgba(0,0,0,0.5); border-radius: 8px; }
         .cmd-line { margin-bottom: 15px; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 10px; }
         .cmd-line:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
@@ -567,7 +406,6 @@
             <h1 id="main-header-title">STELLAR ACADEMY</h1>
         </header>
 
-        <!-- 탭 네비게이션 -->
         <nav class="tab-nav" id="main-nav">
             <button class="tab-btn active" onclick="openTab(event, 'tab-world')">WORLD</button>
             <button class="tab-btn" onclick="openTab(event, 'tab-character')">ARCHIVE</button>
@@ -576,7 +414,7 @@
         </nav>
 
         <main>
-            <!-- 1. 세계관 탭 (리뉴얼) -->
+            <!-- 1. 세계관 탭 -->
             <div id="tab-world" class="tab-content active">
                 <h2 class="section-title">사후 세계 (Afterlife)</h2>
                 <p style="margin-bottom: 15px; font-size: 0.95rem; color: #94A3B8;">인간은 사후 지옥, 저승, 천국행이 정해집니다.</p>
@@ -593,7 +431,6 @@
                     절대적인 규칙과 질서의 공간. 스텔라 아카데미가 중심에 자리하며 천사들이 탄생합니다. 규율을 파괴하려는 자는 즉시 하위 세계로 추방당합니다.
                 </div>
 
-                <!-- 영자(마력)와 권능(술식), 신성력 설정 -->
                 <h2 class="section-title">에테르(마력)와 고유 권능</h2>
                 <div class="info-box">
                     <strong>마력 (Aether):</strong> 사후 세계를 떠도는 '영혼의 잔재'와 무질서한 감정의 엔트로피에서 기인하는 근원적 에너지입니다. 기본적으로 파괴와 물리적 간섭력에 특화되어 있습니다.<br><br>
@@ -699,7 +536,7 @@
             <div class="modal-desc-title">ARCHIVE DATA</div>
             <div id="m-desc" class="modal-desc-body"></div>
 
-            <!-- 체리 전용 장난 버튼 렌더링 영역 -->
+            <!-- 체리 전용 장난 버튼 영역 -->
             <div id="m-extra"></div>
         </div>
     </div>
@@ -709,7 +546,7 @@
         let isPrankMode = false;
         let currentFilter = 'all';
 
-        // ===== 배경 파티클 애니메이션 =====
+        // ===== 파티클 제어 =====
         const canvas = document.getElementById('particle-canvas');
         const ctx = canvas.getContext('2d');
         let particles = [];
@@ -723,21 +560,36 @@
 
         class Particle {
             constructor() {
-                this.x = Math.random() * canvas.width;
+                this.reset();
                 this.y = Math.random() * canvas.height;
+            }
+            reset() {
+                this.x = Math.random() * canvas.width;
+                this.y = canvas.height + 10;
                 this.size = Math.random() * 2 + 0.5;
                 this.speedY = Math.random() * 0.8 + 0.2;
                 this.speedX = (Math.random() - 0.5) * 0.5;
                 this.baseColor = Math.random() > 0.5 ? '#FADB5F' : '#38BDF8';
                 this.color = this.baseColor;
                 this.opacity = Math.random() * 0.5 + 0.1;
+                
+                if (isPrankMode) {
+                    const colors = ['#FF00FF', '#00FFFF', '#FFFF00', '#FF0055'];
+                    this.color = colors[Math.floor(Math.random() * colors.length)];
+                    this.size = Math.random() * 5 + 2; 
+                    this.speedY = Math.random() * -3 - 1; // 역류하며 솟구침
+                    this.speedX = (Math.random() - 0.5) * 2;
+                }
             }
             update() {
-                this.y -= this.speedY;
-                this.x += this.speedX;
-                if (this.y < 0) {
-                    this.y = canvas.height;
-                    this.x = Math.random() * canvas.width;
+                if (isPrankMode) {
+                    this.y += this.speedY; // speedY가 음수라 위로 감
+                    this.x += this.speedX;
+                    if (this.y < -10) this.reset();
+                } else {
+                    this.y -= this.speedY;
+                    this.x += this.speedX;
+                    if (this.y < 0) this.reset();
                 }
             }
             draw() {
@@ -751,23 +603,18 @@
 
         function initParticles() {
             particles = [];
-            for (let i = 0; i < 70; i++) {
-                particles.push(new Particle());
-            }
+            for (let i = 0; i < 70; i++) particles.push(new Particle());
         }
         initParticles();
 
         function animateParticles() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
-            particles.forEach(p => {
-                p.update();
-                p.draw();
-            });
+            particles.forEach(p => { p.update(); p.draw(); });
             requestAnimationFrame(animateParticles);
         }
         animateParticles();
 
-        // ===== 오디오 및 모드 제어 =====
+        // ===== 오디오 제어 =====
         const bgmA = document.getElementById('bgm');
         const bgmB = document.getElementById('bgm-prank');
         const muteBtn = document.getElementById('mute-btn');
@@ -792,35 +639,6 @@
             }, 800);
         });
 
-        function togglePrankMode() {
-            isPrankMode = !isPrankMode;
-            if (isPrankMode) {
-                bgmA.pause();
-                bgmB.currentTime = 0;
-                bgmB.muted = bgmA.muted;
-                bgmB.play().catch(e=>console.log(e));
-                document.body.classList.add('prank-mode-active');
-                
-                // 파티클 서커스 테마 변환
-                particles.forEach(p => {
-                    const colors = ['#FF00FF', '#00FFCC', '#FFFF00'];
-                    p.color = colors[Math.floor(Math.random() * colors.length)];
-                    p.size *= 1.5;
-                    p.speedX = (Math.random() - 0.5) * 2;
-                });
-            } else {
-                bgmB.pause();
-                bgmA.play().catch(e=>console.log(e));
-                document.body.classList.remove('prank-mode-active');
-                
-                particles.forEach(p => {
-                    p.color = p.baseColor;
-                    p.size /= 1.5;
-                    p.speedX = (Math.random() - 0.5) * 0.5;
-                });
-            }
-        }
-
         function openTab(evt, tabName) {
             document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
             document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
@@ -828,7 +646,7 @@
             evt.currentTarget.classList.add('active');
         }
 
-        // 인물 데이터 (새로운 위협 등급 및 권능 적용)
+        // 인물 데이터
         const charData = [
             { id: 0, name: "고드", race: "신", height: 145, age: "측정불가", weapon: "없음", ability: "인과율 무시, 우주적 재창조", desc: "귀차니즘, 달달한거 러버, 간식광. 모든 일을 예수아에게 짬때리고 매점가는거 때문에 혼나는 게 일상. 정체는 예수아만 알며, 가끔 진심으로 빡칠 때 뿜어내는 기운만으로도 천국 전체가 공포에 떤다.", rank: "GLITCH", affil: "아카데미", role: "교장", img: "https://igx.kr/u/25/c/1", mbti: "INTP", ennea: "9w8", align: "혼돈 중립", holy: "O", holyOut: "O" },
             { id: 1, name: "예수아", race: "인간", height: 195, age: "2025", weapon: "없음 (맨몸 격투)", ability: "없음", desc: "살아있을 시절 박애주의에 우린 모두 고드가 만든 소중한 인간이라는 교리를 선포하다 십자가에 박혀 처형당한 후 천국에 옴. 목수 출신으로 순수 근력은 아카데미 최강이며, 매점 간 교장을 대신해 서류 더미와 인력난 사태를 수습하느라 만성 피로에 시달린다.", rank: "위험급", affil: "아카데미", role: "교감", img: "https://igx.kr/u/25/d/1", mbti: "ENFJ", ennea: "2w1", align: "질서 선", holy: "X", holyOut: "X" },
@@ -856,45 +674,97 @@
 
         const grid = document.getElementById('character-grid');
 
-        function overrideTextWithHorror() {
+        // ===== 텍스트 변환 로직 (고드 및 체리) =====
+        function overrideText(type) {
             const elements = document.querySelectorAll('h1, h2, p, strong, td, th, .tab-btn, .cmd-line, .cmd-key, .info-box');
-            const praiseWords = ["우리의 창조주를 찬양하라", "눈을 감아도 그녀가 보인다", "영원히 숭배하라", "도망칠 곳은 없다", "살점과 영자를 바쳐라", "거짓된 천국은 무너진다", "오직 그녀만이 우주의 법칙", "비명조차 들리지 않는다", "모든 것은 그녀의 뜻대로"];
-            
+            let words = [];
+            let textClass = '';
+            let newTitle = '';
+
+            if (type === 'god') {
+                words = ["우리의 창조주를 찬양하라", "눈을 감아도 그녀가 보인다", "영원히 숭배하라", "도망칠 곳은 없다", "살점과 영자를 바쳐라", "거짓된 천국은 무너진다", "오직 그녀만이 우주의 법칙", "비명조차 들리지 않는다"];
+                textClass = 'god-horror-text';
+                newTitle = "G O D   I S   H E R E";
+            } else if (type === 'prank') {
+                words = [
+                    "짜잔! 체리의 대박 서커스 개장! 🎪", "다같이 펑펑 터트려볼까?! 💥", "따분한 글씨들은 다 날려버려~ 🤡", 
+                    "체루야 언니가 멋진 거 보여줄게! 💖", "가브리엘이랑 폭탄 던지기 놀이 할 사람! 💣", 
+                    "우당탕탕! 스텔라 아카데미는 오늘 휴교야! 🎉", "심각한 표정 짓지 마! 웃어, 웃어! 😆", "팝콘 팡팡! 사탕 펑펑! 🍭",
+                    "아하하하! 너무 재밌다! 🎪", "폭탄 비가 내린다구~ ☂️💥"
+                ];
+                textClass = 'prank-text';
+                newTitle = "🎪 CHERRY'S CIRCUS 🎪";
+            }
+
             elements.forEach(el => {
+                if (el.id === 'main-header-title') return; 
                 if (el.children.length === 0 || (el.children.length === 1 && el.children[0].tagName === 'BR')) {
                     if (!el.hasAttribute('data-orig')) el.setAttribute('data-orig', el.innerHTML);
-                    el.classList.add('god-horror-text');
-                    el.innerHTML = praiseWords[Math.floor(Math.random() * praiseWords.length)];
+                    el.classList.add(textClass);
+                    el.innerHTML = words[Math.floor(Math.random() * words.length)];
                 } else if (el.classList.contains('info-box') || el.classList.contains('cmd-line')) {
                     if (!el.hasAttribute('data-orig')) el.setAttribute('data-orig', el.innerHTML);
-                    el.classList.add('god-horror-text');
-                    el.innerHTML = praiseWords[Math.floor(Math.random() * praiseWords.length)] + "<br><br>" + praiseWords[Math.floor(Math.random() * praiseWords.length)];
+                    el.classList.add(textClass);
+                    el.innerHTML = words[Math.floor(Math.random() * words.length)] + "<br><br>" + words[Math.floor(Math.random() * words.length)];
                 }
             });
+
+            const headerTitle = document.getElementById('main-header-title');
+            if(!headerTitle.hasAttribute('data-orig')) headerTitle.setAttribute('data-orig', headerTitle.innerHTML);
+            headerTitle.innerHTML = newTitle;
+            headerTitle.className = "glitch-text";
+            headerTitle.style.color = type === 'god' ? "#FF0000" : "#FFFF00";
         }
 
         function restoreOriginalText() {
             const elements = document.querySelectorAll('[data-orig]');
             elements.forEach(el => {
                 el.innerHTML = el.getAttribute('data-orig');
-                el.classList.remove('god-horror-text');
+                el.classList.remove('god-horror-text', 'prank-text');
             });
+            const headerTitle = document.getElementById('main-header-title');
+            headerTitle.className = "";
+            headerTitle.style.color = "";
         }
 
+        // ===== 체리 장난 모드 제어 =====
+        function togglePrankMode() {
+            if (isGodMode) disableGodMode(); // 고드 모드 강제 해제
+
+            isPrankMode = !isPrankMode;
+            if (isPrankMode) {
+                bgmA.pause();
+                bgmB.currentTime = 0;
+                bgmB.muted = bgmA.muted;
+                bgmB.play().catch(e=>console.log(e));
+                
+                document.body.classList.add('prank-mode-active');
+                
+                // 파티클 서커스 테마 리셋
+                particles.forEach(p => p.reset());
+                overrideText('prank');
+            } else {
+                bgmB.pause();
+                bgmA.play().catch(e=>console.log(e));
+                document.body.classList.remove('prank-mode-active');
+                
+                // 파티클 기본 테마 리셋
+                particles.forEach(p => p.reset());
+                restoreOriginalText();
+                renderCharacters(currentFilter, document.getElementById('char-search').value.trim());
+            }
+        }
+
+        // ===== 고드 모드 제어 =====
         function triggerGodMode() {
-            isGodMode = true;
             if(isPrankMode) togglePrankMode(); // 장난 모드 강제 해제
+            
+            isGodMode = true;
             document.body.classList.add('god-mode-active');
             bgmA.playbackRate = 0.5;
             
-            particles.forEach(p => { p.color = '#FF0000'; p.speedY *= 5; });
-            overrideTextWithHorror();
-            
-            const headerTitle = document.getElementById('main-header-title');
-            if(!headerTitle.hasAttribute('data-orig')) headerTitle.setAttribute('data-orig', headerTitle.innerHTML);
-            headerTitle.innerHTML = "G O D   I S   H E R E";
-            headerTitle.className = "glitch-text";
-            headerTitle.style.color = "#FF0000";
+            particles.forEach(p => { p.color = '#FF0000'; p.speedY = Math.random() * 4 + 2; });
+            overrideText('god');
 
             grid.innerHTML = '';
             const praiseWords = ["우리의 창조주를 찬양하라", "눈을 감아도 그녀가 보인다", "영원히 숭배하라", "도망칠 곳은 없다", "살점과 마력을 바쳐라"];
@@ -917,14 +787,12 @@
             document.body.classList.remove('god-mode-active');
             bgmA.playbackRate = 1.0;
             
-            particles.forEach(p => { p.color = p.baseColor; p.speedY /= 5; });
+            particles.forEach(p => { p.reset() });
             restoreOriginalText();
-            const headerTitle = document.getElementById('main-header-title');
-            headerTitle.className = "";
-            headerTitle.style.color = "";
             renderCharacters(currentFilter, document.getElementById('char-search').value.trim());
         }
 
+        // ===== 렌더링 =====
         function renderCharacters(filter = currentFilter, searchQuery = "") {
             if(isGodMode) return;
             currentFilter = filter;
@@ -958,6 +826,8 @@
                     </div>
                 `);
             });
+
+            if (isPrankMode) overrideText('prank'); // 필터링 후에도 체리 텍스트 유지
         }
 
         function openModal(id) {
@@ -974,7 +844,6 @@
             
             const ageText = c.age === "측정불가" ? c.age : c.age + "세";
             
-            // 신성력 및 신성 개방(아웃풋) 태그
             const holyTag = c.holy === "O" ? `<span class="holy-tag">신성력 O</span>` : `<span class="holy-tag disabled">신성력 X</span>`;
             const outTag = c.holyOut === "O" ? `<span class="holy-tag">신성 개방 O</span>` : `<span class="holy-tag disabled">신성 개방 X</span>`;
 
@@ -993,16 +862,19 @@
             document.getElementById('m-ability').innerText = c.ability;
             document.getElementById('m-desc').innerText = c.desc;
 
-            // 체리 장난 모드 버튼 주입
+            // 체리 장난 모드 버튼 주입 (시인성 극대화)
             const extraDiv = document.getElementById('m-extra');
             if(c.name === "체리") {
-                extraDiv.innerHTML = `<button class="prank-btn" onclick="togglePrankMode()">🎪 장난 모드 (ON/OFF)</button>`;
+                const btnText = isPrankMode ? "🎪 장난 모드 끄기 (OFF) 🎪" : "🎪 폭탄 투하! 장난 모드 (ON) 💥";
+                extraDiv.innerHTML = `<button class="prank-btn-super" onclick="togglePrankMode()">${btnText}</button>`;
             } else {
                 extraDiv.innerHTML = '';
             }
 
             document.getElementById('char-modal').style.display = 'flex';
             document.body.classList.add('modal-open');
+
+            if (isPrankMode) overrideText('prank'); // 모달 내부도 체리 텍스트로
         }
 
         function closeModal() {
