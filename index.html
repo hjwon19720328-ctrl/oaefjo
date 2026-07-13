@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Stellar Academy System</title>
-    <!-- FontAwesome 추가 (음소거 아이콘용) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         /* ===== 프리미엄 홀리 사이버 테마 변수 ===== */
@@ -77,48 +76,57 @@
             box-shadow: 0 0 15px var(--yellow-glow);
         }
 
-        /* ===== 체리 장난 모드 (서커스 분위기 극대화) ===== */
+        /* ===== 체리 장난 모드 (가독성 UP + 파격적인 팝아트 서커스!) ===== */
         body.prank-mode-active {
-            background-color: #1a0510;
-            background-image: repeating-linear-gradient(
-                45deg, 
-                rgba(255, 0, 128, 0.15) 0, 
-                rgba(255, 0, 128, 0.15) 40px, 
-                rgba(255, 215, 0, 0.15) 40px, 
-                rgba(255, 215, 0, 0.15) 80px
-            );
-            animation: circus-bg-scroll 2s linear infinite;
-        }
-        @keyframes circus-bg-scroll {
-            0% { background-position: 0 0; }
-            100% { background-position: 113.1px 0; } /* 80 * sqrt(2) */
+            background-color: #1a001a;
+            background-image: 
+                radial-gradient(circle at 20% 30%, rgba(255, 0, 255, 0.2) 0%, transparent 40%),
+                radial-gradient(circle at 80% 70%, rgba(0, 255, 255, 0.2) 0%, transparent 40%);
+            /* 좌우 스크롤 애니메이션 제거, 커서를 폭탄으로 변경! */
+            cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" style="font-size:24px"><text y="24">💣</text></svg>'), auto;
         }
 
         body.prank-mode-active #main-container {
-            background: rgba(40, 10, 30, 0.85);
-            border: 3px dashed #FF00FF;
-            box-shadow: 0 0 40px rgba(255, 0, 255, 0.4), inset 0 0 20px rgba(0, 255, 255, 0.2);
-            border-radius: 30px;
+            background: rgba(20, 5, 20, 0.95);
+            border: 4px dotted #00FFFF;
+            /* 팝아트 느낌의 겹치지 않는 단색 그림자 */
+            box-shadow: 12px 12px 0px #FF00FF; 
+            border-radius: 40px;
+            transform: rotate(1deg);
         }
 
         body.prank-mode-active .mini-card {
-            background: rgba(255, 255, 255, 0.05);
-            border: 2px solid #00FFFF;
-            border-radius: 50% 20% / 10% 40%;
-            box-shadow: 0 5px 15px rgba(0, 255, 255, 0.2);
+            background: rgba(255, 0, 128, 0.1);
+            border: 3px solid #FFFF00;
+            border-radius: 20px;
+            transition: transform 0.4s cubic-bezier(0.68, -0.55, 0.26, 1.55);
+        }
+        
+        /* 카드에 마우스를 올리면 미친듯이 비틀어짐 */
+        body.prank-mode-active .mini-card:hover {
+            transform: scale(1.1) rotate(5deg) !important;
+            background: rgba(0, 255, 255, 0.2);
+            box-shadow: -8px 8px 0px #FF00FF;
+            border-color: #00FFFF;
         }
 
-        /* 체리식 텍스트 바운스 효과 */
+        /* 체리식 텍스트 (가독성을 위해 배경을 깔고 애니메이션 적용) */
         .prank-text {
             display: inline-block;
-            color: #FFFF00 !important;
-            text-shadow: 2px 2px 0px #FF00FF, -2px -2px 0px #00FFFF !important;
-            animation: bounce-text 0.4s infinite alternate ease-in-out;
-            font-weight: bold;
+            color: #FFF !important;
+            background: rgba(0, 0, 0, 0.85); /* 텍스트 뒷배경 추가로 가독성 확보 */
+            padding: 6px 12px;
+            margin: 4px 0;
+            border-radius: 12px;
+            border: 2px dashed #FF00FF;
+            text-shadow: 2px 2px 0px #000, -2px -2px 0px #FF0055 !important;
+            font-family: 'Comic Sans MS', cursive, sans-serif !important;
+            animation: crazy-shake 0.4s infinite alternate;
         }
-        @keyframes bounce-text {
-            0% { transform: translateY(0px) rotate(-1deg) scale(1); }
-            100% { transform: translateY(-4px) rotate(2deg) scale(1.02); }
+
+        @keyframes crazy-shake {
+            0% { transform: translate(1px, 1px) rotate(0deg); }
+            100% { transform: translate(-1px, -1px) rotate(-1.5deg); }
         }
 
         /* ===== 이스터에그 (고드 강림 모드) ===== */
@@ -382,25 +390,20 @@
 </head>
 <body>
 
-    <!-- 파티클 배경 캔버스 -->
     <canvas id="particle-canvas"></canvas>
 
-    <!-- 오디오 엘리먼트 -->
     <audio id="bgm" src="A.mp3" loop></audio>
     <audio id="bgm-prank" src="B.mp3" loop></audio>
 
-    <!-- 음소거 버튼 -->
     <button id="mute-btn" title="Toggle Sound">
         <i class="fas fa-volume-up"></i>
     </button>
 
-    <!-- 인트로 -->
     <div id="intro-screen">
         <div class="intro-title">System.Boot()<br><span>STELLAR ACADEMY</span></div>
         <button id="enter-btn">ACCESS GRANTED</button>
     </div>
 
-    <!-- 메인 컨테이너 -->
     <div id="main-container">
         <header id="main-header">
             <h1 id="main-header-title">STELLAR ACADEMY</h1>
@@ -414,7 +417,6 @@
         </nav>
 
         <main>
-            <!-- 1. 세계관 탭 -->
             <div id="tab-world" class="tab-content active">
                 <h2 class="section-title">사후 세계 (Afterlife)</h2>
                 <p style="margin-bottom: 15px; font-size: 0.95rem; color: #94A3B8;">인간은 사후 지옥, 저승, 천국행이 정해집니다.</p>
@@ -468,7 +470,6 @@
                 </div>
             </div>
 
-            <!-- 2. 인물 탭 -->
             <div id="tab-character" class="tab-content">
                 <div class="search-container" id="search-container">
                     <input type="text" id="char-search" placeholder="SYSTEM SEARCH..." autocomplete="off">
@@ -482,7 +483,6 @@
                 <div id="character-grid"></div>
             </div>
 
-            <!-- 3. 일정 탭 -->
             <div id="tab-schedule" class="tab-content">
                 <h2 class="section-title">아카데미 연간 학사 일정</h2>
                 <p style="color: var(--cyber-red); font-size: 0.9rem; margin-bottom: 15px; font-weight: bold;">
@@ -504,7 +504,6 @@
                 </table>
             </div>
 
-            <!-- 4. 명령어 탭 -->
             <div id="tab-command" class="tab-content">
                 <h2 class="section-title">CMD LOG</h2>
                 <div class="console-box">
@@ -516,7 +515,6 @@
         </main>
     </div>
 
-    <!-- 상세 프로필 모달 -->
     <div id="char-modal">
         <div class="modal-content" id="char-modal-content">
             <span class="close-btn" onclick="closeModal()">✕</span>
@@ -536,7 +534,6 @@
             <div class="modal-desc-title">ARCHIVE DATA</div>
             <div id="m-desc" class="modal-desc-body"></div>
 
-            <!-- 체리 전용 장난 버튼 영역 -->
             <div id="m-extra"></div>
         </div>
     </div>
@@ -583,7 +580,7 @@
             }
             update() {
                 if (isPrankMode) {
-                    this.y += this.speedY; // speedY가 음수라 위로 감
+                    this.y += this.speedY; // 위로
                     this.x += this.speedX;
                     if (this.y < -10) this.reset();
                 } else {
@@ -687,13 +684,18 @@
                 newTitle = "G O D   I S   H E R E";
             } else if (type === 'prank') {
                 words = [
-                    "짜잔! 체리의 대박 서커스 개장! 🎪", "다같이 펑펑 터트려볼까?! 💥", "따분한 글씨들은 다 날려버려~ 🤡", 
-                    "체루야 언니가 멋진 거 보여줄게! 💖", "가브리엘이랑 폭탄 던지기 놀이 할 사람! 💣", 
-                    "우당탕탕! 스텔라 아카데미는 오늘 휴교야! 🎉", "심각한 표정 짓지 마! 웃어, 웃어! 😆", "팝콘 팡팡! 사탕 펑펑! 🍭",
-                    "아하하하! 너무 재밌다! 🎪", "폭탄 비가 내린다구~ ☂️💥"
+                    "꺄하하하! 다 터져라아아악! 💣💥", 
+                    "이 시스템은 이제 체리꺼야! 메롱~ 😜", 
+                    "어라? 글씨가 왜 도망가지? 얍! 🏃‍♀️💨", 
+                    "교장선생님 간식은 내가 다 먹었지롱! 🍩🍰", 
+                    "삐용삐용! 심각한 에러 발생! ...은 뻥이지롱! 🤡",
+                    "여기를 누르면 펑! 하고 터질지도? 🧨",
+                    "진지한 얘기는 너무 지루해애애애액! 😝",
+                    "체리랑 놀 사람 여기여기 붙어라! 🎪✨",
+                    "아카데미 룰? 그게 뭐야 먹는 거야? 냠냠! 🍔"
                 ];
                 textClass = 'prank-text';
-                newTitle = "🎪 CHERRY'S CIRCUS 🎪";
+                newTitle = "🍒 CHERRY'S BOMB CIRCUS 💣";
             }
 
             elements.forEach(el => {
@@ -713,7 +715,7 @@
             if(!headerTitle.hasAttribute('data-orig')) headerTitle.setAttribute('data-orig', headerTitle.innerHTML);
             headerTitle.innerHTML = newTitle;
             headerTitle.className = "glitch-text";
-            headerTitle.style.color = type === 'god' ? "#FF0000" : "#FFFF00";
+            headerTitle.style.color = type === 'god' ? "#FF0000" : "#00FFFF";
         }
 
         function restoreOriginalText() {
@@ -729,7 +731,7 @@
 
         // ===== 체리 장난 모드 제어 =====
         function togglePrankMode() {
-            if (isGodMode) disableGodMode(); // 고드 모드 강제 해제
+            if (isGodMode) disableGodMode(); 
 
             isPrankMode = !isPrankMode;
             if (isPrankMode) {
@@ -740,7 +742,6 @@
                 
                 document.body.classList.add('prank-mode-active');
                 
-                // 파티클 서커스 테마 리셋
                 particles.forEach(p => p.reset());
                 overrideText('prank');
             } else {
@@ -748,7 +749,6 @@
                 bgmA.play().catch(e=>console.log(e));
                 document.body.classList.remove('prank-mode-active');
                 
-                // 파티클 기본 테마 리셋
                 particles.forEach(p => p.reset());
                 restoreOriginalText();
                 renderCharacters(currentFilter, document.getElementById('char-search').value.trim());
@@ -757,7 +757,7 @@
 
         // ===== 고드 모드 제어 =====
         function triggerGodMode() {
-            if(isPrankMode) togglePrankMode(); // 장난 모드 강제 해제
+            if(isPrankMode) togglePrankMode(); 
             
             isGodMode = true;
             document.body.classList.add('god-mode-active');
@@ -827,7 +827,7 @@
                 `);
             });
 
-            if (isPrankMode) overrideText('prank'); // 필터링 후에도 체리 텍스트 유지
+            if (isPrankMode) overrideText('prank'); 
         }
 
         function openModal(id) {
@@ -862,7 +862,6 @@
             document.getElementById('m-ability').innerText = c.ability;
             document.getElementById('m-desc').innerText = c.desc;
 
-            // 체리 장난 모드 버튼 주입 (시인성 극대화)
             const extraDiv = document.getElementById('m-extra');
             if(c.name === "체리") {
                 const btnText = isPrankMode ? "🎪 장난 모드 끄기 (OFF) 🎪" : "🎪 폭탄 투하! 장난 모드 (ON) 💥";
@@ -874,7 +873,7 @@
             document.getElementById('char-modal').style.display = 'flex';
             document.body.classList.add('modal-open');
 
-            if (isPrankMode) overrideText('prank'); // 모달 내부도 체리 텍스트로
+            if (isPrankMode) overrideText('prank'); 
         }
 
         function closeModal() {
