@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Stellar Academy System</title>
+    <!-- FontAwesome 추가 (음소거 아이콘용) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         /* ===== 프리미엄 홀리 사이버 테마 변수 ===== */
@@ -390,20 +391,25 @@
 </head>
 <body>
 
+    <!-- 파티클 배경 캔버스 -->
     <canvas id="particle-canvas"></canvas>
 
+    <!-- 오디오 엘리먼트 -->
     <audio id="bgm" src="A.mp3" loop></audio>
     <audio id="bgm-prank" src="B.mp3" loop></audio>
 
+    <!-- 음소거 버튼 -->
     <button id="mute-btn" title="Toggle Sound">
         <i class="fas fa-volume-up"></i>
     </button>
 
+    <!-- 인트로 -->
     <div id="intro-screen">
         <div class="intro-title">System.Boot()<br><span>STELLAR ACADEMY</span></div>
         <button id="enter-btn">ACCESS GRANTED</button>
     </div>
 
+    <!-- 메인 컨테이너 -->
     <div id="main-container">
         <header id="main-header">
             <h1 id="main-header-title">STELLAR ACADEMY</h1>
@@ -417,6 +423,7 @@
         </nav>
 
         <main>
+            <!-- 1. 세계관 탭 -->
             <div id="tab-world" class="tab-content active">
                 <h2 class="section-title">사후 세계 (Afterlife)</h2>
                 <p style="margin-bottom: 15px; font-size: 0.95rem; color: #94A3B8;">인간은 사후 지옥, 저승, 천국행이 정해집니다.</p>
@@ -470,6 +477,7 @@
                 </div>
             </div>
 
+            <!-- 2. 인물 탭 -->
             <div id="tab-character" class="tab-content">
                 <div class="search-container" id="search-container">
                     <input type="text" id="char-search" placeholder="SYSTEM SEARCH..." autocomplete="off">
@@ -483,6 +491,7 @@
                 <div id="character-grid"></div>
             </div>
 
+            <!-- 3. 일정 탭 -->
             <div id="tab-schedule" class="tab-content">
                 <h2 class="section-title">아카데미 연간 학사 일정</h2>
                 <p style="color: var(--cyber-red); font-size: 0.9rem; margin-bottom: 15px; font-weight: bold;">
@@ -504,6 +513,7 @@
                 </table>
             </div>
 
+            <!-- 4. 명령어 탭 -->
             <div id="tab-command" class="tab-content">
                 <h2 class="section-title">CMD LOG</h2>
                 <div class="console-box">
@@ -515,6 +525,7 @@
         </main>
     </div>
 
+    <!-- 상세 프로필 모달 -->
     <div id="char-modal">
         <div class="modal-content" id="char-modal-content">
             <span class="close-btn" onclick="closeModal()">✕</span>
@@ -534,6 +545,7 @@
             <div class="modal-desc-title">ARCHIVE DATA</div>
             <div id="m-desc" class="modal-desc-body"></div>
 
+            <!-- 체리 전용 장난 버튼 영역 -->
             <div id="m-extra"></div>
         </div>
     </div>
@@ -835,7 +847,6 @@
             const c = charData.find(item => item.id === id);
             if(!c) return;
 
-            document.getElementById('char-modal-content').scrollTop = 0;
             document.getElementById('m-img').src = c.img;
             document.getElementById('m-name').innerText = c.name;
             
@@ -870,7 +881,9 @@
                 extraDiv.innerHTML = '';
             }
 
+            // 스크롤 버그 픽스 반영 (띄운 직후 스크롤 초기화)
             document.getElementById('char-modal').style.display = 'flex';
+            document.getElementById('char-modal-content').scrollTop = 0; 
             document.body.classList.add('modal-open');
 
             if (isPrankMode) overrideText('prank'); 
